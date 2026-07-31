@@ -1207,6 +1207,8 @@ const PAL={
   lampPost:'rgba(255,255,255,.18)', lampBulb:'rgba(255,255,255,.55)', lampPool:'rgba(255,255,255,.035)',
   smoke:'rgba(255,255,255,.5)', exit:'rgba(255,255,255,.25)',
   tree:'#2b352d', treeHi:'rgba(255,255,255,.10)', trunk:'rgba(255,255,255,.16)',
+  rim:'#040605', grass:'#0f150f', grass2:'#0c110c', grass3:'#121a11',
+  plaza:'#0c0c0f', pond:'#0a121c', pondEdge:'rgba(130,170,210,.14)', rock:'#3a3f46',
   gLight:['rgba(255,255,255,.13)','rgba(255,255,255,0)'], gAO:['rgba(0,0,0,0)','rgba(0,0,0,.30)'],
  },
  light:{
@@ -1219,14 +1221,16 @@ const PAL={
   skylight:'rgba(255,255,255,.85)', antenna:'rgba(0,0,0,.32)', antennaDot:'rgba(0,0,0,.36)',
   lampPost:'rgba(0,0,0,.30)', lampBulb:'rgba(0,0,0,.28)', lampPool:'transparent',
   smoke:'rgba(118,124,134,.5)', exit:'rgba(0,0,0,.30)',
-  tree:'#9CB69A', treeHi:'rgba(255,255,255,.4)', trunk:'rgba(92,72,52,.55)',
+  tree:'#8FB284', treeHi:'rgba(255,255,255,.4)', trunk:'rgba(92,72,52,.55)',
+  rim:'#87A079', grass:'#AAC49B', grass2:'#9FBA8F', grass3:'#B6CDA6',
+  plaza:'#EFEFEA', pond:'#9FC0D8', pondEdge:'rgba(255,255,255,.65)', rock:'#B9B9B1',
   gLight:['rgba(255,255,255,.55)','rgba(255,255,255,0)'], gAO:['rgba(0,0,0,0)','rgba(0,0,0,.10)'],
  }
 };
 let C=PAL.dark;
 
 // lapisan
-const gGrid=mk('g',{}); const gZones=mk('g',{}); const gShadow=mk('g',{}); const gRoutes=mk('g',{}); const gBlocks=mk('g',{}); const gTokens=mk('g',{});
+const gTerrain=mk('g',{}); const gGrid=mk('g',{}); const gZones=mk('g',{}); const gShadow=mk('g',{}); const gRoutes=mk('g',{}); const gBlocks=mk('g',{}); const gTokens=mk('g',{});
 
 // (grid lantai digambar di buildScene supaya ikut tema)
 
@@ -1391,8 +1395,20 @@ function tree(g,tx,ty,s){
   mk('circle',{cx:px,cy:py-11*s,r:6.5*s,fill:C.tree},g);
   mk('circle',{cx:px-2*s,cy:py-13*s,r:3.1*s,fill:C.treeHi},g);
 }
-[[1.15,7.3,1],[2.1,6.6,.85],[0.9,12.8,1.05],[4.2,12.6,.9],[3.2,3.2,.9],[8.5,14.7,1],[13.1,12.1,1],[14.3,6.6,.9],[6.9,6.7,.8]].forEach(([tx,ty,s])=>{
+[[1.15,7.3,1],[2.1,6.6,.85],[0.9,12.8,1.05],[4.2,12.6,.9],[3.2,3.2,.9],[8.5,14.7,1],[13.1,12.1,1],[14.3,6.6,.9],[6.9,6.7,.8],
+ [0.1,9.4,1.1],[3.6,16.1,1],[9.2,16.2,.95],[15.3,4.6,1],[15.8,9.6,.9],[12.6,0.7,.95],[6.4,-0.4,.9],[1.9,15.6,.8],[14.9,11.2,.85]].forEach(([tx,ty,s])=>{
   PROPS.push({v:tx+ty, build:g=>tree(g,tx,ty,s)});
+});
+// semak di padang rumput
+function bush(g,tx,ty,s){
+  s=s||1;const[px,py]=proj(tx,ty);
+  mk('ellipse',{cx:px+2,cy:py+1.5,rx:5*s,ry:2.2*s,fill:C.shadow,opacity:.4},g);
+  mk('circle',{cx:px,cy:py-2.5*s,r:3.4*s,fill:C.tree},g);
+  mk('circle',{cx:px+2.8*s,cy:py-1.6*s,r:2.5*s,fill:C.tree},g);
+  mk('circle',{cx:px-1.5*s,cy:py-3.5*s,r:1.6*s,fill:C.treeHi},g);
+}
+[[0.3,10.8,1],[1.4,15.2,.9],[10.7,16,1],[15.7,6.4,.95],[13.5,1.1,.9],[5.3,-0.1,.85],[2.6,3.9,.8],[12.2,14.9,.9]].forEach(([tx,ty,s])=>{
+  PROPS.push({v:tx+ty, build:g=>bush(g,tx,ty,s)});
 });
 // mobil parkir dekat zona kantor
 PROPS.push({v:9.15, build:g=>{part(g,3.05,5.9,0.45,0.24,5,{f:1.05});part(g,3.14,5.93,0.24,0.18,4,{lift:5,f:.85});}});
@@ -1400,10 +1416,44 @@ PROPS.push({v:9.85, build:g=>{part(g,3.65,5.95,0.45,0.24,5,{f:.9});part(g,3.74,5
 
 /* --- buildScene: seluruh lapisan statis, dibangun ulang saat ganti tema --- */
 const stGroups={};
+function blobPts(cx,cy,r,seed,irr,n){ // blob organik low-poly di ruang tile -> titik terproyeksi
+  irr=irr||0.28; n=n||14;
+  const pts=[];
+  for(let i=0;i<n;i++){
+    const a=i/n*Math.PI*2;
+    const rr=r*(1+((((seed*31+i*17)%13)/13)-0.5)*irr);
+    pts.push(proj(cx+Math.cos(a)*rr, cy+Math.sin(a)*rr*0.92));
+  }
+  return pts;
+}
+const blobStr=(cx,cy,r,seed,irr,n)=>blobPts(cx,cy,r,seed,irr,n).map(p=>p.join(',')).join(' ');
 function buildScene(){
-  [gGrid,gZones,gShadow,gRoutes,gBlocks].forEach(g=>{while(g.firstChild)g.firstChild.remove();});
+  [gTerrain,gGrid,gZones,gShadow,gRoutes,gBlocks].forEach(g=>{while(g.firstChild)g.firstChild.remove();});
   glS[0].setAttribute('stop-color',C.gLight[0]); glS[1].setAttribute('stop-color',C.gLight[1]);
   gaS[0].setAttribute('stop-color',C.gAO[0]);   gaS[1].setAttribute('stop-color',C.gAO[1]);
+  /* --- terrain: pulau lembah hijau gaya diorama game --- */
+  const IC=[7.2,8.2], IR=10.3;
+  // dinding plateau (rim) di bawah pulau
+  mk('polygon',{points:blobPts(IC[0],IC[1],IR,7).map(p=>`${p[0]},${p[1]+10}`).join(' '),fill:C.rim},gTerrain);
+  // hamparan rumput utama
+  mk('polygon',{points:blobStr(IC[0],IC[1],IR,7),fill:C.grass},gTerrain);
+  // gradasi padang: petak rumput lebih gelap / lebih terang
+  mk('polygon',{points:blobStr(1.6,4.3,1.9,3),fill:C.grass2},gTerrain);
+  mk('polygon',{points:blobStr(13.6,12.6,2.1,11),fill:C.grass2},gTerrain);
+  mk('polygon',{points:blobStr(14.6,3.0,1.7,5),fill:C.grass3},gTerrain);
+  mk('polygon',{points:blobStr(3.4,15.2,1.6,9),fill:C.grass3},gTerrain);
+  mk('polygon',{points:blobStr(0.4,9.8,1.5,13),fill:C.grass3},gTerrain);
+  // plaza beraspal tempat kampus berdiri
+  mk('polygon',{points:blobStr(7.4,8.0,6.6,17,.16,16),fill:C.plaza},gTerrain);
+  mk('polygon',{points:blobStr(12.2,6.4,3.4,4,.2),fill:C.plaza},gTerrain);
+  mk('polygon',{points:blobStr(3.4,11.6,3.0,8,.2),fill:C.plaza},gTerrain);
+  // kolam
+  mk('polygon',{points:blobStr(0.7,14.1,1.45,21,.32),fill:C.pond,stroke:C.pondEdge,'stroke-width':1.6},gTerrain);
+  // batu-batu kecil
+  [[2.1,1.9],[15.4,7.6],[8.9,16.3]].forEach(([bx,by],bi)=>{
+    mk('polygon',{points:blobStr(bx,by,0.28,bi*7+2,.5,7),fill:C.rock},gTerrain);
+    mk('polygon',{points:blobStr(bx+0.32,by+0.18,0.16,bi*5+3,.5,6),fill:C.rock,opacity:.8},gTerrain);
+  });
   // grid lantai
   for(let x=-2;x<=16;x+=2){const[a,b]=proj(x,-1),[c2,d2]=proj(x,17);mk('line',{x1:a,y1:b,x2:c2,y2:d2,stroke:C.grid,'stroke-width':1},gGrid);}
   for(let y=-1;y<=17;y+=2){const[a,b]=proj(-2,y),[c2,d2]=proj(16,y);mk('line',{x1:a,y1:b,x2:c2,y2:d2,stroke:C.grid,'stroke-width':1},gGrid);}
@@ -2390,7 +2440,7 @@ syncSim();
 /* ================= INIT ================= */
 renderKpis();renderAttention();renderPipe();renderLoad();renderSdm();renderFeed(false);
 renderLegend();
-setTheme((()=>{try{return localStorage.getItem('atlas-theme')||'dark'}catch(e){return 'dark'}})());
+setTheme((()=>{try{return localStorage.getItem('atlas-theme')||'light'}catch(e){return 'light'}})());
 switchPersona('dimas');
 </script>
 
