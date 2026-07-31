@@ -81,6 +81,21 @@ kapan"):
 5. Peta: lampu jalan + kolam cahaya halus di 5 titik rute.
 6. Baris Kinerja Tim di Menara kini bisa diklik -> langsung profil orang.
 
+## Update 31 Jul malam (3): v5 — loop penugasan atasan -> karyawan
+
+Inti visi yang belum ada akhirnya dibangun: "atasan kirim tugas tanpa WA".
+1. Tombol "Beri Tugas" di Menara Kendali + di panel profil orang (nama
+   langsung terisi). Form: pilih orang (tergrup per sektor), judul, deskripsi,
+   tenggat, prioritas (Normal/Penting/Kritis), order terkait, dan DOKUMEN
+   WAJIB yang otomatis jadi gerbang penguncian penyelesaian.
+2. Tugas mendarat di Ruang Kerja orangnya: chip "Baru" + prioritas, deskripsi,
+   slot dokumen, titik notifikasi di tab Ruang Kerja, tercatat di feed
+   ("Matthew menugaskan ... ke Maya"), beban orang ikut naik.
+3. Ruang Kerja jadi MULTI-PERSONA: klik nama di header -> menu 22 orang per
+   sektor; dashboard menyesuaikan (sapaan sesuai jam, tugas, skor KPI pribadi,
+   umur tugas, streak). Peraga "dashboard sesuai role masing-masing".
+4. Nama pelaku di feed mengikuti persona aktif.
+
 ## Isi prototipe
 
 1. **Menara Kendali (owner)**: 5 KPI + sparkline, antrean "Perlu Perhatian"

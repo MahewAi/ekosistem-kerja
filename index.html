@@ -447,6 +447,40 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .t-start.on{color:#5dbd75;border-color:rgba(60,169,81,.35)}
 .t-start svg{width:10px;height:10px;stroke-width:2}
 
+/* v5: beri tugas + multi-persona */
+.mod{width:540px;max-width:calc(100vw - 32px);margin-top:10vh;background:var(--s2);border:1px solid var(--line2);
+  border-radius:12px;overflow:hidden;animation:palIn .16s var(--ease);display:flex;flex-direction:column}
+.mod-h{padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.mod-b{padding:14px 16px;display:flex;flex-direction:column;gap:13px;overflow-y:auto;max-height:62vh}
+.ffield label{display:block;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.fin{width:100%;height:32px;background:var(--s1);border:1px solid var(--line2);border-radius:7px;color:var(--ink);
+  padding:0 10px;font:400 12.5px var(--sans);letter-spacing:-.01em;outline:none;transition:border-color var(--t) var(--ease)}
+.fin:focus{border-color:rgba(94,106,210,.6)}
+textarea.fin{height:60px;padding:8px 10px;resize:none;line-height:1.5}
+select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8f98' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:26px}
+.doc-add{display:flex;gap:7px}
+.doc-add .fin{flex:1}
+.doc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.doc-chips .chip{cursor:pointer}
+.doc-chips .chip:hover{border-color:rgba(229,72,77,.5);color:#f2777b}
+.mod-f{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+.tab .ndot{width:6px;height:6px;border-radius:50%;background:var(--accent-h);display:none;flex:none}
+.tab.hasnotif .ndot{display:block}
+.persona-btn{position:relative;display:flex;align-items:center;gap:12px;cursor:pointer;border-radius:9px;
+  padding:5px 10px 5px 5px;margin:-5px 0 -5px -5px;transition:background var(--t) var(--ease)}
+.persona-btn:hover{background:var(--s2)}
+.persona-btn>.chev{width:13px;height:13px;stroke-width:1.7;color:var(--ink3);transform:rotate(90deg)}
+.persona-menu{position:absolute;top:calc(100% + 6px);left:0;width:290px;max-height:350px;overflow-y:auto;
+  background:var(--s2);border:1px solid var(--line2);border-radius:10px;z-index:30;display:none;padding:6px}
+.persona-menu.show{display:block;animation:palIn .14s var(--ease)}
+.pm-sec{font:500 9.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding:8px 9px 3px}
+.pm-row{display:flex;gap:9px;padding:7px 9px;border-radius:7px;cursor:pointer;align-items:center}
+.pm-row:hover{background:var(--s3)}
+.pm-row.cur{background:var(--s3)}
+.pm-row .nm{font-size:12.5px;font-weight:500}
+.pm-row .rl{font-size:10.5px;color:var(--ink3)}
+
 /* ============ VIEW: KERJA ============ */
 #view-kerja{overflow-y:auto}
 .kerja-wrap{max-width:1180px;margin:0 auto;padding:24px 24px 56px;display:grid;grid-template-columns:1fr 340px;gap:18px}
@@ -596,6 +630,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
         <h1>Menara Kendali</h1>
         <span class="date" id="todayDate"></span>
         <div class="right">
+          <button class="btn" id="btnAssign"></button>
           <button class="btn" id="goPeta"></button>
         </div>
       </div>
@@ -742,10 +777,14 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
   <section class="view" id="view-kerja">
     <div class="kerja-wrap">
       <div class="kerja-head">
-        <div class="avatar" style="width:34px;height:34px;font-size:12.5px">DM</div>
-        <div class="hi">
-          <h1 id="kerjaHi">Selamat pagi, Dimas</h1>
-          <p id="kerjaSub"></p>
+        <div class="persona-btn" id="personaBtn" title="Ganti karyawan (demo dashboard per role)">
+          <div class="avatar" id="kAv" style="width:34px;height:34px;font-size:12.5px">DM</div>
+          <div class="hi">
+            <h1 id="kerjaHi">Selamat pagi, Dimas</h1>
+            <p id="kerjaSub"></p>
+          </div>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6.5 15 12l-5.5 5.5"/></svg>
+          <div class="persona-menu" id="personaMenu"></div>
         </div>
         <div class="right">
           <span class="streak" id="streak"></span>
@@ -785,6 +824,35 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
     </div>
   </section>
 </main>
+
+<div class="pal-overlay" id="modOv">
+  <div class="mod">
+    <div class="mod-h" id="modH">Beri Tugas</div>
+    <div class="mod-b">
+      <div class="ffield"><label>Untuk</label><select class="fin" id="mAssignee"></select></div>
+      <div class="ffield"><label>Judul tugas</label><input class="fin" id="mTitle" placeholder="cth: Siapkan penawaran revisi Sekolah Pelita" autocomplete="off"></div>
+      <div class="ffield"><label>Deskripsi (opsional)</label><textarea class="fin" id="mDesc" placeholder="Konteks singkat supaya tidak bolak-balik tanya…"></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="ffield"><label>Tenggat</label>
+          <select class="fin" id="mDue"><option>hari ini</option><option>besok</option><option>minggu ini</option></select></div>
+        <div class="ffield"><label>Order terkait (opsional)</label><select class="fin" id="mOid"><option value="">—</option></select></div>
+      </div>
+      <div class="ffield"><label>Prioritas</label>
+        <div style="display:flex;gap:6px" id="mPrio">
+          <button class="hud-chip active" data-pr="normal">Normal</button>
+          <button class="hud-chip" data-pr="penting">Penting</button>
+          <button class="hud-chip" data-pr="kritis">Kritis</button>
+        </div></div>
+      <div class="ffield"><label>Dokumen wajib — mengunci penyelesaian sampai lengkap</label>
+        <div class="doc-add"><input class="fin" id="mDoc" placeholder="cth: SPK ditandatangani" autocomplete="off"><button class="btn" id="mDocAdd" style="height:32px">Tambah</button></div>
+        <div class="doc-chips" id="mDocs"></div></div>
+    </div>
+    <div class="mod-f">
+      <button class="btn" id="mCancel">Batal</button>
+      <button class="btn-primary" id="mSend">Kirim Tugas</button>
+    </div>
+  </div>
+</div>
 
 <div class="pal-overlay" id="palOverlay">
   <div class="pal">
@@ -875,7 +943,7 @@ const SDM = [
   {ini:'BY', nm:'Bayu',  role:'PPIC Pabrik',     done:7,  t:'96%',    med:'update harian', spark:[3,3,4,4,4,5,4], st:4, pid:'bayu'},
   {ini:'RK', nm:'Raka',  role:'Logistik',        done:12, t:'3,1 hr', med:'3,0 hr', spark:[4,3,5,4,5,4,5], st:6, pid:'raka'},
 ];
-const TASKS = [
+let TASKS = [
   {id:'T1', oid:'ORD-0141', title:'Terbitkan PO pabrik — Hotel Grand Kaltim', due:'hari ini', age:6, p85:5,
    desc:'PO ke pabrik untuk 84 pintu WPC-001. Order sudah 6 hari di Purchasing (normal 3 hari) — dua dokumen wajib masih kurang. Sistem menahan tahap berikutnya sampai lengkap, jadi tidak ada berkas yang bisa kelewat.',
    docs:[{n:'Penawaran pabrik (harga final)',up:true},{n:'SPK / kontrak ditandatangani',up:false},{n:'Bukti transfer DP 50%',up:false}]},
@@ -907,16 +975,19 @@ function orderStatus(o){
 /* ================= TOPBAR / TABS ================= */
 $('#tab-menara').innerHTML = I('layout')+'Menara Kendali';
 $('#tab-peta').innerHTML   = I('map')+'Peta Live';
-$('#tab-kerja').innerHTML  = I('user')+'Ruang Kerja';
+$('#tab-kerja').innerHTML  = I('user')+'Ruang Kerja<span class="ndot"></span>';
 $('#goPeta').innerHTML     = I('map')+'Lihat Peta Live';
 $('#goPeta').onclick = ()=>switchView('peta');
 $('#sdmIc').innerHTML = I('user');
 $('#sdmSearchIc').innerHTML = I('search');
 $('#sdmOpen').onclick = ()=>openSdm();
+$('#btnAssign').innerHTML = I('send')+'Beri Tugas';
+$('#btnAssign').onclick = ()=>openAssign();
 let curView='menara';
 function switchView(v){
   if(curView===v) return;
   curView=v; document.body.dataset.view=v;
+  if(v==='kerja')$('#tab-kerja').classList.remove('hasnotif');
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
   document.querySelectorAll('.view').forEach(s=>{
     const on = s.id==='view-'+v;
@@ -1775,10 +1846,11 @@ function showPerson(pid,isRefresh){
      ${p.tugas.map(t=>`<div class="op-kv"><span class="k" style="color:var(--ink2)">•&nbsp; ${t}</span></div>`).join('')}
      ${myOrders.map(o=>`<div class="op-kv"><span class="k" style="color:var(--ink2)">•&nbsp; Pegang <span class="mono" style="font-size:10.5px;color:var(--ink3)">${o.id}</span> ${o.cust}</span></div>`).join('')}
    </div>
-   <div class="op-actions"><button class="btn" id="ppClose2">Tutup</button></div>`;
+   <div class="op-actions"><button class="btn" id="ppAssign">${I('send')}Beri tugas</button><button class="btn" id="ppClose2">Tutup</button></div>`;
   pp.classList.add('show');
   const nb=pp.querySelector('.op-body'); if(nb&&isRefresh)nb.scrollTop=sc;
   $('#ppClose').onclick=closePersonPanel; $('#ppClose2').onclick=closePersonPanel;
+  $('#ppAssign').onclick=()=>openAssign(p.id);
 }
 function closePersonPanel(){curPerson=null;$('#ppanel').classList.remove('show');}
 const fmtH=t=>{const hI=Math.floor(t),m=Math.round((t-hI)*60);return `${String(hI).padStart(2,'0')}.${String(m).padStart(2,'0')}`;};
@@ -1843,10 +1915,55 @@ function openSdm(){
   });
 }
 
-/* ================= KERJA (karyawan) ================= */
-$('#kerjaSub').textContent=`Purchasing · ${TASKS.length} tugas hari ini · ${SARAN.length} saran`;
-$('#streak').innerHTML=I('zap')+'7 hari fokus beruntun';
-let openTask=null;
+/* ================= KERJA (karyawan, multi-persona) ================= */
+const TASKS_DIMAS=TASKS;
+const PT={};
+let persona='dimas', openTask=null;
+function getPersonTasks(pid){
+  if(pid==='dimas')return TASKS_DIMAS;
+  if(!PT[pid]){
+    const e=sdmFlatAll().find(x=>x.p.id===pid);
+    PT[pid]=(e&&e.p.status!=='cuti'?e.p.tugas:[]).map((t,i)=>({
+      id:'G-'+pid+'-'+i, oid:null, title:t, due:i===0?'hari ini':'minggu ini',
+      age:0.15+i*0.9, p85:2, desc:`Tugas rutin ${e?STAGES[e.st].nm:''}.`, docs:[]}));
+  }
+  return PT[pid];
+}
+const curP=()=>{const e=sdmFlatAll().find(x=>x.p.id===persona);return e?e.p:TEAMS[3].mgr;};
+const curNm=()=>curP().nm.split(' ')[0];
+const greet=()=>{const h=new Date().getHours();return h<11?'Selamat pagi':h<15?'Selamat siang':h<19?'Selamat sore':'Selamat malam';};
+function switchPersona(pid){
+  persona=pid; TASKS=getPersonTasks(pid); openTask=null;
+  const e=sdmFlatAll().find(x=>x.p.id===pid); const p=e.p;
+  $('#kAv').textContent=p.ini;
+  $('#kerjaHi').textContent=`${greet()}, ${p.nm.split(' ')[0]}`;
+  $('#kerjaSub').textContent=`${p.role} · ${STAGES[e.st].nm} · ${TASKS.filter(t=>!t.done).length} tugas aktif`;
+  let hsh=0;for(const c of pid)hsh=(hsh*31+c.charCodeAt(0))>>>0;
+  $('#streak').innerHTML=I('zap')+`${(hsh%7)+3} hari fokus beruntun`;
+  renderScore(p);renderTasks();renderSaran();buildPersonaMenu();
+}
+function buildPersonaMenu(){
+  const m=$('#personaMenu');let html='';
+  TEAMS.forEach((t,i)=>{
+    html+=`<div class="pm-sec">${STAGES[i].nm}</div>`;
+    flatTeam(t.mgr,null,[]).forEach(e=>{
+      html+=`<div class="pm-row ${e.p.id===persona?'cur':''}" data-pp="${e.p.id}">
+        <span class="mini-av" style="width:24px;height:24px;font-size:9.5px">${e.p.ini}</span>
+        <div><div class="nm">${e.p.nm}</div><div class="rl">${e.p.role}</div></div></div>`;
+    });
+  });
+  m.innerHTML=html;
+  m.querySelectorAll('[data-pp]').forEach(r=>r.onclick=ev=>{
+    ev.stopPropagation();m.classList.remove('show');switchPersona(r.dataset.pp);
+  });
+}
+$('#personaBtn').addEventListener('click',e=>{
+  if(e.target.closest('.persona-menu'))return;
+  $('#personaMenu').classList.toggle('show');
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#personaBtn'))$('#personaMenu').classList.remove('show');
+});
 function renderTasks(){
   const list=TASKS;
   $('#todayCount').textContent=list.filter(t=>!t.done).length;
@@ -1860,6 +1977,8 @@ function renderTasks(){
         <span class="t-chips">
           ${t.oid?`<span class="t-oid">${t.oid}</span>`:''}
           ${t.docs.length?`<span class="chip ${need?'warn':'ok'}">${I('file')} ${t.docs.filter(d=>d.up).length}/${t.docs.length} dok</span>`:''}
+          ${t.prio==='penting'?'<span class="chip warn">Penting</span>':t.prio==='kritis'?'<span class="chip crit">Kritis</span>':''}
+          ${t.fresh?'<span class="chip" style="color:var(--accent-h);border-color:rgba(94,106,210,.5)">Baru</span>':''}
           ${t.startedAt?`<span class="t-start on">${I('play')}sejak ${t.startedAt}</span>`:`<button class="t-start" data-tstart="${t.id}" title="Catat jam mulai">${I('play')}Mulai</button>`}
           <span class="chip">${t.due}</span>
         </span>
@@ -1888,7 +2007,9 @@ function renderTasks(){
     r.onclick=e=>{
       if(e.target.closest('[data-check]'))return;
       const id=r.parentElement.dataset.t;
-      openTask=openTask===id?null:id;renderTasks();
+      openTask=openTask===id?null:id;
+      const tt=TASKS.find(x=>x.id===id); if(tt)tt.fresh=false;
+      renderTasks();
     };
   });
   $('#todayList').querySelectorAll('[data-up]').forEach(b=>b.onclick=e=>{
@@ -1896,7 +2017,7 @@ function renderTasks(){
     const [tid,di]=b.dataset.up.split(':');
     const t=TASKS.find(x=>x.id===tid); t.docs[di].up=true;
     if(t.oid){const o=ORDERS.find(x=>x.id===t.oid); if(o)o.docs[0]=Math.min(o.docs[0]+1,o.docs[1]);}
-    pushFeed({kind:'dok',html:`<b>Dimas</b> mengunggah “${t.docs[di].n}” ${t.oid?`<span class="oid">${t.oid}</span>`:''}`});
+    pushFeed({kind:'dok',html:`<b>${curNm()}</b> mengunggah “${t.docs[di].n}” ${t.oid?`<span class="oid">${t.oid}</span>`:''}`});
     renderTasks();renderPipe(t.oid);renderAttention();
   });
   $('#todayList').querySelectorAll('[data-gate]').forEach(b=>b.onclick=e=>{
@@ -1906,7 +2027,7 @@ function renderTasks(){
     e.stopPropagation();
     const t=TASKS.find(x=>x.id===b.dataset.tstart); if(!t)return;
     t.startedAt=nowStr();
-    pushFeed({kind:'stage',html:`<b>Dimas</b> mulai mengerjakan “${t.title}” pukul ${t.startedAt}`});
+    pushFeed({kind:'stage',html:`<b>${curNm()}</b> mulai mengerjakan “${t.title}” pukul ${t.startedAt}`});
     renderTasks();
   });
   $('#todayList').querySelectorAll('[data-check]').forEach(b=>b.onclick=e=>{
@@ -1929,12 +2050,16 @@ function completeTask(tid){
     advanceOrder('ORD-0141');
     toast('PO terbit. Order jalan lagi — lihat Peta Live');
   } else {
-    pushFeed({kind:'done',html:`<b>Dimas</b> menyelesaikan “${t.title}”${t.startedAt?` — mulai ${t.startedAt}, selesai ${nowStr()}`:''}`});
+    pushFeed({kind:'done',html:`<b>${curNm()}</b> menyelesaikan “${t.title}”${t.startedAt?` — mulai ${t.startedAt}, selesai ${nowStr()}`:''}`});
     toast('Tugas selesai');
   }
   renderTasks();
 }
 function renderSaran(){
+  if(persona!=='dimas'){
+    $('#saranList').innerHTML='<div class="att-empty">Saran otomatis muncul dari tugas tertinggal &amp; jatuh tempo (demo terisi di persona Dimas).</div>';
+    return;
+  }
   $('#saranList').innerHTML=SARAN.length?SARAN.map((s,i)=>`
     <div class="saran-row">
       <span class="ds-ic">${I('clock')}</span>
@@ -1948,10 +2073,11 @@ function renderSaran(){
     renderTasks();renderSaran();
   });
 }
-function renderScore(){
+function renderScore(p){
+  p=p||curP();
   $('#pairCards').innerHTML=`
-    <div class="pair-card"><div class="pv">1,8<span class="unit"> hari</span></div><div class="pk">rata-rata terbit PO · median tim 2,4</div><div class="pc good">25% lebih cepat dari median</div></div>
-    <div class="pair-card"><div class="pv">3<span class="unit">%</span></div><div class="pk">PO revisi / ditolak · median tim 5%</div><div class="pc good">cepat &amp; tetap rapi</div></div>`;
+    <div class="pair-card"><div class="pv" style="font-size:17px">${p.kpi.avg}</div><div class="pk">rata-rata proses · median tim ${p.kpi.med}</div><div class="pc good">${p.kpi.sel} tugas selesai minggu ini</div></div>
+    <div class="pair-card"><div class="pv" style="font-size:17px">${p.kpi.q}</div><div class="pk">revisi / kualitas</div><div class="pc">pasangan metrik kecepatan — anti akal-akalan</div></div>`;
   const bullets=[
     {k:'PO terbit tepat SLA', v:87, unit:'%', tgt:90, max:100},
     {k:'Kelengkapan dokumen', v:96, unit:'%', tgt:100, max:100},
@@ -1979,7 +2105,53 @@ function renderAging(){
 }
 $('#askHelp').onclick=()=>{
   toast('Permintaan bantuan terkirim ke Matthew');
-  pushFeed({kind:'eksepsi',html:`<b>Dimas</b> minta bantuan untuk tugas yang tertahan <span class="oid">ORD-0141</span>`});
+  pushFeed({kind:'eksepsi',html:`<b>${curNm()}</b> minta bantuan untuk tugas yang tertahan`});
+};
+
+/* ================= BERI TUGAS (owner -> karyawan) ================= */
+let mDocList=[], mPr='normal';
+function renderMDocs(){
+  $('#mDocs').innerHTML=mDocList.map((d,i)=>`<span class="chip" data-rm="${i}" title="Klik untuk hapus">${I('file')} ${d}</span>`).join('');
+  $('#mDocs').querySelectorAll('[data-rm]').forEach(c=>c.onclick=()=>{mDocList.splice(+c.dataset.rm,1);renderMDocs();});
+}
+function openAssign(pref){
+  $('#mAssignee').innerHTML='<option value="">Pilih orang…</option>'+TEAMS.map((t,i)=>
+    `<optgroup label="${STAGES[i].nm}">${flatTeam(t.mgr,null,[]).map(e=>
+      `<option value="${e.p.id}" ${pref===e.p.id?'selected':''}>${e.p.nm} — ${e.p.role}</option>`).join('')}</optgroup>`).join('');
+  $('#mOid').innerHTML='<option value="">—</option>'+ORDERS.map(o=>`<option value="${o.id}">${o.id} · ${o.cust}</option>`).join('');
+  $('#mTitle').value='';$('#mDesc').value='';$('#mDoc').value='';mDocList=[];renderMDocs();
+  mPr='normal';
+  $('#mPrio').querySelectorAll('[data-pr]').forEach(b=>b.classList.toggle('active',b.dataset.pr==='normal'));
+  $('#modOv').classList.add('show');
+  setTimeout(()=>$(pref?'#mTitle':'#mAssignee').focus(),20);
+}
+function closeAssign(){$('#modOv').classList.remove('show');}
+$('#mDocAdd').onclick=()=>{const v=$('#mDoc').value.trim();if(v){mDocList.push(v);$('#mDoc').value='';renderMDocs();}};
+$('#mDoc').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#mDocAdd').click();}});
+$('#mPrio').querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{
+  mPr=b.dataset.pr;
+  $('#mPrio').querySelectorAll('[data-pr]').forEach(x=>x.classList.toggle('active',x===b));
+});
+$('#mCancel').onclick=closeAssign;
+$('#modOv').addEventListener('click',e=>{if(e.target===$('#modOv'))closeAssign();});
+$('#mSend').onclick=()=>{
+  const pid=$('#mAssignee').value, title=$('#mTitle').value.trim();
+  if(!pid){toast('Pilih dulu siapa yang ditugaskan');return;}
+  if(!title){toast('Judul tugas belum diisi');return;}
+  const e=sdmFlatAll().find(x=>x.p.id===pid);
+  const task={id:'A-'+Math.floor(performance.now()), oid:$('#mOid').value||null, title,
+    due:$('#mDue').value, age:0.01, p85:2, prio:mPr, fresh:true, from:'Matthew',
+    desc:($('#mDesc').value.trim()||'Ditugaskan oleh Matthew (Owner).')+
+      (mPr!=='normal'?` Prioritas: ${mPr}.`:''),
+    docs:mDocList.map(n=>({n,up:false}))};
+  getPersonTasks(pid).unshift(task);
+  e.p.tugas.unshift(title);
+  e.p.beban=Math.min(5,e.p.beban+1);
+  pushFeed({kind:'stage',html:`<b>Matthew</b> menugaskan “${title}” ke <b>${e.p.nm.split(' ')[0]}</b>${task.oid?` <span class="oid">${task.oid}</span>`:''}`});
+  toast(`Tugas terkirim ke ${e.p.nm.split(' ')[0]}`);
+  closeAssign();
+  $('#tab-kerja').classList.add('hasnotif');
+  if(pid===persona)switchPersona(persona);
 };
 
 /* ================= ADVANCE ORDER (dipakai engine & aksi karyawan) ================= */
@@ -2055,6 +2227,7 @@ window.addEventListener('keydown',e=>{
     else if(e.key==='Enter'&&flat[palIdx]){flat[palIdx].run();closePal();}
     return;
   }
+  if(e.key==='Escape'&&$('#modOv').classList.contains('show')){closeAssign();return;}
   if(e.target.matches('input,textarea'))return;
   if(e.key==='Escape'&&curView==='sdm'){switchView('menara');return;}
   if(e.key==='Escape'&&curView==='sektor'){
@@ -2112,7 +2285,7 @@ syncSim();
 /* ================= INIT ================= */
 renderKpis();renderAttention();renderPipe();renderLoad();renderSdm();renderFeed(false);
 renderLegend();refreshPeta();
-renderTasks();renderSaran();renderScore();
+switchPersona('dimas');
 </script>
 
 </body>

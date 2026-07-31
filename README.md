@@ -21,14 +21,16 @@ jalan offline). Pindah layar: tab di atas, tombol `1 / 2 / 3`, atau `Ctrl+K`.
 | **Peta Bisnis Live** | Peta isometrik 7 stasiun; order = token yang bergerak dan mengantre; zoom + pan; klik gedung → halaman sektor; filter jenis order & "Bermasalah"; kontrol simulasi Jeda/1x/4x |
 | **Halaman Sektor** | Bagan hirarki tim per sektor (PIC → bawahan, 3 tingkat), kinerja sektor (throughput, lead time, beban per orang), order di sektor; klik orang → profil + Jejak Kerja (kapan mulai, kapan selesai) |
 | **KPI Seluruh SDM** | Tabel 22 orang lintas 7 sektor + pencarian; klik baris → profil orangnya |
-| **Ruang Kerja** | "Hari Ini" + saran (pola My Day), slot dokumen bernama dengan gerbang tahap (tombol lanjut terkunci sampai berkas lengkap), tombol Mulai pencatat jam, skor pribadi vs median tim |
+| **Ruang Kerja** | "Hari Ini" + saran (pola My Day), slot dokumen bernama dengan gerbang tahap (tombol lanjut terkunci sampai berkas lengkap), tombol Mulai pencatat jam, skor pribadi vs median tim, multi-persona (lihat dashboard karyawan mana pun) |
+| **Beri Tugas** | Owner/manager menugaskan dari Menara atau profil orang: judul, tenggat, prioritas, order terkait, dokumen wajib; tugas mendarat di Ruang Kerja orangnya dengan notifikasi |
 
 ## Tangkapan layar
 
 ![Peta Bisnis Live](v4-peta.png)
 ![KPI Seluruh SDM](v4-sdm.png)
 ![Profil + Jejak Kerja](v4-person-jejak.png)
-![Ruang Kerja](v4-kerja-mulai.png)
+![Form Beri Tugas](v5-modal.png)
+![Ruang Kerja karyawan](v5-maya.png)
 
 ## Prinsip desain
 
