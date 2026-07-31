@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ATLAS — Ekosistem Kerja (Prototipe)</title>
+<meta name="description" content="Prototipe sistem operasi perusahaan: atasan mengirim tugas tanpa WhatsApp, tiap karyawan punya dashboard sesuai perannya, kinerja terpantau, tidak ada berkas yang kelewat, dan seluruh alur bisnis terlihat hidup di satu peta gaya game.">
+<meta name="theme-color" content="#050505">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ATLAS">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="ATLAS — Ekosistem Kerja Perusahaan">
+<meta property="og:description" content="Menara kendali, peta bisnis live, dan ruang kerja per karyawan dalam satu prototipe. Data dummy, tanpa backend.">
+<meta property="og:url" content="https://mahewai.github.io/ekosistem-kerja/">
+<meta property="og:image" content="https://mahewai.github.io/ekosistem-kerja/v4-peta.png">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="900">
+<meta property="og:image:alt" content="Peta bisnis live isometrik dengan tujuh stasiun dan token order yang bergerak.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1.5' y='1.5' width='19' height='19' rx='5' fill='%23101013' stroke='rgba(255,255,255,.4)' stroke-width='1.4'/%3E%3Ccircle cx='7' cy='14.5' r='1.8' fill='%235e6ad2'/%3E%3Ccircle cx='11' cy='8' r='1.8' fill='white'/%3E%3Ccircle cx='15.4' cy='12.5' r='1.8' fill='rgba(255,255,255,.5)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +32,7 @@
   --ok:#3ca951; --warn:#f5a623; --crit:#e5484d; --info:#4269d0;
   --c-proyek:#4269d0; --c-retail:#2fa89a; --c-custom:#a463f2;
   --t:150ms; --ease:cubic-bezier(.25,1,.5,1);
+  --top-h:52px; --nav-h:0px;
   --sans:'Geist',system-ui,-apple-system,sans-serif;
   --mono:'Geist Mono',ui-monospace,'Cascadia Mono',monospace;
 }
@@ -42,7 +57,7 @@ svg{display:block}
 
 /* ============ TOPBAR ============ */
 .topbar{
-  height:52px;display:flex;align-items:center;gap:20px;
+  height:var(--top-h);display:flex;align-items:center;gap:20px;
   padding:0 16px;border-bottom:1px solid var(--line);
   position:relative;z-index:40;background:var(--bg);
 }
@@ -74,6 +89,8 @@ svg{display:block}
   border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:var(--s1);
   transition:border-color var(--t) var(--ease)}
 .kbd-hint:hover{border-color:var(--line2);color:var(--ink2)}
+.kh-tx{display:flex;align-items:center;gap:6px}
+.kh-ic{display:none;align-items:center;justify-content:center}
 kbd{
   font:500 10.5px var(--mono);color:var(--ink3);background:var(--s2);
   border:1px solid var(--line);border-bottom-color:var(--line2);
@@ -81,7 +98,7 @@ kbd{
 }
 
 /* ============ SHELL ============ */
-main{height:calc(100dvh - 52px);position:relative}
+main{height:calc(100dvh - var(--top-h) - var(--nav-h));position:relative}
 .view{display:none;height:100%}
 .view.active{display:block}
 .view.enter{animation:viewIn .28s var(--ease)}
@@ -237,8 +254,9 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .feed-time{font:400 10.5px var(--mono);color:var(--ink3);margin-top:2px}
 
 /* ============ VIEW: PETA ============ */
-#view-peta{position:relative;overflow:hidden;background:
+#view-peta{position:relative;overflow:hidden;touch-action:none;background:
   radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.016), transparent 70%), var(--bg)}
+#view-peta .hud,#view-peta .opanel,#view-peta .popover{touch-action:auto}
 #petaSvg{position:absolute;inset:0;width:100%;height:100%}
 .st-grp{cursor:pointer}
 .st-grp polygon{transition:fill .4s var(--ease)}
@@ -587,9 +605,206 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 }
+
+/* ============================================================
+   RESPONSIVE
+   Tiga langkah: <=1100 kolom tunggal, <=900 mode layar kecil
+   (bottom nav + tabel jadi kartu + panel jadi bottom sheet),
+   <=560 padat untuk ponsel.
+   ============================================================ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.two-col.sm{gap:12px}
+
+/* elemen khusus layar kecil — disembunyikan di desktop */
+.botnav,.hud-nav,.only-small{display:none}
+.nav-chip .nvn{
+  font:500 9.5px var(--mono);color:var(--ink3);
+  border:1px solid var(--line2);border-radius:4px;padding:1px 4px;
+}
+.nav-chip .nvc{
+  font:500 9.5px var(--mono);color:var(--ink);
+  background:var(--s4);border-radius:999px;padding:1px 5px;
+}
+
 @media (max-width:1100px){
   .menara-wrap,.kerja-wrap{grid-template-columns:1fr}
-  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .two-col{grid-template-columns:1fr}
+}
+
+@media (max-width:900px){
+  :root{--nav-h:58px}
+  main{height:calc(100dvh - var(--top-h) - var(--nav-h))}
+
+  /* --- topbar dirampingkan --- */
+  .topbar{gap:10px;padding:0 12px}
+  .brand{min-width:0;flex:1}
+  .brand .proto,.live,.clock{display:none}
+  .tabs{display:none}                     /* pindah ke bottom nav */
+  .top-right{gap:8px}
+  .kh-tx{display:none}
+  .kbd-hint{width:34px;height:34px;padding:0;justify-content:center}
+  .kh-ic{display:flex}
+  .kh-ic svg{width:16px;height:16px;stroke-width:1.7}
+  .avatar{width:30px;height:30px;font-size:11px}
+
+  /* --- bottom nav --- */
+  .botnav{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    position:fixed;left:0;right:0;bottom:0;z-index:60;height:var(--nav-h);
+    background:var(--bg);border-top:1px solid var(--line);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .botnav .btab{
+    height:auto;flex-direction:column;gap:4px;padding:9px 0 8px;border-radius:0;
+    font-size:10.5px;position:relative;justify-content:center;
+  }
+  .botnav .btab svg{width:19px;height:19px}
+  .botnav .btab.active{background:transparent;color:var(--accent-h)}
+  .botnav .btab.active::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:26px;height:2px;border-radius:0 0 2px 2px;background:var(--accent);
+  }
+  .botnav .btab .ndot{position:absolute;top:8px;left:calc(50% + 9px)}
+
+  /* --- menara --- */
+  .menara-wrap{padding:16px 14px 32px;gap:14px}
+  .page-head{flex-wrap:wrap;gap:8px}
+  .page-head .right{margin-left:0;width:100%}
+  .page-head .right .btn{flex:1;justify-content:center;height:34px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
+  .feed-list{max-height:none}
+
+  /* --- tabel jadi kartu (pipeline + KPI SDM) --- */
+  .pipe-scroll{overflow-x:visible}
+  table.pipe,table.pipe tbody,table.pipe tr,table.pipe td{display:block;width:100%;min-width:0}
+  table.pipe thead{display:none}
+  table.pipe tr{
+    padding:11px 14px;border-bottom:1px solid var(--line);
+  }
+  table.pipe tbody tr:last-child{border-bottom:0}
+  table.pipe td{
+    border:0;padding:3.5px 0;white-space:normal;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  table.pipe td::before{
+    content:attr(data-l);flex:none;
+    font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+  }
+  table.pipe td:first-child{
+    padding-bottom:7px;margin-bottom:4px;border-bottom:1px solid var(--line);
+  }
+  table.pipe td:first-child::before{display:none}
+  table.pipe .oid-cell{font-size:12.5px;color:var(--ink);font-weight:500;justify-content:flex-start}
+  table.pipe .cust-cell,table.pipe .pic-cell{text-align:right}
+  table.pipe .cust-cell>div{text-align:right}
+  table.pipe td[colspan]{display:block;padding:0}
+  table.pipe td[colspan]::before{display:none}
+  .pipe td>.stepper{justify-content:flex-end;flex-wrap:wrap}
+  .pipe .stage-lab{display:none}
+  .pipe-sdm td:first-child{justify-content:flex-start}
+
+  /* --- sektor --- */
+  .sektor-wrap,.sdm-wrap{padding:16px 14px 32px}
+  .sk-stats{grid-template-columns:repeat(2,1fr)}
+  .sdm-search{max-width:none}
+
+  /* --- ruang kerja --- */
+  .kerja-wrap{padding:18px 14px 32px;gap:14px}
+  .kerja-head{flex-wrap:wrap}
+  .kerja-head .right{margin-left:0}
+  .task-detail{padding-left:14px}
+  .persona-menu{width:min(290px,calc(100vw - 40px))}
+  /* judul tugas jangan dipotong demi chip — biarkan turun baris */
+  .t-title{white-space:normal;overflow:visible}
+  .saran-row .t-title{white-space:normal}
+
+  /* --- peta: HUD dirombak jadi layar kecil --- */
+  .hud-tl{
+    top:10px;left:0;right:0;padding:0 12px;gap:6px;
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .hud-tl::-webkit-scrollbar{display:none}
+  .hud-title{display:none}
+  .hud-tl .hud-chip{flex:none}
+  .only-small{display:inline-flex}
+  .sim-chips{margin-left:2px}
+  .hud-tr{top:52px;right:12px}
+  .zoomctl button{width:36px;height:36px}
+
+  /* navigator stasiun jadi kendali utama alur di layar kecil */
+  .hud-nav{
+    display:flex;gap:6px;left:0;right:0;padding:0 12px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .hud-nav::-webkit-scrollbar{display:none}
+  .nav-chip{flex:none;background:rgba(10,10,11,.92);backdrop-filter:blur(8px)}
+
+  /* legenda & hambatan ditumpuk di atas navigator, selebar layar */
+  .hud-bl,.hud-br{top:auto;left:0;right:0;padding:0 12px}
+  .hud-bl{bottom:calc(60px + env(safe-area-inset-bottom));display:none}
+  body.legend-on .hud-bl{display:block}
+  .hud-br{bottom:calc(60px + env(safe-area-inset-bottom))}
+  body.legend-on .hud-br{bottom:calc(126px + env(safe-area-inset-bottom))}
+  .legend{
+    flex-direction:row;flex-wrap:wrap;gap:6px 14px;
+    background:rgba(10,10,11,.92);backdrop-filter:blur(8px);
+  }
+  .legend .leg-hint,.legend .leg-head,.legend .leg-sep{display:none}
+  .queue-panel{min-width:0;background:rgba(10,10,11,.92);backdrop-filter:blur(8px)}
+  .queue-panel .qp-antri,.queue-panel .qp-sep{display:none}  /* di ponsel cukup hambatannya */
+  .queue-panel:not(:has(.qp-blok)){display:none}
+  .hud-ticker{max-width:calc(100vw - 24px);bottom:auto;top:96px}
+
+  /* panel detail order/orang jadi bottom sheet */
+  .opanel{
+    top:auto;left:0;right:0;bottom:0;width:auto;max-height:72dvh;
+    border-radius:14px 14px 0 0;transform:translateY(14px);
+  }
+  .opanel.show{transform:none}
+  #ppanel{position:fixed;top:auto;left:0;right:0;bottom:0}
+  .popover{max-width:min(290px,calc(100vw - 24px))}
+
+  /* --- modal + palet --- */
+  .mod{margin-top:6vh}
+  .mod-b{max-height:56vh}
+  .two-col.sm{grid-template-columns:1fr}
+  .pal{margin-top:9vh}
+  .pal-list{max-height:min(320px,46dvh)}
+}
+
+@media (max-width:560px){
+  .kpis{grid-template-columns:1fr 1fr;gap:8px}
+  .tile{padding:11px 12px 10px}
+  .tile .val{font-size:21px}
+  .tile .spark{display:none}
+  .sk-stats{grid-template-columns:1fr}
+  .pair-cards{grid-template-columns:1fr}
+  .page-head h1,.sk-head h1,.kerja-head .hi h1{font-size:17px}
+  /* alert: judul penuh dulu, tombol aksi turun ke bawah */
+  .att-row{flex-wrap:wrap;align-items:flex-start;gap:10px}
+  .att-row .att-body{flex:1 1 auto}
+  .att-row .btn{flex:none;margin-left:38px}
+  .att-meta{gap:4px 8px}
+  .menara-wrap,.kerja-wrap,.sektor-wrap,.sdm-wrap{padding-left:11px;padding-right:11px}
+  .pcard{min-width:132px}
+  .brand .name{font-size:13px}
+  /* chip tugas turun ke barisnya sendiri supaya judul dapat lebar penuh */
+  .task-row{flex-wrap:wrap;row-gap:8px}
+  .t-chips{flex:1 1 100%;margin-left:28px;flex-wrap:wrap}
+  .saran-row{flex-wrap:wrap;row-gap:8px}
+  .saran-row .btn{margin-left:28px}
+}
+
+/* target sentuh lebih besar di perangkat tanpa mouse presisi */
+@media (pointer:coarse){
+  .btn{height:32px;padding:0 12px}
+  .hud-chip{height:32px;padding:0 13px}
+  .ftab{height:30px}
+  .tcheck{width:21px;height:21px}
+  .t-start{height:26px;padding:0 10px}
+  .op-title .x{width:32px;height:32px}
 }
 </style>
 </head>
@@ -608,14 +823,17 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <span class="proto">Prototipe</span>
   </div>
 
-  <nav class="tabs" id="tabs">
+  <nav class="tabs" id="tabs" aria-label="Navigasi utama">
     <button class="tab active" data-view="menara" id="tab-menara"></button>
     <button class="tab" data-view="peta" id="tab-peta"></button>
     <button class="tab" data-view="kerja" id="tab-kerja"></button>
   </nav>
 
   <div class="top-right">
-    <button class="kbd-hint" id="palOpen">Cari / perintah <kbd>Ctrl</kbd><kbd>K</kbd></button>
+    <button class="kbd-hint" id="palOpen" aria-label="Cari atau jalankan perintah">
+      <span class="kh-ic" aria-hidden="true"></span>
+      <span class="kh-tx">Cari / perintah <kbd>Ctrl</kbd><kbd>K</kbd></span>
+    </button>
     <div class="live"><span class="dot"></span>SIMULASI LIVE</div>
     <div class="clock mono" id="clock">--:--:--</div>
     <div class="avatar" id="topAvatar">MT</div>
@@ -661,7 +879,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="two-col">
           <div class="panel">
             <div class="panel-h">Beban per Tahap<span class="right sub">order aktif</span></div>
             <div class="load-rows" id="loadRows"></div>
@@ -697,12 +915,16 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <button class="hud-chip active" id="ovLabel">Label</button>
       <button class="hud-chip" id="ovLoad">Beban</button>
       <button class="hud-chip" id="ovIssue">Bermasalah</button>
+      <button class="hud-chip only-small" id="ovLegend">Legenda</button>
       <div class="sim-chips">
         <button class="hud-chip" id="simPause"></button>
         <button class="hud-chip active" data-speed="1">1x</button>
         <button class="hud-chip" data-speed="4">4x</button>
       </div>
     </div>
+
+    <!-- navigator stasiun: cara menyusuri alur di layar kecil -->
+    <div class="hud hud-nav" id="stNav" aria-label="Lompat ke stasiun"></div>
 
     <div class="hud hud-tr">
       <div class="zoomctl">
@@ -765,7 +987,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <div class="sdm-search"><span id="sdmSearchIc"></span><input id="sdmSearch" type="text" placeholder="Cari nama, jabatan, atau sektor…" autocomplete="off"></div>
       <div class="panel">
         <div class="pipe-scroll">
-          <table class="pipe" style="min-width:820px"><thead><tr>
+          <table class="pipe pipe-sdm"><thead><tr>
             <th>Nama</th><th>Sektor</th><th>Status</th><th>Beban</th><th>Selesai&nbsp;Mgg</th><th>Rata-rata</th><th>Kualitas</th>
           </tr></thead><tbody id="sdmBody"></tbody></table>
         </div>
@@ -825,6 +1047,12 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   </section>
 </main>
 
+<nav class="botnav" id="botnav" aria-label="Navigasi utama (layar kecil)">
+  <button class="tab btab active" data-view="menara"></button>
+  <button class="tab btab" data-view="peta"></button>
+  <button class="tab btab" data-view="kerja"></button>
+</nav>
+
 <div class="pal-overlay" id="modOv">
   <div class="mod">
     <div class="mod-h" id="modH">Beri Tugas</div>
@@ -832,7 +1060,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <div class="ffield"><label>Untuk</label><select class="fin" id="mAssignee"></select></div>
       <div class="ffield"><label>Judul tugas</label><input class="fin" id="mTitle" placeholder="cth: Siapkan penawaran revisi Sekolah Pelita" autocomplete="off"></div>
       <div class="ffield"><label>Deskripsi (opsional)</label><textarea class="fin" id="mDesc" placeholder="Konteks singkat supaya tidak bolak-balik tanya…"></textarea></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="two-col sm">
         <div class="ffield"><label>Tenggat</label>
           <select class="fin" id="mDue"><option>hari ini</option><option>besok</option><option>minggu ini</option></select></div>
         <div class="ffield"><label>Order terkait (opsional)</label><select class="fin" id="mOid"><option value="">—</option></select></div>
@@ -973,13 +1201,24 @@ function orderStatus(o){
 }
 
 /* ================= TOPBAR / TABS ================= */
-$('#tab-menara').innerHTML = I('layout')+'Menara Kendali';
-$('#tab-peta').innerHTML   = I('map')+'Peta Live';
-$('#tab-kerja').innerHTML  = I('user')+'Ruang Kerja<span class="ndot"></span>';
+/* label panjang untuk topbar, label pendek untuk bottom nav layar kecil */
+const TAB_DEF = {
+  menara:{icon:'layout', long:'Menara Kendali', short:'Menara'},
+  peta:  {icon:'map',    long:'Peta Live',      short:'Peta'},
+  kerja: {icon:'user',   long:'Ruang Kerja',    short:'Kerja'},
+};
+document.querySelectorAll('.tab').forEach(t=>{
+  const d=TAB_DEF[t.dataset.view]; if(!d)return;
+  const lab = t.classList.contains('btab') ? d.short : d.long;
+  t.innerHTML = I(d.icon)+`<span class="tlab">${lab}</span>`+(t.dataset.view==='kerja'?'<span class="ndot"></span>':'');
+  t.setAttribute('aria-label',d.long);
+});
+const tabsFor = v => document.querySelectorAll(`.tab[data-view="${v}"]`);
 $('#goPeta').innerHTML     = I('map')+'Lihat Peta Live';
 $('#goPeta').onclick = ()=>switchView('peta');
 $('#sdmIc').innerHTML = I('user');
 $('#sdmSearchIc').innerHTML = I('search');
+document.querySelector('.kh-ic').innerHTML = I('search');
 $('#sdmOpen').onclick = ()=>openSdm();
 $('#btnAssign').innerHTML = I('send')+'Beri Tugas';
 $('#btnAssign').onclick = ()=>openAssign();
@@ -987,7 +1226,7 @@ let curView='menara';
 function switchView(v){
   if(curView===v) return;
   curView=v; document.body.dataset.view=v;
-  if(v==='kerja')$('#tab-kerja').classList.remove('hasnotif');
+  if(v==='kerja')tabsFor('kerja').forEach(t=>t.classList.remove('hasnotif'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
   document.querySelectorAll('.view').forEach(s=>{
     const on = s.id==='view-'+v;
@@ -1081,15 +1320,15 @@ function renderPipe(flashOid){
   $('#pipeBody').innerHTML = ORDERS.map(o=>{
     const st=STAGES[o.stage], s=orderStatus(o);
     return `<tr data-oid="${o.id}" class="${flashOid===o.id?'flash':''}">
-      <td class="oid-cell">${o.id}</td>
-      <td class="cust-cell"><div class="c1">${o.cust}</div><div class="c2">${o.proj}</div></td>
-      <td class="val-cell">${fmtVal(o.val)}</td>
-      <td><div class="stepper">${STAGES.map((_,i)=>`<span class="seg ${i<o.stage?'done':i===o.stage?'cur '+(s==='ok'?'':s):''}"></span>`).join('')}</div>
+      <td class="oid-cell" data-l="Order">${o.id}</td>
+      <td class="cust-cell" data-l="Customer"><div class="c1">${o.cust}</div><div class="c2">${o.proj}</div></td>
+      <td class="val-cell" data-l="Nilai">${fmtVal(o.val)}</td>
+      <td data-l="Tahap"><div class="stepper">${STAGES.map((_,i)=>`<span class="seg ${i<o.stage?'done':i===o.stage?'cur '+(s==='ok'?'':s):''}"></span>`).join('')}</div>
           <div class="stage-lab">${st.nm}</div></td>
-      <td class="age-cell">${fmtAge(o.age)}${ageDots(o)}</td>
-      <td>${slaChip(o)}</td>
-      <td><span class="chip ${o.docs[0]<o.docs[1]?'warn':''}">${o.docs[0]}/${o.docs[1]}</span></td>
-      <td><div class="pic-cell"><span class="mini-av">${st.pic.slice(0,2).toUpperCase()}</span>${st.pic}</div></td>
+      <td class="age-cell" data-l="Umur tahap">${fmtAge(o.age)}${ageDots(o)}</td>
+      <td data-l="SLA">${slaChip(o)}</td>
+      <td data-l="Dok"><span class="chip ${o.docs[0]<o.docs[1]?'warn':''}">${o.docs[0]}/${o.docs[1]}</span></td>
+      <td data-l="PIC"><div class="pic-cell"><span class="mini-av">${st.pic.slice(0,2).toUpperCase()}</span>${st.pic}</div></td>
     </tr>`;
   }).join('');
   $('#pipeBody').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>focusOrder(tr.dataset.oid));
@@ -1412,13 +1651,18 @@ function renderLabels(){
 let VS={s:1,ox:0,oy:0};
 const vb={x:0,y:0,w:1500,h:780};
 const petaEl=$('#view-peta');
-function applyVb(){svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);layoutPeta();}
+function applyVb(){layoutPeta();}
 function layoutPeta(){
   const r=petaEl.getBoundingClientRect();
-  if(r.width===0)return;
-  const s=Math.min(r.width/vb.w,r.height/vb.h);
-  VS={s,ox:(r.width-vb.w*s)/2 - vb.x*s, oy:(r.height-vb.h*s)/2 - vb.y*s};
-  labWrap.classList.toggle('far',vb.w>1050);
+  if(r.width===0||r.height===0)return;
+  /* Samakan rasio viewBox dengan rasio kontainer supaya tidak ada pita kosong
+     (dulu peta 1500x780 menyusut jadi kecil sekali di layar potret). */
+  const want=vb.w*r.height/r.width;
+  if(Math.abs(want-vb.h)>0.5){vb.y+=(vb.h-want)/2;vb.h=want;}
+  svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  const s=r.width/vb.w;
+  VS={s,ox:-vb.x*s,oy:-vb.y*s};
+  labWrap.classList.toggle('far',vb.w>1200);   /* ambang disesuaikan dengan kamera baru */
   labWrap.querySelectorAll('.st-label').forEach(el=>{
     const[wx,wy]=el._world;
     el.style.left=(VS.ox+wx*VS.s)+'px'; el.style.top=(VS.oy+wy*VS.s)+'px';
@@ -1427,7 +1671,10 @@ function layoutPeta(){
 new ResizeObserver(layoutPeta).observe(petaEl);
 
 /* --- pan & zoom --- */
-const ZMIN=650, ZMAX=2600;
+/* batas zoom: layar kecil boleh masuk lebih dalam supaya gedung terbaca */
+let ZMIN=650; const ZMAX=2600;
+function syncZoomLimits(){ZMIN=window.matchMedia('(max-width:900px)').matches?340:650;}
+syncZoomLimits();
 function zoomAt(sx,sy,factor){
   const wx=(sx-VS.ox)/VS.s, wy=(sy-VS.oy)/VS.s;
   const nw=clamp(vb.w*factor,ZMIN,ZMAX); const f=nw/vb.w;
@@ -1441,18 +1688,43 @@ petaEl.addEventListener('wheel',e=>{
   const r=petaEl.getBoundingClientRect();
   zoomAt(e.clientX-r.left,e.clientY-r.top,e.deltaY>0?1.13:1/1.13);
 },{passive:false});
-let dragSt=null, wasDrag=false;
+/* satu jari = geser, dua jari = cubit untuk zoom (sentuh), mouse tetap seperti semula */
+const HUD_SEL='.hud,.hud-tr,.opanel,.popover,.queue-panel,.legend,.zoomctl';
+const ptrs=new Map();
+let dragSt=null, wasDrag=false, pinch=null;
 petaEl.addEventListener('pointerdown',e=>{
-  if(e.button!==0||e.target.closest('.hud,.hud-tr,.opanel,.popover,.queue-panel,.legend,.zoomctl'))return;
-  dragSt={sx:e.clientX,sy:e.clientY,vx:vb.x,vy:vb.y};wasDrag=false;
+  if(e.button!==0||e.target.closest(HUD_SEL))return;
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===2){
+    const [a,b]=[...ptrs.values()];
+    pinch={d:Math.hypot(a.x-b.x,a.y-b.y)||1, w:vb.w};
+    dragSt=null; wasDrag=true;              // cubit tidak boleh terhitung sebagai klik
+  }else if(ptrs.size===1){
+    dragSt={sx:e.clientX,sy:e.clientY,vx:vb.x,vy:vb.y};wasDrag=false;
+  }
 });
 window.addEventListener('pointermove',e=>{
+  if(ptrs.has(e.pointerId))ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pinch&&ptrs.size>=2){
+    const [a,b]=[...ptrs.values()];
+    const d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<12)return;
+    const r=petaEl.getBoundingClientRect();
+    zoomAt((a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top, clamp(pinch.w*pinch.d/d,ZMIN,ZMAX)/vb.w);
+    return;
+  }
   if(!dragSt)return;
   const dx=e.clientX-dragSt.sx, dy=e.clientY-dragSt.sy;
   if(Math.abs(dx)+Math.abs(dy)>4)wasDrag=true;
   if(wasDrag){pop.classList.remove('show');vb.x=dragSt.vx-dx/VS.s;vb.y=dragSt.vy-dy/VS.s;applyVb();}
 });
-window.addEventListener('pointerup',()=>{dragSt=null;setTimeout(()=>wasDrag=false,0);});
+const endPtr=e=>{
+  ptrs.delete(e.pointerId);
+  if(ptrs.size<2)pinch=null;
+  if(ptrs.size===0){dragSt=null;setTimeout(()=>wasDrag=false,0);}
+};
+window.addEventListener('pointerup',endPtr);
+window.addEventListener('pointercancel',endPtr);
 svg.addEventListener('click',e=>{if(wasDrag)e.stopPropagation();},true);
 function animateVb(t){
   const f={...vb};const t0=performance.now();const D=420;
@@ -1462,15 +1734,64 @@ function animateVb(t){
     applyVb();if(k<1)requestAnimationFrame(step);
   })(t0);
 }
+function petaAspect(){const r=petaEl.getBoundingClientRect();return (r.width&&r.height)?r.width/r.height:1500/780;}
 function zoomToWorld(wx,wy,w){
-  w=w||820;const h=w*780/1500;
-  animateVb({x:wx-w/2,y:wy-h*0.52,w,h});
+  w=clamp(w||820,ZMIN,ZMAX);const h=w/petaAspect();
+  /* di potret pita isi peta jauh lebih pendek dari layar — pusatkan ke pita,
+     bukan ke titiknya, supaya stasiun tetangga ikut terlihat */
+  const cy = h>CONTENT.h*1.6 ? CONTENT.y+CONTENT.h/2 : wy+h*0.02;
+  animateVb({x:wx-w/2,y:cy-h/2,w,h});
+}
+/* Kotak isi peta yang sebenarnya (tanpa area kosong di tepi kanvas 1500x780).
+   Diukur dari bbox 7 .st-grp (234,142 1014x397) lalu diberi margin untuk label. */
+const CONTENT={x:200,y:115,w:1090,h:480};
+const isSmall=()=>window.matchMedia('(max-width:900px)').matches;
+function fitContent(animate){
+  const A=petaAspect();
+  let w,h;
+  if(A>=CONTENT.w/CONTENT.h){h=CONTENT.h;w=h*A;}else{w=CONTENT.w;h=w/A;}
+  w=clamp(w,ZMIN,ZMAX);h=w/A;
+  const t={x:CONTENT.x+CONTENT.w/2-w/2, y:CONTENT.y+CONTENT.h/2-h/2, w, h};
+  if(animate)animateVb(t);else{Object.assign(vb,t);applyVb();}
 }
 $('#zin').innerHTML=I('plus');$('#zout').innerHTML=I('minus');$('#zreset').innerHTML=I('frame');
 $('#zin').onclick=()=>{const r=petaEl.getBoundingClientRect();zoomAt(r.width/2,r.height/2,1/1.35);};
 $('#zout').onclick=()=>{const r=petaEl.getBoundingClientRect();zoomAt(r.width/2,r.height/2,1.35);};
-$('#zreset').onclick=()=>animateVb({x:0,y:0,w:1500,h:780});
+$('#zreset').onclick=()=>fitContent(true);
 labWrap.style.cssText='position:absolute;inset:0;z-index:3;pointer-events:none';
+
+/* --- navigator stasiun (layar kecil): ketuk untuk terbang ke stasiun --- */
+function renderStNav(){
+  $('#stNav').innerHTML=STAGES.map((st,i)=>{
+    const n=stationCount(i);
+    return `<button class="hud-chip nav-chip" data-nav="${i}">
+      <span class="nvn">${i+1}</span>${st.nm}${n?`<span class="nvc">${n}</span>`:''}</button>`;
+  }).join('')+`<button class="hud-chip nav-chip" data-nav="all">Seluruh peta</button>`;
+  $('#stNav').querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{
+    const v=b.dataset.nav;
+    if(v==='all'){fitContent(true);return;}
+    const st=STAGES[+v], [wx,wy]=proj(st.tile[0],st.tile[1]);
+    zoomToWorld(wx,wy,isSmall()?520:820);   /* hanya geser kamera — buka sektor tetap lewat ketuk gedung */
+    $('#stNav').querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('active',x===b));
+  });
+}
+
+/* Layar kecil mulai dengan zoom yang terbaca, bukan seluruh peta yang mengecil.
+   Sumbu Y dipusatkan ke pita isi peta supaya tidak ada langit kosong di atas. */
+function initPetaCamera(){
+  const r=petaEl.getBoundingClientRect();
+  if(isSmall()&&r.width){
+    /* skala layar ~0.85 supaya gedung terbaca; tablet lebar otomatis muat seluruh alur */
+    const w=clamp(r.width/0.85, ZMIN, CONTENT.w*1.12), h=w/petaAspect();
+    const cx = w>=CONTENT.w*0.85
+      ? CONTENT.x+CONTENT.w/2                       /* cukup lebar — tampilkan seluruh alur */
+      : proj(STAGES[0].tile[0],STAGES[0].tile[1])[0]; /* ponsel — mulai dari stasiun pertama */
+    Object.assign(vb,{x:cx-w/2, y:CONTENT.y+CONTENT.h/2-h/2, w, h});
+  }else{
+    fitContent(false);
+  }
+  applyVb();
+}
 
 /* token engine */
 const tokens={}; const anims=[];
@@ -1649,12 +1970,12 @@ function applyFilter(){
 }
 function renderLegend(){
   $('#legend').innerHTML=`
-    <div class="leg-row"><span class="microlabel" style="letter-spacing:.07em">Jenis order — klik untuk saring</span></div>
+    <div class="leg-row leg-head"><span class="microlabel" style="letter-spacing:.07em">Jenis order — klik untuk saring</span></div>
     ${Object.keys(TYPE_C).map(t=>`<div class="leg-row pick ${typeHide.has(t)?'off':''}" data-type="${t}"><span class="cdot" style="background:${TYPE_C[t]}"></span>${TYPE_N[t]}</div>`).join('')}
-    <div style="height:1px;background:var(--line);margin:4px 0"></div>
+    <div class="leg-sep" style="height:1px;background:var(--line);margin:4px 0"></div>
     <div class="leg-row"><span class="cdot" style="background:transparent;border:1.5px solid var(--crit)"></span>Macet / kritis</div>
     <div class="leg-row"><span class="cdot" style="background:transparent;border:1.5px solid var(--warn)"></span>Perlu perhatian</div>
-    <div class="leg-row" style="color:var(--ink3);font-size:10.5px;margin-top:2px">Klik stasiun atau titik order untuk detail</div>`;
+    <div class="leg-row leg-hint" style="color:var(--ink3);font-size:10.5px;margin-top:2px">Klik stasiun atau titik order untuk detail</div>`;
   $('#legend').querySelectorAll('[data-type]').forEach(r=>r.onclick=()=>{
     const t=r.dataset.type; typeHide.has(t)?typeHide.delete(t):typeHide.add(t);
     renderLegend();applyFilter();
@@ -1667,9 +1988,9 @@ function renderQp(){
     .sort((a,b)=>b.n-a.n).slice(0,4)
     .map(r=>`<div class="qp-row" data-qst="${r.i}" style="cursor:pointer"><span>${r.st.nm}</span><span class="v ${r.n>=3?'hot':''}">${r.n} order</span></div>`).join('');
   $('#qpBody').innerHTML=
-    (stuck?`<div class="microlabel" style="margin:2px 0 3px">Hambatan</div>${stuck}<div style="height:1px;background:var(--line);margin:6px 0"></div>`:'')+
-    `<div class="microlabel" style="margin:2px 0 3px">Antrian terpanjang</div>`+
-    (rows||'<div class="qp-row">Semua lancar</div>');
+    (stuck?`<div class="qp-blok"><div class="microlabel" style="margin:2px 0 3px">Hambatan</div>${stuck}<div class="qp-sep" style="height:1px;background:var(--line);margin:6px 0"></div></div>`:'')+
+    `<div class="qp-antri"><div class="microlabel" style="margin:2px 0 3px">Antrian terpanjang</div>`+
+    (rows||'<div class="qp-row">Semua lancar</div>')+`</div>`;
   $('#qpBody').querySelectorAll('[data-qst]').forEach(r=>r.onclick=()=>showStationPop(+r.dataset.qst));
   $('#qpBody').querySelectorAll('[data-qo]').forEach(r=>r.onclick=()=>showOrderPop(r.dataset.qo));
 }
@@ -1695,8 +2016,13 @@ $('#ovLabel').onclick=()=>{
 $('#ovIssue').onclick=()=>{
   onlyIssue=!onlyIssue;$('#ovIssue').classList.toggle('active',onlyIssue);applyFilter();
 };
+/* di layar kecil legenda disembunyikan dulu supaya peta lega */
+$('#ovLegend').onclick=()=>{
+  const on=document.body.classList.toggle('legend-on');
+  $('#ovLegend').classList.toggle('active',on);
+};
 function refreshPeta(){
-  renderLabels();renderQp();applyLoad();applyFilter();
+  renderLabels();renderQp();renderStNav();applyLoad();applyFilter();
   Object.values(tokens).forEach(tk=>{
     const s=orderStatus(tk.o);
     tk.g.classList.toggle('stuck',s==='crit');
@@ -1885,13 +2211,13 @@ function sdmRowsHtml(q){
   return rows.map(e=>{
     const p=e.p; const sc=(STATC[p.status]||STATC.aktif);
     return `<tr data-sp="${e.st}:${p.id}">
-      <td><div class="pic-cell"><span class="mini-av">${p.ini}</span><div><div style="font-weight:500;font-size:12.5px">${p.nm}</div><div style="font-size:10.5px;color:var(--ink3)">${p.role}</div></div></div></td>
-      <td class="val-cell">${STAGES[e.st].nm}</td>
-      <td><span class="chip"><span class="cdot" style="background:${sc[0]}"></span>${sc[1]}</span></td>
-      <td class="val-cell">${p.beban} tugas</td>
-      <td class="val-cell">${p.kpi.sel}</td>
-      <td class="val-cell">${p.kpi.avg} <span style="color:var(--ink3);font-size:10.5px">/ med ${p.kpi.med}</span></td>
-      <td class="val-cell">${p.kpi.q}</td>
+      <td data-l="Nama"><div class="pic-cell"><span class="mini-av">${p.ini}</span><div><div style="font-weight:500;font-size:12.5px">${p.nm}</div><div style="font-size:10.5px;color:var(--ink3)">${p.role}</div></div></div></td>
+      <td class="val-cell" data-l="Sektor">${STAGES[e.st].nm}</td>
+      <td data-l="Status"><span class="chip"><span class="cdot" style="background:${sc[0]}"></span>${sc[1]}</span></td>
+      <td class="val-cell" data-l="Beban">${p.beban} tugas</td>
+      <td class="val-cell" data-l="Selesai mgg">${p.kpi.sel}</td>
+      <td class="val-cell" data-l="Rata-rata">${p.kpi.avg} <span style="color:var(--ink3);font-size:10.5px">/ med ${p.kpi.med}</span></td>
+      <td class="val-cell" data-l="Kualitas">${p.kpi.q}</td>
     </tr>`;
   }).join('')||`<tr><td colspan="7"><div class="att-empty">Tidak ditemukan.</div></td></tr>`;
 }
@@ -2150,7 +2476,7 @@ $('#mSend').onclick=()=>{
   pushFeed({kind:'stage',html:`<b>Matthew</b> menugaskan “${title}” ke <b>${e.p.nm.split(' ')[0]}</b>${task.oid?` <span class="oid">${task.oid}</span>`:''}`});
   toast(`Tugas terkirim ke ${e.p.nm.split(' ')[0]}`);
   closeAssign();
-  $('#tab-kerja').classList.add('hasnotif');
+  tabsFor('kerja').forEach(t=>t.classList.add('hasnotif'));
   if(pid===persona)switchPersona(persona);
 };
 
@@ -2286,6 +2612,17 @@ syncSim();
 renderKpis();renderAttention();renderPipe();renderLoad();renderSdm();renderFeed(false);
 renderLegend();refreshPeta();
 switchPersona('dimas');
+initPetaCamera();
+/* rasio kanvas berubah saat rotasi layar — bingkai ulang kalau belum disentuh */
+let camTouched=false;
+petaEl.addEventListener('pointerdown',()=>{camTouched=true;},{capture:true});
+petaEl.addEventListener('wheel',()=>{camTouched=true;},{capture:true,passive:true});
+let lastSmall=isSmall();
+window.addEventListener('resize',()=>{
+  syncZoomLimits();
+  const s=isSmall();
+  if(s!==lastSmall){lastSmall=s;if(!camTouched)initPetaCamera();}
+});
 </script>
 
 </body>
