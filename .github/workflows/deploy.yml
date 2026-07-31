@@ -1,0 +1,44 @@
+name: Deploy ke GitHub Pages
+
+# Situs statis satu file — tidak ada build step.
+# Setiap push ke main langsung menerbitkan ulang.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Biarkan deploy yang sedang jalan selesai, jangan dibatalkan di tengah.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # enablement:true menyalakan GitHub Pages sendiri pada run pertama,
+      # jadi tidak perlu buka Settings secara manual.
+      - name: Siapkan Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Unggah isi repo sebagai artefak situs
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Terbitkan
+        id: deployment
+        uses: actions/deploy-pages@v4

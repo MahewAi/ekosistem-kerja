@@ -8,10 +8,24 @@ gaya game (eagle eye).
 > Status: **prototipe desain** dengan data dummy. Satu file HTML mandiri,
 > tanpa backend. Codename "ATLAS" masih placeholder.
 
+## Live demo
+
+**<https://mahewai.github.io/ekosistem-kerja/>**
+
+Terbit otomatis dari `main` lewat GitHub Actions
+([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) — tidak ada
+build step, isi repo langsung disajikan. Setiap push ke `main` menerbitkan ulang
+dalam ~1 menit. Run pertama menyalakan GitHub Pages sendiri; kalau gagal karena
+izin, nyalakan manual di **Settings → Pages → Source: GitHub Actions**.
+
 ## Cara membuka
 
-Dobel-klik `index.html` (butuh internet sekali untuk font Google, selebihnya
-jalan offline). Pindah layar: tab di atas, tombol `1 / 2 / 3`, atau `Ctrl+K`.
+Online: buka tautan di atas. Offline: dobel-klik `index.html` (butuh internet
+sekali untuk font Google, selebihnya jalan offline). Pindah layar: tab di atas,
+tombol `1 / 2 / 3`, atau `Ctrl+K`.
+
+Jalan di desktop, tablet, dan ponsel. Di layar kecil tab pindah ke bawah, tabel
+berubah jadi kartu, dan peta punya navigator stasiun + cubit-untuk-zoom.
 
 ## Isi
 
@@ -45,6 +59,19 @@ jalan offline). Pindah layar: tab di atas, tombol `1 / 2 / 3`, atau `Ctrl+K`.
   pabrik saat produksi aktif).
 
 Riwayat keputusan lengkap: [CATATAN.md](CATATAN.md).
+
+## Yang belum nyata (penting sebelum demo ke stakeholder)
+
+Alur penugasan dan gerbang dokumen benar-benar jalan, tapi ini masih peraga:
+
+- **Tombol "Unggah" tidak mengunggah file.** Menandai slot dokumen jadi terisi;
+  tidak ada file picker maupun penyimpanan.
+- **Belum ada aksi setujui/tolak.** "Review & Approval" ada sebagai tahap dan
+  Matthew tercatat sebagai PIC-nya, tapi order maju karena timer simulasi —
+  bukan karena ada yang menyetujui.
+- **Tidak ada yang tersimpan.** Refresh = semua tugas, dokumen, dan penyelesaian
+  kembali ke awal.
+- **Tidak ada login.** Pemilih 22 persona adalah dropdown demo, bukan otentikasi.
 
 ## Menunggu input
 
