@@ -135,7 +135,9 @@ main{height:calc(100dvh - var(--top-h) - var(--nav-h));position:relative}
 }
 .btn:hover{background:var(--s3);color:var(--ink);border-color:var(--line3)}
 .btn svg{width:13px;height:13px;stroke-width:1.6}
-.btn-primary{background:var(--accent);border-color:transparent;color:#fff;height:32px;padding:0 14px;border-radius:7px}
+.btn-primary{background:var(--accent);border-color:transparent;color:#fff;height:32px;padding:0 14px;border-radius:7px;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;font-weight:500}
+.btn-primary svg{width:13px;height:13px;stroke-width:1.9;flex:none}
 .btn-primary:hover{background:var(--accent-h);color:#fff}
 .btn-primary:disabled{background:var(--s3);color:var(--ink3);cursor:not-allowed;border:1px solid var(--line)}
 .btn-primary:active:not(:disabled){transform:scale(.98)}
@@ -253,6 +255,58 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .feed-text .oid{font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
 .feed-time{font:400 10.5px var(--mono);color:var(--ink3);margin-top:2px}
 
+/* ============ ALUR PROSES (pita 7 tahap) ============ */
+.flow-ribbon{display:flex;align-items:stretch;gap:2px;padding:11px 12px;overflow-x:auto;scrollbar-width:none}
+.flow-ribbon::-webkit-scrollbar{display:none}
+.fl-step{
+  flex:1 0 104px;display:flex;flex-direction:column;align-items:stretch;gap:5px;text-align:left;
+  padding:8px 9px 9px;border:1px solid var(--line);border-radius:9px;background:var(--s2);
+  transition:background var(--t) var(--ease),border-color var(--t) var(--ease);
+}
+.fl-step:hover{background:var(--s3);border-color:var(--line2)}
+.fl-step.on{border-color:var(--accent);background:var(--s3)}
+.fl-step.bad{border-color:rgba(229,72,77,.45);background:rgba(229,72,77,.05)}
+.fl-step.bad .fl-n{background:rgba(229,72,77,.18);color:#f2777b}
+.fl-n{
+  width:20px;height:20px;flex:none;border-radius:6px;background:var(--s4);color:var(--ink2);
+  display:flex;align-items:center;justify-content:center;font:600 10.5px var(--mono);
+}
+.fl-step.on .fl-n{background:var(--accent);color:#fff}
+.fl-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.fl-nm{font-size:11.5px;font-weight:500;color:var(--ink);line-height:1.25;overflow-wrap:anywhere}
+.fl-pic{font:400 9.5px var(--mono);color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fl-ct{
+  flex:none;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--s4);
+  display:flex;align-items:center;justify-content:center;font:500 10.5px var(--mono);color:var(--ink2);
+}
+.fl-ct.hot{background:rgba(245,166,35,.16);color:#f0b13e}
+.fl-arrow{display:flex;align-items:center;color:var(--ink4);flex:none;margin:0 -1px}
+.fl-arrow svg{width:11px;height:11px;stroke-width:2}
+.fl-end{
+  display:flex;align-items:center;gap:5px;flex:none;padding:0 10px;
+  font-size:11px;color:var(--ink3);white-space:nowrap;
+}
+.fl-end svg{width:12px;height:12px;stroke-width:1.8;color:var(--ok)}
+
+/* nomor tahap di label peta — mengikat peta ke pita alur */
+.st-label .nm{display:flex;align-items:center;justify-content:center;gap:5px}
+.stnum{
+  width:14px;height:14px;border-radius:4px;background:rgba(255,255,255,.13);color:var(--ink2);
+  display:inline-flex;align-items:center;justify-content:center;font:600 9px var(--mono);flex:none;
+}
+
+/* chip serah terima di peta */
+.handoff{
+  position:absolute;transform:translate(-50%,-50%) scale(.9);z-index:6;pointer-events:none;
+  display:flex;align-items:center;gap:4px;white-space:nowrap;
+  background:rgba(10,10,11,.94);border:1px solid var(--line2);border-radius:999px;
+  padding:4px 10px;font-size:11px;color:var(--ink2);
+  opacity:0;transition:opacity .25s var(--ease),transform .25s var(--ease);
+}
+.handoff.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.handoff b{color:var(--ink);font-weight:500}
+.handoff svg{width:12px;height:12px;stroke-width:2;color:var(--accent-h)}
+
 /* ============ VIEW: PETA ============ */
 #view-peta{position:relative;overflow:hidden;touch-action:none;background:
   radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.016), transparent 70%), var(--bg)}
@@ -360,6 +414,36 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .trip-v{font:500 10.5px var(--mono);color:var(--ink3)}
 .trip-v.slow{color:#f0b13e}
 .op-actions{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px}
+.op-actions.approve{justify-content:flex-end;align-items:center}
+.op-actions.approve .btn-primary{height:30px}
+.btn-rev{color:var(--ink3)}
+.btn-rev:hover{color:#f2777b;border-color:rgba(229,72,77,.45);background:transparent}
+.op-gate{
+  padding:0 16px 12px;display:flex;align-items:center;gap:6px;justify-content:flex-end;
+  font-size:11px;color:var(--ink3);
+}
+.op-gate svg{width:12px;height:12px;stroke-width:1.8;color:var(--warn);flex:none}
+
+/* baris "berikutnya" di panel order */
+.nextstep{
+  margin:11px 0 3px;padding:9px 11px;border-radius:8px;
+  background:var(--s3);border-left:2px solid var(--accent);
+}
+.nextstep.blocked{border-left-color:var(--warn)}
+.ns-l{display:block;font:500 9.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+.ns-t{font-size:11.5px;color:var(--ink2);line-height:1.5}
+.ns-t b{color:var(--ink);font-weight:500}
+
+/* checklist berkas wajib per tahap */
+.doc-check{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.dc-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-bottom:1px solid var(--line);background:var(--s1)}
+.dc-row:last-child{border-bottom:0}
+.dc-ic{width:18px;height:18px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--s3);color:var(--ink3)}
+.dc-ic svg{width:11px;height:11px;stroke-width:1.9}
+.dc-row.ok .dc-ic{background:rgba(60,169,81,.13);color:#5dbd75}
+.dc-n{flex:1;min-width:0;font-size:11.5px;color:var(--ink3)}
+.dc-row.ok .dc-n{color:var(--ink2)}
+.dc-s{font:400 10px var(--mono);color:var(--ink4);flex:none}
 
 /* peta v3: cahaya, hidup, dan halaman sektor */
 .token .inner{transition:transform .18s var(--ease);transform-box:fill-box;transform-origin:center}
@@ -596,6 +680,44 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .pal-row .pr-kbd{margin-left:auto}
 .pal-row b{color:var(--ink);font-weight:600}
 
+/* ============ TUR TERPANDU ============ */
+.btn-tour{border-color:rgba(94,106,210,.5);color:var(--accent-h)}
+.btn-tour:hover{background:rgba(94,106,210,.12);border-color:var(--accent);color:var(--accent-h)}
+.tour{
+  position:fixed;left:0;right:0;bottom:0;z-index:85;
+  transform:translateY(100%);transition:transform .3s var(--ease);
+  background:var(--s2);border-top:1px solid var(--line2);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.tour.show{transform:none}
+.tour-bar{
+  max-width:1100px;margin:0 auto;padding:13px 18px 14px;
+  display:flex;align-items:center;gap:16px;
+}
+.tour-step{font-size:11px;color:var(--ink3);flex:none;letter-spacing:.04em}
+.tour-txt{flex:1;min-width:0;font-size:13px;line-height:1.55;color:var(--ink2)}
+.tour-txt b{color:var(--ink);font-weight:600}
+.tour-act{display:flex;align-items:center;gap:7px;flex:none}
+.tour-act .btn{height:30px}
+.tour-act .btn:disabled{opacity:.4;cursor:not-allowed}
+.tour-act .btn-primary{height:30px}
+.tour-x{width:30px;padding:0;justify-content:center}
+.tour-x svg{width:13px;height:13px}
+.tour-prog{height:2px;background:rgba(255,255,255,.07)}
+.tour-prog i{display:block;height:100%;width:0;background:var(--accent)}
+/* elemen yang sedang disorot tur */
+.tour-hl{animation:tourHl 2.4s var(--ease)}
+@keyframes tourHl{
+  0%,100%{box-shadow:0 0 0 0 rgba(94,106,210,0)}
+  18%,72%{box-shadow:0 0 0 2px rgba(94,106,210,.55)}
+}
+/* saat tur jalan, sisakan ruang supaya bar tidak menutupi konten */
+body.tour-on .menara-wrap,body.tour-on .kerja-wrap,
+body.tour-on .sektor-wrap,body.tour-on .sdm-wrap{padding-bottom:130px}
+body.tour-on .hud-bl,body.tour-on .hud-br,body.tour-on .hud-nav{display:none}
+body.tour-on .opanel{bottom:96px}
+body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
+
 /* toast */
 .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,8px);z-index:90;
   background:var(--s3);border:1px solid var(--line2);border-radius:9px;padding:9px 14px;font-size:12.5px;color:var(--ink);
@@ -670,8 +792,18 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   /* --- menara --- */
   .menara-wrap{padding:16px 14px 32px;gap:14px}
   .page-head{flex-wrap:wrap;gap:8px}
-  .page-head .right{margin-left:0;width:100%}
-  .page-head .right .btn{flex:1;justify-content:center;height:34px}
+  .page-head .right{margin-left:0;width:100%;flex-wrap:wrap}
+  .page-head .right .btn{flex:1;justify-content:center;height:34px;min-width:130px}
+  /* tur di ponsel: teks di atas, tombol di bawah */
+  .tour-bar{flex-wrap:wrap;gap:10px;padding:12px 14px}
+  .tour-txt{flex:1 1 100%;order:2;font-size:12.5px}
+  .tour-step{order:1}
+  .tour-act{order:3;width:100%;justify-content:flex-end}
+  body.tour-on .botnav{display:none}
+  body.tour-on .menara-wrap,body.tour-on .kerja-wrap,
+  body.tour-on .sektor-wrap,body.tour-on .sdm-wrap{padding-bottom:190px}
+  body.tour-on .opanel{bottom:170px;max-height:46dvh}
+  body.tour-on .toast{bottom:176px}
   .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
   .feed-list{max-height:none}
 
@@ -849,6 +981,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
         <h1>Menara Kendali</h1>
         <span class="date" id="todayDate"></span>
         <div class="right">
+          <button class="btn btn-tour" id="btnTour"></button>
           <button class="btn" id="btnAssign"></button>
           <button class="btn" id="goPeta"></button>
         </div>
@@ -857,6 +990,14 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <div class="kpis" id="kpis"></div>
 
       <div class="menara-main">
+        <div class="panel">
+          <div class="panel-h">Alur Proses
+            <span class="sub">7 tahap · klik untuk menyaring pipeline</span>
+            <span class="right sub" id="flowFilterOff" style="display:none;cursor:pointer;color:var(--accent-h)">Tampilkan semua</span>
+          </div>
+          <div class="flow-ribbon" id="flowRibbon"></div>
+        </div>
+
         <div class="panel" id="attPanel">
           <div class="panel-h">Perlu Perhatian
             <span class="count-badge crit" id="attCount">0</span>
@@ -1091,6 +1232,21 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 </div>
 <div class="toast" id="toast"></div>
 
+<!-- ============ TUR TERPANDU ============ -->
+<div class="tour" id="tour" role="dialog" aria-live="polite">
+  <div class="tour-bar">
+    <span class="tour-step mono" id="tourStep">1/10</span>
+    <p class="tour-txt" id="tourTxt"></p>
+    <div class="tour-act">
+      <button class="btn" id="tourPrev">Kembali</button>
+      <button class="btn" id="tourPause"></button>
+      <button class="btn-primary" id="tourNext">Lanjut</button>
+      <button class="btn tour-x" id="tourExit" aria-label="Keluar dari tur"></button>
+    </div>
+  </div>
+  <div class="tour-prog"><i id="tourProg"></i></div>
+</div>
+
 <script>
 /* ================= ICONS (stroke 1.6, currentColor) ================= */
 const P = {
@@ -1123,14 +1279,24 @@ const P = {
 const I = (n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${P[n]||''}</svg>`;
 
 /* ================= DATA ================= */
+/* docs = berkas wajib untuk KELUAR dari tahap ini (gerbang tahap).
+   act  = kalimat "berikutnya" di panel order.
+   Nama berkas masih dummy — ikut diganti saat flow asli masuk. */
 const STAGES = [
-  {id:'penawaran', nm:'Penawaran Masuk', pic:'Sari',    icon:'inbox',   median:1,  tile:[2,11],    size:[1.7,1.7,26]},
-  {id:'review',    nm:'Review & Approval', pic:'Matthew',icon:'check',  median:1,  tile:[4,8],     size:[1.5,1.5,32]},
-  {id:'finance',   nm:'Finance',         pic:'Rina',    icon:'coins',   median:2,  tile:[7.5,8.5], size:[1.7,1.7,26]},
-  {id:'purchasing',nm:'Purchasing / PO', pic:'Dimas',   icon:'cart',    median:3,  tile:[6.5,3.5], size:[1.7,1.7,26]},
-  {id:'produksi',  nm:'Produksi Pabrik', pic:'Bayu',    icon:'factory', median:14, tile:[12,4],    size:[2.6,2,42]},
-  {id:'qc',        nm:'QC & Packing',    pic:'Tono',    icon:'box',     median:2,  tile:[11.5,9],  size:[1.7,1.6,24]},
-  {id:'kirim',     nm:'Pengiriman',      pic:'Raka',    icon:'truck',   median:4,  tile:[9.5,13],  size:[1.9,1.5,22]},
+  {id:'penawaran', nm:'Penawaran Masuk', pic:'Sari',    icon:'inbox',   median:1,  tile:[2,11],    size:[1.7,1.7,26],
+   act:'menyusun penawaran', docs:['RAB / rincian kebutuhan','Gambar & spesifikasi pintu']},
+  {id:'review',    nm:'Review & Approval', pic:'Matthew',icon:'check',  median:1,  tile:[4,8],     size:[1.5,1.5,32],
+   act:'menyetujui penawaran', docs:['Penawaran final','Persetujuan harga']},
+  {id:'finance',   nm:'Finance',         pic:'Rina',    icon:'coins',   median:2,  tile:[7.5,8.5], size:[1.7,1.7,26],
+   act:'memverifikasi DP', docs:['Faktur DP','Bukti transfer DP','Rekap pajak']},
+  {id:'purchasing',nm:'Purchasing / PO', pic:'Dimas',   icon:'cart',    median:3,  tile:[6.5,3.5], size:[1.7,1.7,26],
+   act:'menerbitkan PO pabrik', docs:['PO ke pabrik','Konfirmasi harga supplier','Jadwal produksi']},
+  {id:'produksi',  nm:'Produksi Pabrik', pic:'Bayu',    icon:'factory', median:14, tile:[12,4],    size:[2.6,2,42],
+   act:'merakit & finishing', docs:['SPK produksi','Laporan bahan baku','Foto progres rakitan','Checklist finishing','Berita acara selesai']},
+  {id:'qc',        nm:'QC & Packing',    pic:'Tono',    icon:'box',     median:2,  tile:[11.5,9],  size:[1.7,1.6,24],
+   act:'memeriksa & mengepak', docs:['Checklist QC','Foto packing','Packing list']},
+  {id:'kirim',     nm:'Pengiriman',      pic:'Raka',    icon:'truck',   median:4,  tile:[9.5,13],  size:[1.9,1.5,22],
+   act:'mengirim ke customer', docs:['Surat jalan','Jadwal armada','Foto muat','Bukti terima customer']},
 ];
 const EXIT_TILE = [5.5,15];
 // waypoint tile-paths antar stasiun (Manhattan di ruang tile = diagonal iso di layar)
@@ -1165,6 +1331,14 @@ ORDERS.forEach((o,oi)=>{o.hist=[];for(let i=0;i<o.stage;i++){
   const f=0.55+(((oi+1)*(i+2)*37)%80)/100;
   o.hist.push({i,d:Math.round(STAGES[i].median*f*10)/10});
 }});
+/* docs:[sudah,total] di data awal jadi daftar berkas bernama per tahap */
+const stDocs   = o => STAGES[o.stage].docs;
+const docsNeed = o => stDocs(o).length;
+const docsDone = o => (o.docState||[]).filter(Boolean).length;
+const docsLack = o => docsNeed(o)-docsDone(o);
+const docsMissing = o => stDocs(o).filter((_,i)=>!o.docState[i]);
+const resetDocs = (o,done)=>{o.docState=stDocs(o).map((_,i)=>i<(done||0));};
+ORDERS.forEach(o=>resetDocs(o,o.docs[0]));
 const SDM = [
   {ini:'SR', nm:'Sari',  role:'Admin Penawaran', done:14, t:'0,8 hr', med:'1,2 hr', spark:[3,4,2,5,4,6,5], st:0, pid:'sari'},
   {ini:'RN', nm:'Rina',  role:'Finance',         done:11, t:'1,4 hr', med:'1,9 hr', spark:[2,3,3,4,3,4,5], st:2, pid:'rina'},
@@ -1196,8 +1370,8 @@ const nowStr = ()=> new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600);}
 function orderStatus(o){
   const m = STAGES[o.stage].median;
-  if(o.stuck || (o.docs[0]<o.docs[1] && o.age>m)) return 'crit';
-  if(o.age>m || (o.slaH && o.slaH<=8) || (o.docs[0]<o.docs[1] && o.age>0.5)) return 'warn';
+  if(o.stuck || (docsLack(o) && o.age>m)) return 'crit';
+  if(o.age>m || (o.slaH && o.slaH<=8) || (docsLack(o) && o.age>0.5)) return 'warn';
   return 'ok';
 }
 
@@ -1272,7 +1446,7 @@ function attentionItems(){
   for(const o of ORDERS){
     const st=STAGES[o.stage], m=st.median;
     if(o.stuck) items.push({sev:'crit',o,t:`Macet di ${st.nm} ${Math.round(o.age)} hari — ${Math.round(o.age/m*10)/10}x normal`, act:'peta'});
-    else if(o.docs[0]<o.docs[1] && o.age>0.5) items.push({sev:o.age>m?'crit':'warn',o,t:`Dokumen kurang di ${st.nm} — ${o.docs[1]-o.docs[0]} berkas belum diterima`, act:'dok'});
+    else if(docsLack(o) && o.age>0.5) items.push({sev:o.age>m?'crit':'warn',o,t:`Dokumen kurang di ${st.nm} — menunggu ${docsMissing(o)[0]}${docsLack(o)>1?` +${docsLack(o)-1} lagi`:''}`, act:'dok'});
     if(o.slaH && o.slaH<=8) items.push({sev:'warn',o,t:`SLA pengiriman tersisa ${o.slaH} jam`, act:'peta'});
     if(!o.stuck && o.age>m*1.1 && o.stage===4 ) items.push({sev:'warn',o,t:`Produksi lewat estimasi ${Math.round(o.age-m)} hari — cek ke pabrik`, act:'peta'});
   }
@@ -1316,9 +1490,39 @@ function slaChip(o){
   if(o.age>STAGES[o.stage].median) return `<span class="chip warn">lewat median</span>`;
   return `<span class="chip ok">on track</span>`;
 }
+/* ================= ALUR PROSES (pita 7 tahap) ================= */
+let flowFilter=null;
+function renderFlow(){
+  $('#flowRibbon').innerHTML=STAGES.map((st,i)=>{
+    const n=stationCount(i);
+    /* hanya tahap yang benar-benar macet yang diberi cincin — supaya sinyalnya tidak tumpul */
+    const bad=ORDERS.some(o=>o.stage===i&&orderStatus(o)==='crit');
+    return `<button class="fl-step ${flowFilter===i?'on':''} ${bad?'bad':''}" data-fl="${i}"
+              title="${st.nm} — PIC ${st.pic} · normal ${st.median} hari · ${st.docs.length} berkas wajib">
+      <span class="fl-top">
+        <span class="fl-n">${i+1}</span>
+        <span class="fl-ct ${n>=3?'hot':''}">${n}</span>
+      </span>
+      <span class="fl-nm">${st.nm}</span>
+      <span class="fl-pic">${st.pic} · ${st.median} hr</span>
+    </button>`;
+  }).join('<span class="fl-arrow">'+I('chev')+'</span>')
+   +`<span class="fl-arrow">${I('chev')}</span><span class="fl-end">${I('check')}Customer</span>`;
+  $('#flowRibbon').querySelectorAll('[data-fl]').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.fl;
+    flowFilter = flowFilter===i ? null : i;
+    renderFlow(); renderPipe();
+  });
+  $('#flowFilterOff').style.display = flowFilter===null?'none':'';
+}
+$('#flowFilterOff').onclick=()=>{flowFilter=null;renderFlow();renderPipe();};
+
 function renderPipe(flashOid){
-  $('#pipeSub').textContent=`${ORDERS.length} order aktif · ${fmtVal(ORDERS.reduce((s,o)=>s+o.val,0))}`;
-  $('#pipeBody').innerHTML = ORDERS.map(o=>{
+  const rows = flowFilter===null?ORDERS:ORDERS.filter(o=>o.stage===flowFilter);
+  $('#pipeSub').textContent = flowFilter===null
+    ? `${ORDERS.length} order aktif · ${fmtVal(ORDERS.reduce((s,o)=>s+o.val,0))}`
+    : `${rows.length} order di ${STAGES[flowFilter].nm} · dari ${ORDERS.length} order aktif`;
+  $('#pipeBody').innerHTML = rows.map(o=>{
     const st=STAGES[o.stage], s=orderStatus(o);
     return `<tr data-oid="${o.id}" class="${flashOid===o.id?'flash':''}">
       <td class="oid-cell" data-l="Order">${o.id}</td>
@@ -1328,11 +1532,12 @@ function renderPipe(flashOid){
           <div class="stage-lab">${st.nm}</div></td>
       <td class="age-cell" data-l="Umur tahap">${fmtAge(o.age)}${ageDots(o)}</td>
       <td data-l="SLA">${slaChip(o)}</td>
-      <td data-l="Dok"><span class="chip ${o.docs[0]<o.docs[1]?'warn':''}">${o.docs[0]}/${o.docs[1]}</span></td>
+      <td data-l="Dok"><span class="chip ${docsLack(o)&&o.age>0.5?'warn':''}" title="${stDocs(o).map((d,i)=>`${o.docState[i]?'✓':'○'} ${d}`).join('\n')}">${docsDone(o)}/${docsNeed(o)}</span></td>
       <td data-l="PIC"><div class="pic-cell"><span class="mini-av">${st.pic.slice(0,2).toUpperCase()}</span>${st.pic}</div></td>
     </tr>`;
   }).join('');
-  $('#pipeBody').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>focusOrder(tr.dataset.oid));
+  if(!rows.length)$('#pipeBody').innerHTML=`<tr><td colspan="8"><div class="att-empty">Tidak ada order di ${STAGES[flowFilter].nm} saat ini.</div></td></tr>`;
+  $('#pipeBody').querySelectorAll('tr[data-oid]').forEach(tr=>tr.onclick=()=>focusOrder(tr.dataset.oid));
 }
 
 /* ================= MENARA: BEBAN & SDM ================= */
@@ -1622,6 +1827,9 @@ for(const job of drawJobs){
 
 /* label stasiun (HTML upright layer) */
 const labWrap=$('#stLabels');
+/* lapisan efek sesaat (serah terima) — terpisah supaya tidak ikut terhapus renderLabels */
+const fxWrap=document.createElement('div');
+fxWrap.style.cssText='position:absolute;inset:0;z-index:4;pointer-events:none';
 function stationCount(i){return ORDERS.filter(o=>o.stage===i).length;}
 function renderLabels(){
   labWrap.innerHTML='';
@@ -1631,7 +1839,7 @@ function renderLabels(){
     el.className='st-label'; el.dataset.st=i;
     const n=stationCount(i);
     const stuckO=ORDERS.filter(o=>o.stage===i&&orderStatus(o)==='crit')[0];
-    el.innerHTML=`<div class="nm">${st.nm}</div>
+    el.innerHTML=`<div class="nm"><span class="stnum">${i+1}</span>${st.nm}</div>
       <div class="ct ${n>=3?'hot':''}">${n} order<span class="picpart"> · PIC ${st.pic}</span></div>
       ${stuckO?`<div class="ct" style="color:#f2777b">${stuckO.id} macet ${fmtAge(stuckO.age)}</div>`:''}`;
     el._world=[cx,cy+TH*(st.size[1]/2)+12];
@@ -1664,7 +1872,8 @@ function layoutPeta(){
   const s=r.width/vb.w;
   VS={s,ox:-vb.x*s,oy:-vb.y*s};
   labWrap.classList.toggle('far',vb.w>1200);   /* ambang disesuaikan dengan kamera baru */
-  labWrap.querySelectorAll('.st-label').forEach(el=>{
+  [...labWrap.querySelectorAll('.st-label'),...fxWrap.children].forEach(el=>{
+    if(!el._world)return;
     const[wx,wy]=el._world;
     el.style.left=(VS.ox+wx*VS.s)+'px'; el.style.top=(VS.oy+wy*VS.s)+'px';
   });
@@ -1760,6 +1969,20 @@ $('#zin').onclick=()=>{const r=petaEl.getBoundingClientRect();zoomAt(r.width/2,r
 $('#zout').onclick=()=>{const r=petaEl.getBoundingClientRect();zoomAt(r.width/2,r.height/2,1.35);};
 $('#zreset').onclick=()=>fitContent(true);
 labWrap.style.cssText='position:absolute;inset:0;z-index:3;pointer-events:none';
+petaEl.appendChild(fxWrap);
+
+/* chip "Rina → Dimas" muncul sebentar di tengah rute saat order berpindah tangan */
+function showHandoff(fromStage,toStage){
+  const a=proj(...STAGES[fromStage].tile), b=proj(...STAGES[toStage].tile);
+  const el=document.createElement('div');
+  el.className='handoff';
+  el.innerHTML=`<b>${STAGES[fromStage].pic}</b>${I('chev')}<b>${STAGES[toStage].pic}</b>`;
+  el._world=[(a[0]+b[0])/2,(a[1]+b[1])/2-16];
+  fxWrap.appendChild(el);
+  layoutPeta();
+  requestAnimationFrame(()=>el.classList.add('show'));
+  setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),420);},2600);
+}
 
 /* --- navigator stasiun (layar kecil): ketuk untuk terbang ke stasiun --- */
 function renderStNav(){
@@ -1865,6 +2088,15 @@ function travel(o,fromStage,toStage,onEnd){
   const dur=clamp(polyLen(path)*5.5,1100,2600);
   glide(tk,path,dur,()=>{arriveFx(tk);blinkStation(toStage);layoutQueues(true);onEnd&&onEnd();});
 }
+/* order yang ditolak berjalan mundur menyusuri rute yang sama */
+function travelBack(o,fromStage,toStage,onEnd){
+  const tk=tokens[o.id]; if(!tk){onEnd&&onEnd();return;}
+  const path=[tk.pos];
+  for(let s=fromStage;s>toStage;s--) routePts[s].slice().reverse().forEach(p=>path.push(p));
+  path.push(slotPoint(toStage, Math.max(0,ORDERS.filter(x=>x.stage===toStage).indexOf(o))));
+  glide(tk,path,clamp(polyLen(path)*5.5,1100,2600),
+    ()=>{arriveFx(tk);blinkStation(toStage);layoutQueues(true);onEnd&&onEnd();});
+}
 function travelExit(o,onEnd){
   const tk=tokens[o.id]; if(!tk){onEnd&&onEnd();return;}
   const b=tk.g.querySelector('.body');
@@ -1918,8 +2150,22 @@ function showOrderPop(oid){
    <div class="op-body">
      <div class="op-kv"><span class="k">Pesanan</span><span class="v">${o.proj}</span></div>
      <div class="op-kv"><span class="k">PIC tahap ini</span><span class="v">${st.pic}</span></div>
-     <div class="op-kv"><span class="k">Dokumen</span><span class="v" style="${o.docs[0]<o.docs[1]?'color:#f0b13e':''}">${o.docs[0]}/${o.docs[1]} lengkap</span></div>
      <div class="op-kv"><span class="k">Status</span><span class="v" style="${s==='crit'?'color:#f2777b':s==='warn'?'color:#f0b13e':'color:#5dbd75'}">${s==='ok'?'On track':s==='warn'?'Perlu perhatian':'Kritis'}</span></div>
+     ${o.rev?`<div class="op-kv"><span class="k">Revisi</span><span class="v" style="color:#f0b13e">${o.rev}× dikembalikan</span></div>`:''}
+
+     <div class="nextstep ${docsLack(o)?'blocked':''}">
+       <span class="ns-l">Berikutnya</span>
+       <span class="ns-t">${nextStepText(o)}</span>
+     </div>
+
+     <div class="op-sec">Berkas wajib — gerbang keluar ${st.nm}</div>
+     <div class="doc-check">
+       ${stDocs(o).map((d,i)=>`<div class="dc-row ${o.docState[i]?'ok':''}">
+         <span class="dc-ic">${I(o.docState[i]?'check':'file')}</span>
+         <span class="dc-n">${d}</span>
+         <span class="dc-s">${o.docState[i]?'diterima':'belum ada'}</span></div>`).join('')}
+     </div>
+
      <div class="op-sec">Perjalanan order — aktual vs normal</div>
      <div class="trip">
        ${STAGES.map((sg,i)=>{
@@ -1933,17 +2179,67 @@ function showOrderPop(oid){
        <div class="trip-row future"><span class="trip-dot"></span><span class="trip-k">Diterima customer</span></div>
      </div>
    </div>
+   ${o.stage===1?`
+   <div class="op-actions approve">
+     <button class="btn btn-rev" id="opReject">Minta revisi</button>
+     <button class="btn-primary" id="opApprove" ${docsLack(o)?'disabled':''}>${I('check')}Setujui</button>
+   </div>
+   ${docsLack(o)?`<div class="op-gate">${I('alert')}Terkunci sampai ${docsLack(o)} berkas lengkap</div>`:''}`:`
    <div class="op-actions">
      <button class="btn" id="opFocus">${I('search')}Fokus di peta</button>
      <button class="btn" id="opPipe">Lihat pipeline</button>
-   </div>`;
+   </div>`}`;
   opanel.classList.add('show');
   const nb=opanel.querySelector('.op-body'); if(nb)nb.scrollTop=prevScroll;
   const qp=petaEl.querySelector('.hud-br'); if(qp)qp.style.display='none';
   $('#opClose').onclick=closeOrderPanel;
-  $('#opFocus').onclick=()=>{const tk=tokens[oid];if(tk){zoomToWorld(tk.pos[0],tk.pos[1]);pulse(oid);}};
-  $('#opPipe').onclick=()=>{closeOrderPanel();switchView('menara');renderPipe(oid);
+  const focusBtn=$('#opFocus'), pipeBtn=$('#opPipe');
+  if(focusBtn)focusBtn.onclick=()=>{const tk=tokens[oid];if(tk){zoomToWorld(tk.pos[0],tk.pos[1]);pulse(oid);}};
+  if(pipeBtn)pipeBtn.onclick=()=>{closeOrderPanel();switchView('menara');renderPipe(oid);
     setTimeout(()=>{const tr=$(`tr[data-oid="${oid}"]`);tr&&tr.scrollIntoView({block:'center',behavior:'smooth'});},60);};
+  const apBtn=$('#opApprove'), rjBtn=$('#opReject');
+  if(apBtn)apBtn.onclick=()=>approveOrder(oid);
+  if(rjBtn)rjBtn.onclick=()=>rejectOrder(oid);
+}
+
+/* kalimat "apa yang terjadi berikutnya" — pertanyaan pertama tiap orang */
+function nextStepText(o){
+  const st=STAGES[o.stage];
+  if(docsLack(o)){
+    const m=docsMissing(o);
+    return `<b>${st.pic}</b> melengkapi <b>${m[0]}</b>${m.length>1?` (+${m.length-1} berkas lagi)`:''} — tahap terkunci sampai lengkap`;
+  }
+  if(o.stage===1) return `<b>Matthew</b> menyetujui, lalu lanjut ke <b>Finance</b> (Rina)`;
+  if(o.stage>=6)  return `<b>Raka</b> mengantar ke customer — order keluar dari pipeline`;
+  const nx=STAGES[o.stage+1];
+  return `Berkas lengkap — siap diserahkan ke <b>${nx.nm}</b> (${nx.pic}) untuk ${nx.act}`;
+}
+
+/* ================= SETUJUI / MINTA REVISI (tahap Review) ================= */
+function approveOrder(oid){
+  const o=ORDERS.find(x=>x.id===oid); if(!o||o.stage!==1)return;
+  if(docsLack(o)){toast('Lengkapi berkas dulu — persetujuan terkunci');return;}
+  pushFeed({kind:'stage',html:`<b>Matthew</b> menyetujui penawaran <b>${o.cust}</b> <span class="oid">${o.id}</span>`});
+  advanceOrder(oid);
+  toast(`Disetujui — ${o.cust} lanjut ke Finance`);
+  if(openOid===oid)closeOrderPanel();
+}
+function rejectOrder(oid){
+  const o=ORDERS.find(x=>x.id===oid); if(!o||o.stage!==1)return;
+  const from=o.stage;
+  o.rev=(o.rev||0)+1; o.stage=0; o.age=0.05; o.slaH=null;
+  resetDocs(o,1);                       /* RAB tetap ada, penawaran harus disusun ulang */
+  travelBack(o,from,0,()=>{});
+  getPersonTasks('sari').unshift({id:'R-'+Math.floor(performance.now()),oid:o.id,
+    title:`Revisi penawaran — ${o.cust}`,due:'hari ini',age:0.02,p85:1,prio:'penting',fresh:true,from:'Matthew',
+    desc:'Dikembalikan Matthew dari Review & Approval. Susun ulang penawaran lalu ajukan lagi.',
+    docs:[{n:'Penawaran revisi',up:false}]});
+  pushFeed({kind:'eksepsi',html:`<b>Matthew</b> mengembalikan <b>${o.cust}</b> ke Penawaran — revisi ke-${o.rev} <span class="oid">${o.id}</span>`});
+  tabsFor('kerja').forEach(t=>t.classList.add('hasnotif'));
+  toast('Dikembalikan ke Sari untuk revisi');
+  if(openOid===oid)closeOrderPanel();
+  if(persona==='sari')switchPersona('sari');
+  rerenderMenara(oid,null);
 }
 function closeOrderPanel(){
   openOid=null;opanel.classList.remove('show');
@@ -2343,7 +2639,8 @@ function renderTasks(){
     e.stopPropagation();
     const [tid,di]=b.dataset.up.split(':');
     const t=TASKS.find(x=>x.id===tid); t.docs[di].up=true;
-    if(t.oid){const o=ORDERS.find(x=>x.id===t.oid); if(o)o.docs[0]=Math.min(o.docs[0]+1,o.docs[1]);}
+    if(t.oid){const o=ORDERS.find(x=>x.id===t.oid);
+      if(o){const k=o.docState.findIndex(v=>!v); if(k>=0)o.docState[k]=true;}}
     pushFeed({kind:'dok',html:`<b>${curNm()}</b> mengunggah “${t.docs[di].n}” ${t.oid?`<span class="oid">${t.oid}</span>`:''}`});
     renderTasks();renderPipe(t.oid);renderAttention();
   });
@@ -2483,7 +2780,7 @@ $('#mSend').onclick=()=>{
 
 /* ================= ADVANCE ORDER (dipakai engine & aksi karyawan) ================= */
 function rerenderMenara(flashOid,flashKpi){
-  renderKpis(flashKpi);renderAttention();renderPipe(flashOid);renderLoad();refreshPeta();
+  renderKpis(flashKpi);renderAttention();renderFlow();renderPipe(flashOid);renderLoad();refreshPeta();
 }
 function advanceOrder(oid){
   const o=ORDERS.find(x=>x.id===oid); if(!o)return;
@@ -2498,9 +2795,12 @@ function advanceOrder(oid){
     return;
   }
   o.stage++; o.age=0.05; o.slaH=null;
+  resetDocs(o,0);                       /* tahap baru = berkas wajib baru */
   tokens[oid]?.g.classList.remove('stuck');
   travel(o,from,o.stage,()=>{});
-  pushFeed({kind:'stage',html:`<span class="oid">${o.id}</span> <b>${o.cust}</b> masuk tahap <b>${STAGES[o.stage].nm}</b>`});
+  /* serah terima antar orang — inti janji produknya, jadi namanya disebut */
+  showHandoff(from,o.stage);
+  pushFeed({kind:'stage',html:`<b>${STAGES[from].pic}</b> → <b>${STAGES[o.stage].pic}</b> · <b>${o.cust}</b> masuk tahap <b>${STAGES[o.stage].nm}</b> <span class="oid">${o.id}</span>`});
   rerenderMenara(oid,null);
 }
 
@@ -2569,7 +2869,7 @@ window.addEventListener('keydown',e=>{
 /* ================= SIMULASI LIVE ================= */
 const SCRIPT=[
   ()=>pushFeed({kind:'stage',html:`<b>Bayu</b> update pabrik: pintu Medical Line mulai finishing <span class="oid">ORD-0142</span>`}),
-  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0140');if(o&&o.docs[0]<o.docs[1]){o.docs[0]=o.docs[1];
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0140');if(o&&docsLack(o)){resetDocs(o,docsNeed(o));
       pushFeed({kind:'dok',html:`Faktur DP diterima dari <b>Perum Citra Bukit</b> — dokumen lengkap <span class="oid">ORD-0140</span>`});
       rerenderMenara('ORD-0140',null);}},
   ()=>advanceOrder('ORD-0135'),
@@ -2609,8 +2909,115 @@ document.querySelectorAll('[data-speed]').forEach(b=>b.onclick=()=>{
 });
 syncSim();
 
+/* ================= TUR TERPANDU =================
+   Menjalankan sendiri cerita utamanya: hambatan terlihat -> owner menugaskan ->
+   karyawan kebentur gerbang dokumen -> dokumen lengkap -> order jalan lagi.
+   Simulasi dijeda selama tur supaya tidak ada kejutan di tengah presentasi. */
+const TOUR=[
+  {t:'Ini <b>Menara Kendali</b> — yang dilihat owner tiap pagi. Lima KPI di atas, lalu antrean <b>Perlu Perhatian</b> yang sudah diurutkan dari yang paling mendesak. Bukan log, tapi daftar kerja.',
+   run(){switchView('menara');flowFilter=null;renderFlow();renderPipe();window.scrollTo(0,0);$('#view-menara').scrollTop=0;}, ms:8000},
+
+  {t:'Di bawahnya <b>Alur Proses</b>: tujuh tahap dari penawaran masuk sampai barang diterima customer, lengkap dengan PIC dan waktu normalnya. Angka di kanan tiap tahap = order yang sedang antre di situ.',
+   run(){$('#view-menara').scrollTop=0;flash('.flow-ribbon');}, ms:9000},
+
+  {t:'Masalah hari ini: <b>ORD-0141 — Hotel Grand Kaltim</b> macet <b>6 hari</b> di Purchasing. Normalnya 3 hari. Ini order Rp 412 juta yang diam tanpa ada yang sadar.',
+   run(){switchView('menara');const r=$('#attList .att-row');if(r){r.scrollIntoView({block:'center',behavior:'smooth'});flashEl(r);}}, ms:8500},
+
+  {t:'Di <b>Peta Bisnis Live</b> hambatan itu kelihatan tanpa perlu dicari — gedung Purchasing menyala merah dengan label "macet 6 hari". Inilah gunanya peta: satu pandangan, langsung tahu di mana macetnya.',
+   run(){switchView('peta');const st=STAGES[3],[wx,wy]=proj(st.tile[0],st.tile[1]);zoomToWorld(wx,wy,isSmall()?520:760);}, ms:9000},
+
+  {t:'Buka ordernya — <b>penyebabnya dokumen</b>. Tahap Purchasing butuh 3 berkas wajib dan baru 1 yang masuk. Baris <b>Berikutnya</b> menyebut persis siapa yang harus melakukan apa.',
+   run(){showOrderPop('ORD-0141');}, ms:10000},
+
+  {t:'Owner menugaskan langsung dari sini — <b>tanpa WhatsApp</b>. Pilih orangnya, tenggat, prioritas, dan yang penting: <b>dokumen wajib</b>, yang otomatis jadi gerbang penyelesaian.',
+   run(){closeOrderPanel();switchView('menara');openAssign('dimas');}, ms:9500},
+
+  {t:'Tugas mendarat di <b>Ruang Kerja</b> orangnya. Tiap karyawan melihat dashboard sesuai perannya — ini punya Dimas, Purchasing Manager. Tugas dari atasan langsung ada di "Hari Ini".',
+   run(){closeAssign();switchPersona('dimas');switchView('kerja');openTask='T1';renderTasks();
+         setTimeout(()=>{const el=$('#todayList .task');el&&el.scrollIntoView({block:'center',behavior:'smooth'});},80);}, ms:9000},
+
+  {t:'Dimas mencoba menandai selesai — <b>ditolak</b>. Dua berkas wajib belum ada, jadi tahap berikutnya terkunci. Inilah jawaban untuk "tidak ada berkas yang kelewat": sistemnya yang menahan, bukan ingatan orang.',
+   run(){switchView('kerja');const b=$('#todayList [data-check]');b&&b.click();}, ms:9500},
+
+  {t:'Berkas diunggah satu per satu. Begitu slot terakhir terisi, gerbangnya terbuka sendiri.',
+   run(){switchView('kerja');openTask='T1';renderTasks();
+         const ups=[...$('#todayList').querySelectorAll('[data-up]')];
+         ups.forEach((b,i)=>setTimeout(()=>{const live=$(`[data-up="${b.dataset.up}"]`);live&&live.click();},600+i*1100));}, ms:9500},
+
+  {t:'Selesai — dan semuanya ikut bergerak: token jalan di peta, hambatan terurai, alert owner hilang, KPI naik. <b>Satu aksi karyawan, tiga layar langsung rekonsil.</b>',
+   /* tidak menganggap langkah sebelumnya sudah selesai: presenter boleh
+      menekan Lanjut lebih cepat dari animasi unggah. */
+   run(){switchView('kerja');openTask='T1';renderTasks();
+         let guard=0,btn;
+         while((btn=$('#todayList [data-up]'))&&guard++<12)btn.click();
+         const c=$('#todayList [data-check]');c&&c.click();
+         setTimeout(()=>switchView('peta'),1400);}, ms:10000},
+
+  {t:'Kembali ke Menara: antrean "Perlu Perhatian" berkurang, dan ORD-0141 sudah pindah tahap. Itu keseluruhan lingkarannya — <b>tugas turun, berkas terkunci, kerja terlacak, semua terlihat</b>.',
+   run(){switchView('menara');$('#view-menara').scrollTop=0;}, ms:9000},
+];
+function flash(sel){flashEl($(sel));}
+function flashEl(el){if(!el)return;el.classList.remove('tour-hl');void el.offsetWidth;el.classList.add('tour-hl');
+  setTimeout(()=>el.classList.remove('tour-hl'),2400);}
+
+let tourI=-1, tourTimer=null, tourOn=false, tourPaused=false, tourPrevSim=false;
+function tourRender(){
+  const s=TOUR[tourI];
+  $('#tourTxt').innerHTML=s.t;
+  $('#tourStep').textContent=`${tourI+1}/${TOUR.length}`;
+  $('#tourPrev').disabled=tourI===0;
+  $('#tourNext').textContent=tourI===TOUR.length-1?'Selesai':'Lanjut';
+  $('#tourPause').innerHTML=(tourPaused?I('play'):I('pause'))+(tourPaused?'Lanjut':'Jeda');
+  const p=$('#tourProg');
+  p.style.transition='none';p.style.width='0%';
+  void p.offsetWidth;
+  if(!tourPaused){p.style.transition=`width ${s.ms}ms linear`;p.style.width='100%';}
+}
+function tourGo(i){
+  if(i>=TOUR.length){tourEnd();return;}
+  tourI=clamp(i,0,TOUR.length-1);
+  clearTimeout(tourTimer);
+  try{TOUR[tourI].run();}catch(e){/* langkah gagal tidak boleh mematikan tur */}
+  tourRender();
+  if(!tourPaused)tourTimer=setTimeout(()=>tourGo(tourI+1),TOUR[tourI].ms);
+}
+function tourStart(){
+  if(tourOn)return;
+  tourOn=true;tourPaused=false;
+  tourPrevSim=simPaused;simPaused=true;syncSim();       /* simulasi dijeda selama tur */
+  document.body.classList.add('tour-on');
+  $('#tour').classList.add('show');
+  tourGo(0);
+}
+function tourEnd(){
+  tourOn=false;clearTimeout(tourTimer);
+  document.body.classList.remove('tour-on');
+  $('#tour').classList.remove('show');
+  simPaused=tourPrevSim;syncSim();
+  clearTimeout(simTimer);simTimer=setTimeout(simTick,6500/simSpeed);
+}
+$('#btnTour').innerHTML=I('play')+`Tur ${Math.round(TOUR.reduce((s,x)=>s+x.ms,0)/1000)} detik`;
+$('#btnTour').onclick=tourStart;
+$('#tourNext').onclick=()=>tourGo(tourI+1);
+$('#tourPrev').onclick=()=>tourGo(tourI-1);
+$('#tourExit').innerHTML=I('x');
+$('#tourExit').onclick=tourEnd;
+$('#tourPause').onclick=()=>{
+  tourPaused=!tourPaused;
+  if(tourPaused){clearTimeout(tourTimer);const p=$('#tourProg');
+    p.style.transition='none';p.style.width=getComputedStyle(p).width;}
+  else tourTimer=setTimeout(()=>tourGo(tourI+1),TOUR[tourI].ms);
+  tourRender();
+};
+document.addEventListener('keydown',e=>{
+  if(!tourOn)return;
+  if(e.key==='Escape'){tourEnd();}
+  else if(e.key==='ArrowRight'){e.preventDefault();tourGo(tourI+1);}
+  else if(e.key==='ArrowLeft'){e.preventDefault();tourGo(tourI-1);}
+});
+
 /* ================= INIT ================= */
-renderKpis();renderAttention();renderPipe();renderLoad();renderSdm();renderFeed(false);
+renderKpis();renderAttention();renderFlow();renderPipe();renderLoad();renderSdm();renderFeed(false);
 renderLegend();refreshPeta();
 switchPersona('dimas');
 initPetaCamera();

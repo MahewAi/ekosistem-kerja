@@ -37,6 +37,8 @@ berubah jadi kartu, dan peta punya navigator stasiun + cubit-untuk-zoom.
 | **KPI Seluruh SDM** | Tabel 22 orang lintas 7 sektor + pencarian; klik baris → profil orangnya |
 | **Ruang Kerja** | "Hari Ini" + saran (pola My Day), slot dokumen bernama dengan gerbang tahap (tombol lanjut terkunci sampai berkas lengkap), tombol Mulai pencatat jam, skor pribadi vs median tim, multi-persona (lihat dashboard karyawan mana pun) |
 | **Beri Tugas** | Owner/manager menugaskan dari Menara atau profil orang: judul, tenggat, prioritas, order terkait, dokumen wajib; tugas mendarat di Ruang Kerja orangnya dengan notifikasi |
+| **Alur Proses** | Pita 7 tahap di Menara: nomor, nama, PIC, waktu normal, jumlah order antre; tahap yang macet diberi cincin merah; klik untuk menyaring pipeline. Nomor yang sama muncul di label peta |
+| **Tur terpandu** | Tombol "Tur" menjalankan sendiri cerita utamanya dalam ~100 detik: hambatan terlihat → owner menugaskan → karyawan kebentur gerbang dokumen → dokumen lengkap → order jalan lagi. Simulasi dijeda selama tur |
 
 ## Tangkapan layar
 
@@ -62,16 +64,19 @@ Riwayat keputusan lengkap: [CATATAN.md](CATATAN.md).
 
 ## Yang belum nyata (penting sebelum demo ke stakeholder)
 
-Alur penugasan dan gerbang dokumen benar-benar jalan, tapi ini masih peraga:
+Alur penugasan, gerbang dokumen, dan persetujuan benar-benar jalan, tapi ini
+masih peraga:
 
 - **Tombol "Unggah" tidak mengunggah file.** Menandai slot dokumen jadi terisi;
   tidak ada file picker maupun penyimpanan.
-- **Belum ada aksi setujui/tolak.** "Review & Approval" ada sebagai tahap dan
-  Matthew tercatat sebagai PIC-nya, tapi order maju karena timer simulasi —
-  bukan karena ada yang menyetujui.
-- **Tidak ada yang tersimpan.** Refresh = semua tugas, dokumen, dan penyelesaian
-  kembali ke awal.
+- **Nama berkas wajib masih dummy.** Daftar per tahap di `STAGES[].docs`
+  (mis. Finance: Faktur DP, Bukti transfer DP, Rekap pajak) dikarang untuk
+  konteks pabrik pintu — ikut diganti saat flow asli masuk.
+- **Tidak ada yang tersimpan.** Refresh = semua tugas, dokumen, persetujuan, dan
+  penyelesaian kembali ke awal.
 - **Tidak ada login.** Pemilih 22 persona adalah dropdown demo, bukan otentikasi.
+- **Order tetap maju sendiri.** Di luar tahap Review, perpindahan tahap
+  dijalankan timer simulasi tiap 6,5 detik, bukan oleh aksi orang.
 
 ## Menunggu input
 
