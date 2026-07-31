@@ -700,8 +700,9 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   table.pipe .cust-cell>div{text-align:right}
   table.pipe td[colspan]{display:block;padding:0}
   table.pipe td[colspan]::before{display:none}
-  .pipe td>.stepper{justify-content:flex-end;flex-wrap:wrap}
-  .pipe .stage-lab{display:none}
+  .pipe td>.stepper{flex-wrap:wrap}
+  /* nama tahap harus tetap terbaca — stepper saja tidak memberi tahu apa-apa */
+  .pipe .stage-lab{margin-top:0;color:var(--ink2)}
   .pipe-sdm td:first-child{justify-content:flex-start}
 
   /* --- sektor --- */
