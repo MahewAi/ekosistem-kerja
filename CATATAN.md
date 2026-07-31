@@ -110,6 +110,15 @@ Inti visi yang belum ada akhirnya dibangun: "atasan kirim tugas tanpa WA".
    kecil berlarian keluar gedung setiap stasiun memproses peristiwa.
 4. Logo topbar dipindah ke token warna supaya tampil di kedua tema.
 
+## Update 31 Jul larut (5): v7 — terrain lembah hijau (permintaan Matthew)
+
+Peta jadi diorama game: seluruh kampus berdiri di PULAU LEMBAH HIJAU dengan
+dinding plateau di tepinya. Isi terrain: hamparan rumput dengan petak gradasi
+(blob organik low-poly, deterministik), plaza beraspal tempat gedung berdiri,
+kolam air dengan tepi terang, batu-batu, 8 semak, dan total 27 pohon.
+Semua ikut tema: siang = lembah hijau segar + kolam biru; malam = lembah
+gelap tenang. Default tema kini TERANG (permintaan "saya maunya terang").
+
 ## Isi prototipe
 
 1. **Menara Kendali (owner)**: 5 KPI + sparkline, antrean "Perlu Perhatian"
