@@ -148,6 +148,26 @@ dianalisis & diuji, 0 error).
    programatik tidak bisa membuka dialog file).
 3. Perbaikan kecil: urutan deklarasi penyimpanan (TDZ), koma param.
 
+## Update 1 Agu (4): REMODEL KE FLOW ASLI (input Matthew masuk!)
+
+Business process asli dari 2 gambar Matthew dipetakan penuh (docs/flow-asli.md).
+Fokus checkpoint: sampai PRODUKSI MENERIMA DATA.
+1. 10 stasiun baru: Order -> ABA Verifikasi (7 cek nyata jadi gerbang berkas) ->
+   SSA/Annisa Proses SO -> PPIC/Bu Liana Proses WO -> Cek Material (CABANG:
+   cukup langsung / kurang lewat Purchasing -> vendor -> Material In Transit +
+   QC masuk) -> Produksi Terima Data (cp) -> [luar fokus] Produksi & QC ->
+   Gudang FG & Kirim (BAST + invoice di feed).
+2. Mesin rute jadi graf EDGES bercabang (nextOf per order, matKurang flag);
+   jalan vendor masuk dari tepi peta.
+3. Ribbon Alur Proses: penanda hijau "Checkpoint" + tahap luar fokus kelabu.
+4. Setujui/Minta revisi pindah ke ABA (kembali ke Sales/Rio bila gagal cek).
+5. TEAMS 10 sektor (~26 orang); NAMA NYATA: Annisa (SSA), Bu Liana (PPIC);
+   sisanya placeholder. 4 sprite dipetakan ulang (ABA/SSA/PPIC/pabrik).
+6. Tur, simulasi, feed, tugas Dimas ditulis ulang mengikuti flow; save state
+   naik ke atlas-state-v2 (state lama tidak kompatibel).
+Terverifikasi: siklus penuh 4x tanpa error; cabang cukup/kurang & checkpoint
+feed bekerja.
+
 ## Isi prototipe
 
 1. **Menara Kendali (owner)**: 5 KPI + sparkline, antrean "Perlu Perhatian"

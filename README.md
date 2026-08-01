@@ -93,6 +93,9 @@ masih peraga:
 
 ## Menunggu input
 
-1. Flow business process asli (7 stasiun sekarang dummy).
-2. Struktur organisasi asli (21 nama di bagan tim fiktif).
+1. ~~Flow business process asli~~ **SUDAH MASUK (1 Agu)** — peta kini memakai
+   10 stasiun flow nyata dengan cabang material & checkpoint "produksi terima
+   data" ([docs/flow-asli.md](docs/flow-asli.md)).
+2. Struktur organisasi lengkap (baru Annisa & Bu Liana yang nyata; sisanya
+   placeholder).
 3. Nama sistem & perusahaan pemakainya.

@@ -284,6 +284,8 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .fl-step:hover{background:var(--s3);border-color:var(--line2)}
 .fl-step.on{border-color:var(--accent);background:var(--s3)}
 .fl-step.bad{border-color:rgba(229,72,77,.45);background:rgba(229,72,77,.05)}
+.fl-step.dim{opacity:.5}
+.fl-step.cp{border-color:rgba(60,169,81,.45)}
 .fl-step.bad .fl-n{background:rgba(229,72,77,.18);color:var(--t-crit)}
 .fl-n{
   width:20px;height:20px;flex:none;border-radius:6px;background:var(--s4);color:var(--ink2);
@@ -1042,7 +1044,7 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
       <div class="menara-main">
         <div class="panel">
           <div class="panel-h">Alur Proses
-            <span class="sub">7 tahap · klik untuk menyaring pipeline</span>
+            <span class="sub">flow asli · fokus checkpoint s.d. produksi terima data · klik untuk menyaring</span>
             <span class="right sub" id="flowFilterOff" style="display:none;cursor:pointer;color:var(--accent-h)">Tampilkan semua</span>
           </div>
           <div class="flow-ribbon" id="flowRibbon"></div>
@@ -1338,54 +1340,82 @@ const I = (n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* docs = berkas wajib untuk KELUAR dari tahap ini (gerbang tahap).
    act  = kalimat "berikutnya" di panel order.
    Nama berkas masih dummy — ikut diganti saat flow asli masuk. */
+/* ============ FLOW ASLI (gambar business process Matthew, 1 Agu) ============
+   Fokus checkpoint: sampai PRODUKSI MENERIMA DATA (cp:true di stasiun 'wo').
+   Stasiun setelahnya luar:true = di luar fokus. Rincian: docs/flow-asli.md */
 const STAGES = [
-  {id:'penawaran', nm:'Penawaran Masuk', pic:'Sari',    icon:'inbox',   median:1,  tile:[2,11],    size:[1.7,1.7,26],
-   act:'menyusun penawaran', docs:['RAB / rincian kebutuhan','Gambar & spesifikasi pintu']},
-  {id:'review',    nm:'Review & Approval', pic:'Matthew',icon:'check',  median:1,  tile:[4,8],     size:[1.5,1.5,32],
-   act:'menyetujui penawaran', docs:['Penawaran final','Persetujuan harga']},
-  {id:'finance',   nm:'Finance',         pic:'Rina',    icon:'coins',   median:2,  tile:[7.5,8.5], size:[1.7,1.7,26],
-   act:'memverifikasi DP', docs:['Faktur DP','Bukti transfer DP','Rekap pajak']},
-  {id:'purchasing',nm:'Purchasing / PO', pic:'Dimas',   icon:'cart',    median:3,  tile:[6.5,3.5], size:[1.7,1.7,26],
-   act:'menerbitkan PO pabrik', docs:['PO ke pabrik','Konfirmasi harga supplier','Jadwal produksi']},
-  {id:'produksi',  nm:'Produksi Pabrik', pic:'Bayu',    icon:'factory', median:14, tile:[12,4],    size:[2.6,2,42],
-   act:'merakit & finishing', docs:['SPK produksi','Laporan bahan baku','Foto progres rakitan','Checklist finishing','Berita acara selesai']},
-  {id:'qc',        nm:'QC & Packing',    pic:'Tono',    icon:'box',     median:2,  tile:[11.5,9],  size:[1.7,1.6,24],
-   act:'memeriksa & mengepak', docs:['Checklist QC','Foto packing','Packing list']},
-  {id:'kirim',     nm:'Pengiriman',      pic:'Raka',    icon:'truck',   median:4,  tile:[9.5,13],  size:[1.9,1.5,22],
-   act:'mengirim ke customer', docs:['Surat jalan','Jadwal armada','Foto muat','Bukti terima customer']},
+  {id:'order',  nm:'Order Masuk',        pic:'Sales',   icon:'inbox',  median:0.3, tile:[1.3,11.6], size:[1.2,1.2,16],
+   act:'menerima PO customer', docs:['PO customer diterima','Data kontak & alamat kirim']},
+  {id:'aba',    nm:'ABA — Verifikasi',   pic:'ABA',     icon:'check',  median:0.5, tile:[3.2,9.2],  size:[1.5,1.5,24],
+   act:'menjalankan 7 cek ABA lalu request SSA',
+   docs:['Cek PO = Penawaran','Cek Harga & TOP','Cek historis pelanggan','Cek standard / custom','Cek kebutuhan survey / gambar','Cek ketersediaan barang','Cek deadline kirim']},
+  {id:'ssa',    nm:'SSA — Proses SO',    pic:'Annisa',  icon:'file',   median:1,   tile:[5.8,7.2],  size:[1.6,1.6,26],
+   act:'klarifikasi data & menerbitkan SO',
+   docs:['Klarifikasi data lengkap','SO terbit','Approval gambar N1/N2','Info invoice ke Finance']},
+  {id:'ppic',   nm:'PPIC — Proses WO',   pic:'Bu Liana',icon:'layout', median:1,   tile:[4.2,4.2],  size:[1.5,1.5,32],
+   act:'menyusun WO, jadwal produksi & material',
+   docs:['Klarifikasi data WO','Jadwal produksi','Jadwal material']},
+  {id:'gudang', nm:'Cek Material',       pic:'Inv. Controller', icon:'box', median:0.5, tile:[8.2,5.2], size:[2.0,1.6,22],
+   act:'cek stok: cukup → langsung; kurang → Purchasing',
+   docs:['Hasil cek stok','Alokasi material']},
+  {id:'purch',  nm:'Purchasing',         pic:'Dimas',   icon:'cart',   median:2,   tile:[7.6,1.9],  size:[1.6,1.4,24],
+   act:'PO material ke supplier / vendor',
+   docs:['PO ke supplier','Konfirmasi vendor & harga','Jadwal kedatangan']},
+  {id:'transit',nm:'Material In Transit',pic:'Ekspedisi',icon:'truck', median:4,   tile:[12.3,1.6], size:[1.4,1.1,14],
+   act:'material menuju gudang + QC masuk',
+   docs:['Surat jalan supplier','QC material diterima']},
+  {id:'wo',     nm:'Produksi Terima Data', pic:'Bu Liana', icon:'send', median:0.3, tile:[10.6,6.6], size:[1.3,1.2,18], cp:true,
+   act:'serah WO + material ke produksi — checkpoint selesai',
+   docs:['Gambar final','Material siap','Deadline terkonfirmasi','Detail pekerjaan lengkap']},
+  {id:'prod',   nm:'Produksi & QC',      pic:'Kep. Produksi', icon:'factory', median:14, tile:[12.4,4.6], size:[2.6,2,42], luar:true,
+   act:'membuat & memeriksa barang',
+   docs:['SPK produksi','Checklist QC']},
+  {id:'fg',     nm:'Gudang FG & Kirim',  pic:'Raka',    icon:'truck',  median:3,   tile:[9.5,13],   size:[1.9,1.5,22], luar:true,
+   act:'simpan FG, kirim, BAST & invoice ke FAT',
+   docs:['QC finish good','Surat jalan / DO','BAST','Invoice ke FAT']},
 ];
 const EXIT_TILE = [5.5,15];
-// waypoint tile-paths antar stasiun (Manhattan di ruang tile = diagonal iso di layar)
-const ROUTES = [
-  [[-1.5,11],[2,11]],                       // spawn -> penawaran
-  [[2,11],[4,11],[4,8]],                    // penawaran -> review
-  [[4,8],[4,8.5],[7.5,8.5]],                // review -> finance
-  [[7.5,8.5],[6.5,8.5],[6.5,3.5]],          // finance -> purchasing
-  [[6.5,3.5],[12,3.5],[12,4]],              // purchasing -> produksi
-  [[12,4],[11.5,4],[11.5,9]],               // produksi -> qc
-  [[11.5,9],[11.5,13],[9.5,13]],            // qc -> kirim
-  [[9.5,13],[5.5,13],EXIT_TILE],            // kirim -> customer
+/* jaringan jalan BERCABANG: f=asal, t=tujuan (-1 spawn, 99 exit, 98 gerbang vendor) */
+const EDGES = [
+  {f:-1,t:0, pts:[[-1.5,11.6],[1.3,11.6]]},
+  {f:0, t:1, pts:[[1.3,11.6],[3.2,11.6],[3.2,9.2]]},
+  {f:1, t:2, pts:[[3.2,9.2],[5.8,9.2],[5.8,7.2]]},
+  {f:2, t:3, pts:[[5.8,7.2],[4.2,7.2],[4.2,4.2]]},
+  {f:3, t:4, pts:[[4.2,4.2],[8.2,4.2],[8.2,5.2]]},
+  {f:4, t:7, pts:[[8.2,5.2],[10.6,5.2],[10.6,6.6]]},          // material CUKUP: langsung serah data
+  {f:4, t:5, pts:[[8.2,5.2],[7.6,5.2],[7.6,1.9]]},            // material KURANG: ke purchasing
+  {f:5, t:6, pts:[[7.6,1.9],[12.3,1.9],[12.3,1.6]]},
+  {f:6, t:7, pts:[[12.3,1.6],[12.3,5.0],[10.6,5.0],[10.6,6.6]]},
+  {f:7, t:8, pts:[[10.6,6.6],[12.4,6.6],[12.4,4.6]]},
+  {f:8, t:9, pts:[[12.4,4.6],[11.8,4.6],[11.8,13],[9.5,13]]},
+  {f:9, t:99,pts:[[9.5,13],[5.5,13],EXIT_TILE]},
+  {f:98,t:6, pts:[[16.4,1.6],[12.3,1.6]]},                    // jalan masuk vendor dari luar peta
 ];
+const EDGE=(f,t)=>EDGES.find(e=>e.f===f&&e.t===t);
+/* jalur masuk utama tiap stasiun (untuk slot antrian) */
+const INC=[EDGE(-1,0),EDGE(0,1),EDGE(1,2),EDGE(2,3),EDGE(3,4),EDGE(4,5),EDGE(5,6),EDGE(6,7),EDGE(7,8),EDGE(8,9)];
+/* tahap berikutnya per order (cabang di Cek Material) */
+const nextOf=o=> o.stage===4 ? (o.matKurang?5:7) : o.stage+1;
 const ORDERS = [
-  {id:'ORD-0142', cust:'RS Hermina Samarinda', proj:'120 Pintu Medical Line', val:655, type:'proyek', stage:4, age:6,   docs:[5,5]},
-  {id:'ORD-0141', cust:'Hotel Grand Kaltim',   proj:'84 Pintu WPC-001',       val:412, type:'proyek', stage:3, age:6,   docs:[1,3], stuck:true},
-  {id:'ORD-0140', cust:'Perum Citra Bukit',    proj:'36 Pintu BAJA-001',      val:128, type:'proyek', stage:2, age:1,   docs:[2,3]},
-  {id:'ORD-0139', cust:'CV Borneo Interior',   proj:'12 Pintu Custom Jati',   val:96,  type:'custom', stage:1, age:0.5, docs:[2,2]},
-  {id:'ORD-0138', cust:'Toko Sinar Abadi',     proj:'8 Pintu WPC (retail)',   val:24,  type:'retail', stage:6, age:3,   docs:[4,4], slaH:6},
-  {id:'ORD-0137', cust:'Dinas PU Balikpapan',  proj:'60 Pintu Baja Galvanis', val:310, type:'proyek', stage:4, age:16,  docs:[5,5]},
-  {id:'ORD-0136', cust:'Apartemen Skyline',    proj:'200 Pintu WPC-001',      val:890, type:'proyek', stage:4, age:3,   docs:[5,5]},
-  {id:'ORD-0135', cust:'Ruko Pasar Baru',      proj:'10 Pintu Aluminium',     val:31,  type:'retail', stage:5, age:1,   docs:[3,3]},
-  {id:'ORD-0134', cust:'Masjid Al-Ikhlas',     proj:'6 Pintu Custom Ukir',    val:45,  type:'custom', stage:5, age:2,   docs:[3,3]},
-  {id:'ORD-0133', cust:'Gudang KM13',          proj:'4 Pintu Baja Sliding',   val:18,  type:'retail', stage:6, age:2,   docs:[4,4]},
-  {id:'ORD-0131', cust:'Sekolah Pelita',       proj:'40 Pintu WPC',           val:145, type:'proyek', stage:0, age:1,   docs:[1,2]},
-  {id:'ORD-0130', cust:'Klinik Medika',        proj:'15 Pintu Medical',       val:88,  type:'proyek', stage:0, age:0.2, docs:[0,2]},
+  {id:'ORD-0142', cust:'RS Hermina Samarinda', proj:'120 Pintu Medical Line', val:655, type:'proyek', stage:7, age:0.2, docs:[4,4], matKurang:true},
+  {id:'ORD-0141', cust:'Hotel Grand Kaltim',   proj:'84 Pintu WPC-001',       val:412, type:'proyek', stage:5, age:5,   docs:[1,3], stuck:true, matKurang:true},
+  {id:'ORD-0140', cust:'Perum Citra Bukit',    proj:'36 Pintu BAJA-001',      val:128, type:'proyek', stage:3, age:1.2, docs:[2,3], matKurang:true},
+  {id:'ORD-0139', cust:'CV Borneo Interior',   proj:'12 Pintu Custom Jati',   val:96,  type:'custom', stage:2, age:0.5, docs:[2,4]},
+  {id:'ORD-0138', cust:'Toko Sinar Abadi',     proj:'8 Pintu WPC (retail)',   val:24,  type:'retail', stage:9, age:2,   docs:[4,4], slaH:6},
+  {id:'ORD-0137', cust:'Dinas PU Balikpapan',  proj:'60 Pintu Baja Galvanis', val:310, type:'proyek', stage:6, age:6,   docs:[1,2], matKurang:true},
+  {id:'ORD-0136', cust:'Apartemen Skyline',    proj:'200 Pintu WPC-001',      val:890, type:'proyek', stage:8, age:3,   docs:[2,2], matKurang:true},
+  {id:'ORD-0135', cust:'Ruko Pasar Baru',      proj:'10 Pintu Aluminium',     val:31,  type:'retail', stage:4, age:0.3, docs:[2,2]},
+  {id:'ORD-0134', cust:'Masjid Al-Ikhlas',     proj:'6 Pintu Custom Ukir',    val:45,  type:'custom', stage:8, age:2,   docs:[1,2]},
+  {id:'ORD-0133', cust:'Gudang KM13',          proj:'4 Pintu Baja Sliding',   val:18,  type:'retail', stage:9, age:1.5, docs:[4,4]},
+  {id:'ORD-0131', cust:'Sekolah Pelita',       proj:'40 Pintu WPC',           val:145, type:'proyek', stage:1, age:0.6, docs:[4,7]},
+  {id:'ORD-0130', cust:'Klinik Medika',        proj:'15 Pintu Medical',       val:88,  type:'proyek', stage:0, age:0.2, docs:[1,2]},
 ];
 const TYPE_C = {proyek:'var(--c-proyek)', retail:'var(--c-retail)', custom:'var(--c-custom)'};
 const TYPE_N = {proyek:'Proyek', retail:'Retail', custom:'Custom'};
 // riwayat sintetis tahap yang sudah dilalui (deterministik, untuk timeline "Perjalanan Order")
 /* ============ PENYIMPANAN LOKAL (localStorage + IndexedDB) ============
    State demo tersimpan per browser: refresh tidak me-reset. Reset lewat Ctrl+K. */
-const SAVE_KEY='atlas-state-v1';
+const SAVE_KEY='atlas-state-v2'; /* v2: indeks tahap flow asli — save lama tidak kompatibel */
 function loadStateRaw(){
   try{const s=localStorage.getItem(SAVE_KEY);return s?JSON.parse(s):null;}catch(e){return null;}
 }
@@ -1420,21 +1450,21 @@ const docsMissing = o => stDocs(o).filter((_,i)=>!o.docState[i]);
 const resetDocs = (o,done)=>{o.docState=stDocs(o).map((_,i)=>i<(done||0));};
 ORDERS.forEach(o=>{if(!o.docState)resetDocs(o,o.docs?o.docs[0]:0);});
 const SDM = [
-  {ini:'SR', nm:'Sari',  role:'Admin Penawaran', done:14, t:'0,8 hr', med:'1,2 hr', spark:[3,4,2,5,4,6,5], st:0, pid:'sari'},
-  {ini:'RN', nm:'Rina',  role:'Finance',         done:11, t:'1,4 hr', med:'1,9 hr', spark:[2,3,3,4,3,4,5], st:2, pid:'rina'},
-  {ini:'DM', nm:'Dimas', role:'Purchasing',      done:9,  t:'1,8 hr', med:'2,4 hr', spark:[2,2,3,2,4,3,4], st:3, pid:'dimas'},
-  {ini:'BY', nm:'Bayu',  role:'PPIC Pabrik',     done:7,  t:'96%',    med:'update harian', spark:[3,3,4,4,4,5,4], st:4, pid:'bayu'},
-  {ini:'RK', nm:'Raka',  role:'Logistik',        done:12, t:'3,1 hr', med:'3,0 hr', spark:[4,3,5,4,5,4,5], st:6, pid:'raka'},
+  {ini:'KA', nm:'Kepala ABA', role:'ABA — Verifikasi', done:16, t:'0,4 hr', med:'0,5 hr', spark:[3,4,2,5,4,6,5], st:1, pid:'aba1'},
+  {ini:'AN', nm:'Annisa',   role:'SSA — Proses SO',   done:13, t:'0,9 hr', med:'1 hr',   spark:[2,3,3,4,3,4,5], st:2, pid:'annisa'},
+  {ini:'BL', nm:'Bu Liana', role:'PPIC — Proses WO',  done:12, t:'0,9 hr', med:'1 hr',   spark:[3,3,4,4,4,5,4], st:3, pid:'liana'},
+  {ini:'DM', nm:'Dimas',    role:'Purchasing',        done:9,  t:'1,8 hr', med:'2 hr',   spark:[2,2,3,2,4,3,4], st:5, pid:'dimas'},
+  {ini:'RK', nm:'Raka',     role:'Gudang FG & Kirim', done:12, t:'3 hr',   med:'3 hr',   spark:[4,3,5,4,5,4,5], st:9, pid:'raka'},
 ];
 let TASKS = [
-  {id:'T1', oid:'ORD-0141', title:'Terbitkan PO pabrik — Hotel Grand Kaltim', due:'hari ini', age:6, p85:5,
-   desc:'PO ke pabrik untuk 84 pintu WPC-001. Order sudah 6 hari di Purchasing (normal 3 hari) — dua dokumen wajib masih kurang. Sistem menahan tahap berikutnya sampai lengkap, jadi tidak ada berkas yang bisa kelewat.',
-   docs:[{n:'Penawaran pabrik (harga final)',up:true},{n:'SPK / kontrak ditandatangani',up:false},{n:'Bukti transfer DP 50%',up:false}]},
-  {id:'T2', oid:'ORD-0140', title:'Konfirmasi harga plat baja ke supplier', due:'hari ini', age:1, p85:5,
-   desc:'Minta harga final plat 0,8 mm untuk 36 pintu BAJA-001 sebelum PO dibuat.',
+  {id:'T1', oid:'ORD-0141', title:'Terbitkan PO material — Hotel Grand Kaltim', due:'hari ini', age:5, p85:4,
+   desc:'Material WPC untuk 84 pintu KURANG di gudang. Order sudah 5 hari di Purchasing (normal 2 hari) — dua berkas wajib masih kosong. Sistem menahan tahap berikutnya sampai lengkap, jadi tidak ada berkas yang bisa kelewat.',
+   docs:[{n:'PO ke supplier',up:true},{n:'Konfirmasi vendor & harga',up:false},{n:'Jadwal kedatangan',up:false}]},
+  {id:'T2', oid:'ORD-0140', title:'Siapkan quote material — Perum Citra Bukit', due:'hari ini', age:1, p85:4,
+   desc:'PPIC (Bu Liana) sedang menyusun jadwal material. Siapkan harga plat 0,8 mm supaya kalau stok kurang, PO supplier bisa langsung terbit.',
    docs:[{n:'Penawaran supplier terbaru',up:true}]},
-  {id:'T3', oid:null, title:'Update lead time produksi mingguan', due:'16.00', age:0.3, p85:1,
-   desc:'Perbarui estimasi lead time dari laporan PPIC untuk dipakai tim penawaran.', docs:[]},
+  {id:'T3', oid:null, title:'Update lead time material mingguan', due:'16.00', age:0.3, p85:1,
+   desc:'Perbarui estimasi lead time vendor untuk dipakai PPIC menyusun jadwal material.', docs:[]},
 ];
 const SARAN = [
   {title:'Follow-up penawaran supplier engsel', why:'tertinggal dari kemarin'},
@@ -1530,7 +1560,8 @@ function attentionItems(){
     if(o.stuck) items.push({sev:'crit',o,t:`Macet di ${st.nm} ${Math.round(o.age)} hari — ${Math.round(o.age/m*10)/10}x normal`, act:'peta'});
     else if(docsLack(o) && o.age>0.5) items.push({sev:o.age>m?'crit':'warn',o,t:`Dokumen kurang di ${st.nm} — menunggu ${docsMissing(o)[0]}${docsLack(o)>1?` +${docsLack(o)-1} lagi`:''}`, act:'dok'});
     if(o.slaH && o.slaH<=8) items.push({sev:'warn',o,t:`SLA pengiriman tersisa ${o.slaH} jam`, act:'peta'});
-    if(!o.stuck && o.age>m*1.1 && o.stage===4 ) items.push({sev:'warn',o,t:`Produksi lewat estimasi ${Math.round(o.age-m)} hari — cek ke pabrik`, act:'peta'});
+    if(!o.stuck && o.age>m*1.1 && o.stage===8 ) items.push({sev:'warn',o,t:`Produksi lewat estimasi ${Math.round(o.age-m)} hari — cek ke pabrik`, act:'peta'});
+    if(!o.stuck && o.age>m*1.1 && o.stage===6 ) items.push({sev:'warn',o,t:`Material in transit lewat estimasi ${Math.round(o.age-m)} hari — kejar vendor`, act:'peta'});
   }
   const rank={crit:0,warn:1};
   return items.sort((a,b)=>rank[a.sev]-rank[b.sev]);
@@ -1575,12 +1606,12 @@ function slaChip(o){
 /* ================= ALUR PROSES (pita 7 tahap) ================= */
 let flowFilter=null;
 function renderFlow(){
-  $('#flowRibbon').innerHTML=STAGES.map((st,i)=>{
+  const parts=STAGES.map((st,i)=>{
     const n=stationCount(i);
     /* hanya tahap yang benar-benar macet yang diberi cincin — supaya sinyalnya tidak tumpul */
     const bad=ORDERS.some(o=>o.stage===i&&orderStatus(o)==='crit');
-    return `<button class="fl-step ${flowFilter===i?'on':''} ${bad?'bad':''}" data-fl="${i}"
-              title="${st.nm} — PIC ${st.pic} · normal ${st.median} hari · ${st.docs.length} berkas wajib">
+    return `<button class="fl-step ${flowFilter===i?'on':''} ${bad?'bad':''} ${st.luar?'dim':''} ${st.cp?'cp':''}" data-fl="${i}"
+              title="${st.nm} — PIC ${st.pic} · normal ${st.median} hari · ${st.docs.length} berkas wajib${st.cp?' · CHECKPOINT FOKUS':st.luar?' · di luar fokus checkpoint':''}">
       <span class="fl-top">
         <span class="fl-n">${i+1}</span>
         <span class="fl-ct ${n>=3?'hot':''}">${n}</span>
@@ -1588,8 +1619,14 @@ function renderFlow(){
       <span class="fl-nm">${st.nm}</span>
       <span class="fl-pic">${st.pic} · ${st.median} hr</span>
     </button>`;
-  }).join('<span class="fl-arrow">'+I('chev')+'</span>')
-   +`<span class="fl-arrow">${I('chev')}</span><span class="fl-end">${I('check')}Customer</span>`;
+  });
+  const arrow=`<span class="fl-arrow">${I('chev')}</span>`;
+  const cut=STAGES.findIndex(s=>s.luar); // batas fokus checkpoint
+  $('#flowRibbon').innerHTML=
+    parts.slice(0,cut).join(arrow)
+    +arrow+`<span class="fl-end" style="color:var(--t-ok)" title="Fokus checkpoint: produksi menerima data">${I('check')}Checkpoint</span>`+arrow
+    +parts.slice(cut).join(arrow)
+    +arrow+`<span class="fl-end">${I('check')}Customer</span>`;
   $('#flowRibbon').querySelectorAll('[data-fl]').forEach(b=>b.onclick=()=>{
     const i=+b.dataset.fl;
     flowFilter = flowFilter===i ? null : i;
@@ -1673,12 +1710,12 @@ $('#feedTabs').querySelectorAll('.ftab').forEach(b=>b.onclick=()=>{
   renderFeed(false);
 });
 [
- {kind:'stage', html:`<b>Bayu</b> update produksi: rangka 200 unit selesai (68%) <span class="oid">ORD-0136</span>`},
- {kind:'dok',   html:`Packing list diterima dari pabrik <span class="oid">ORD-0135</span>`},
- {kind:'eksepsi',html:`<b>Sistem</b>: order macet di Purchasing 6 hari — 2x normal <span class="oid">ORD-0141</span>`},
- {kind:'stage', html:`<b>Rina</b> verifikasi DP lunas, lanjut ke Purchasing <span class="oid">ORD-0139</span>`},
- {kind:'done',  html:`Barang diterima customer — <b>Toko Berkah</b> <span class="oid">ORD-0129</span>`},
- {kind:'dok',   html:`<b>Sari</b> melengkapi RAB penawaran <span class="oid">ORD-0131</span>`},
+ {kind:'done',  html:`✅ <b>Checkpoint tercapai</b> — produksi menerima data <b>Apartemen Skyline</b> <span class="oid">ORD-0136</span>`},
+ {kind:'stage', html:`<b>Bu Liana</b> menyelesaikan jadwal produksi &amp; material <span class="oid">ORD-0136</span>`},
+ {kind:'eksepsi',html:`<b>Sistem</b>: order macet di Purchasing 5 hari — menunggu konfirmasi vendor <span class="oid">ORD-0141</span>`},
+ {kind:'stage', html:`<b>Annisa</b> menerbitkan SO, approval gambar N1/N2 lengkap <span class="oid">ORD-0139</span>`},
+ {kind:'dok',   html:`<b>Kepala ABA</b> menyelesaikan cek harga &amp; TOP <span class="oid">ORD-0131</span>`},
+ {kind:'dok',   html:`QC material diterima di gudang — sesuai surat jalan <span class="oid">ORD-0142</span>`},
  {kind:'stage', html:`<b>Raka</b> jadwalkan armada kirim Kariangau <span class="oid">ORD-0138</span>`},
 ].reverse().forEach(f=>{f.time=nowStr();FEED.unshift(f);});
 
@@ -1744,8 +1781,8 @@ const gTerrain=mk('g',{}); const gGrid=mk('g',{}); const gZones=mk('g',{}); cons
 
 // (grid lantai digambar di buildScene supaya ikut tema)
 
-// rute
-const routePts = ROUTES.map(r=>r.map(([x,y])=>proj(x,y)));
+// proyeksikan semua edge sekali
+EDGES.forEach(e=>{e.p=e.pts.map(([x,y])=>proj(x,y));});
 // (rute digambar di buildScene supaya ikut tema)
 // panjang polyline & titik pada jarak
 function polyLen(pts){let L=0;for(let i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return L;}
@@ -1760,19 +1797,19 @@ function pointAt(pts,dist){
   }
   return pts[pts.length-1];
 }
-// slot antrian: mundur dari ujung rute masuk, jarak menyesuaikan ukuran gedung
+// slot antrian: mundur dari ujung jalur masuk utama, jarak menyesuaikan ukuran gedung
 const SLOT_BACK=STAGES.map(st=>(st.size[0]+st.size[1])/4*51.4+24);
 function slotPoint(stageIdx,slot){
-  const pts=routePts[stageIdx]; const L=polyLen(pts);
+  const pts=INC[stageIdx].p; const L=polyLen(pts);
   return pointAt(pts, Math.max(0, L-SLOT_BACK[stageIdx]-slot*24));
 }
 // (chevron & takik slot digambar di buildScene supaya ikut tema)
 
 /* --- zona kampus (pelat lantai) --- */
 const ZONES=[
-  {nm:'KANTOR',    a:[0.6,6.2],  b:[9.2,13.2]},
-  {nm:'PENGADAAN', a:[4.6,1.8],  b:[8.6,5.6]},
-  {nm:'PABRIK',    a:[9.8,2.2],  b:[14.4,10.6]},
+  {nm:'KANTOR',    a:[0.4,3.3],  b:[7.3,13.2]},
+  {nm:'PENGADAAN', a:[6.6,0.7],  b:[14.9,3.0]},
+  {nm:'PABRIK',    a:[7.4,3.4],  b:[15.0,8.8]},
   {nm:'LOGISTIK',  a:[7.6,11.4], b:[11.8,15.2]},
 ];
 /* --- pembangun blok isometrik --- */
@@ -1817,10 +1854,10 @@ function shadowAt(cx,cy,rx,ry){mk('ellipse',{cx:cx+5,cy:cy+4,rx,ry,fill:C.shadow
    s = lebar sprite relatif diagonal footprint; ay = anchor dasar (fraksi tinggi).
    Gedung tanpa entri masih memakai builder vektor (menunggu kuota generasi). */
 const SPRITES={
-  produksi:{src:'assets/spr-produksi.png', s:1.18, ay:.84},
-  penawaran:{src:'assets/spr-penawaran.png', s:1.34, ay:.80},
-  review:{src:'assets/spr-review.png', s:1.42, ay:.86},
-  finance:{src:'assets/spr-finance.png', s:1.32, ay:.82},
+  prod:{src:'assets/spr-produksi.png', s:1.18, ay:.84},
+  aba:{src:'assets/spr-penawaran.png', s:1.14, ay:.80},
+  ppic:{src:'assets/spr-review.png', s:1.08, ay:.86},
+  ssa:{src:'assets/spr-finance.png', s:1.10, ay:.82},
 };
 function buildStation(idx,g){
   const st=STAGES[idx];const[wc,dc]=st.size;
@@ -1837,56 +1874,55 @@ function buildStation(idx,g){
     return;
   }
   switch(st.id){
-    case 'penawaran':
+    case 'order': // kios kecil di gerbang: PO customer masuk
+      part(g,x,y,wc,dc,14,{main:true});
+      part(g,x-0.1,y+dc-0.5,0.5,0.5,8,{f:1.1});
+      winFace(g,'r',x+wc,y,0.25,0.35,4,10,true);
+      break;
+    case 'gudang': // gudang material + dok
       part(g,x,y,wc,dc,20,{main:true});
-      part(g,x-0.12,y+dc-0.62,0.62,0.62,10,{f:1.1});
-      part(g,x+0.3,y+0.25,0.24,0.24,4,{lift:20,f:1.22}); // unit AC atap
-      winFace(g,'r',x+wc,y,0.3,0.36,5,13,true);winFace(g,'r',x+wc,y,0.92,0.36,5,13);
-      winFace(g,'l',x,y+dc,0.85,0.5,2,12);
+      part(g,x+0.2,y+dc-0.05,wc-1.1,0.5,6,{f:1.12});
+      part(g,x+wc-0.5,y+0.2,0.26,0.26,4,{lift:20,f:1.22});
+      winFace(g,'l',x,y+dc,0.35,0.6,3,14);
+      winFace(g,'l',x,y+dc,1.15,0.6,3,14,true);
       break;
-    case 'review':
-      part(g,x+0.05,y+0.05,wc-0.1,dc-0.1,9,{f:.92});
-      part(g,x+0.24,y+0.24,wc-0.48,dc-0.48,30,{main:true});
-      part(g,x+0.46,y+0.46,wc-0.92,dc-0.92,6,{lift:30,f:1.16});
-      { // antena tipis di puncak menara
-        const [ax,ay]=proj(x+wc/2,y+dc/2);
-        mk('line',{x1:ax,y1:ay-36,x2:ax,y2:ay-50,stroke:C.antenna,'stroke-width':1},g);
-        mk('circle',{cx:ax,cy:ay-51.5,r:1.5,fill:C.antennaDot},g);
-      }
-      winFace(g,'r',x+0.24+(wc-0.48),y+0.24,0.16,0.26,7,25,true);winFace(g,'r',x+0.24+(wc-0.48),y+0.24,0.6,0.26,7,25);
-      break;
-    case 'finance':
-      part(g,x,y,wc,dc,8,{f:.9});
-      part(g,x+0.16,y+0.16,wc-0.32,dc-0.32,25,{main:true});
-      part(g,x+0.35,y+0.3,0.24,0.24,4,{lift:33,f:1.22});
-      winFace(g,'r',x+0.16+(wc-0.32),y+0.16,0.22,0.3,4,20,true);winFace(g,'r',x+0.16+(wc-0.32),y+0.16,0.72,0.3,4,20);
-      winFace(g,'l',x+0.16,y+dc-0.16,0.5,0.4,4,14);
-      break;
-    case 'purchasing':
+    case 'purch': // kantor purchasing + dok kecil
       part(g,x,y,wc,dc,19,{main:true});
       part(g,x+0.15,y+dc-0.05,wc-1.0,0.5,6,{f:1.12});
-      part(g,x+wc-0.55,y+0.25,0.26,0.26,4,{lift:19,f:1.22});
-      winFace(g,'l',x,y+dc,1.1,0.55,3,14);
-      winFace(g,'r',x+wc,y,0.4,0.4,5,13,true);
+      part(g,x+wc-0.5,y+0.22,0.24,0.24,4,{lift:19,f:1.22});
+      winFace(g,'l',x,y+dc,1.0,0.5,3,14);
+      winFace(g,'r',x+wc,y,0.35,0.38,5,13,true);
       break;
-    case 'produksi':
+    case 'transit': // shelter terbuka: kanopi di atas 4 tiang (material lewat sini)
+      {
+        const rf=12;
+        [[x+0.08,y+0.08],[x+wc-0.16,y+0.08],[x+0.08,y+dc-0.16],[x+wc-0.16,y+dc-0.16]].forEach(([px,py])=>
+          part(g,px,py,0.08,0.08,rf,{f:.85}));
+        part(g,x-0.06,y-0.06,wc+0.12,dc+0.12,2.5,{lift:rf,main:true,f:1.14});
+      }
+      break;
+    case 'wo': // pos serah data produksi — checkpoint
+      part(g,x,y,wc,dc,16,{main:true});
+      { // antena kecil penanda pos
+        const [ax,ay]=proj(x+wc/2,y+dc/2);
+        mk('line',{x1:ax,y1:ay-20,x2:ax,y2:ay-32,stroke:C.antenna,'stroke-width':1},g);
+        mk('circle',{cx:ax,cy:ay-33.5,r:1.4,fill:C.antennaDot},g);
+      }
+      winFace(g,'l',x,y+dc,0.3,0.7,3,11,true);
+      break;
+    case 'prod': // fallback vektor pabrik (sprite biasanya aktif)
       part(g,x,y,wc,dc,32,{main:true});
       part(g,x+0.28,y+0.4,wc-0.56,0.6,9,{lift:32,f:1.15});
-      for(let k=0;k<3;k++)topDetail(g,x+0.5+k*0.62,y+0.5,0.4,0.4,41,C.skylight); // skylight monitor
-      part(g,x+wc-0.42,y+0.14,0.26,0.26,17,{lift:32,f:.78}); // cerobong
-      { // asap: hidup hanya saat sektor .working
+      for(let k=0;k<3;k++)topDetail(g,x+0.5+k*0.62,y+0.5,0.4,0.4,41,C.skylight);
+      part(g,x+wc-0.42,y+0.14,0.26,0.26,17,{lift:32,f:.78});
+      {
         const [smx,smy]=proj(x+wc-0.29,y+0.27);
         [0,1,2].forEach(k=>mk('circle',{cx:smx,cy:smy-51,r:3+k*0.9,fill:C.smoke,class:'smoke s'+(k+1)},g));
       }
       winFace(g,'l',x,y+dc,0.5,1.5,5,23);
       winFace(g,'r',x+wc,y,0.35,0.5,6,15,true);winFace(g,'r',x+wc,y,1.15,0.5,6,15);
       break;
-    case 'qc':
-      part(g,x,y,wc,dc,18,{main:true});
-      part(g,x+0.2,y+0.2,wc-0.4,dc-0.4,5,{lift:18,f:1.13});
-      winFace(g,'l',x,y+dc,0.5,0.8,3,12,true);
-      break;
-    case 'kirim':
+    case 'fg': // gudang FG + 3 pintu dok kirim
       part(g,x,y,wc,dc,16,{main:true});
       part(g,x+0.25,y+0.22,0.26,0.26,4,{lift:16,f:1.22});
       winFace(g,'l',x,y+dc,0.2,0.42,2,11);winFace(g,'l',x,y+dc,0.78,0.42,2,11,true);winFace(g,'l',x,y+dc,1.36,0.42,2,11);
@@ -1896,12 +1932,12 @@ function buildStation(idx,g){
 
 /* --- properti dekorasi (kontainer, truk parkir, gerbang QC) --- */
 const PROPS=[
-  {v:6.1, build:g=>{ // tumpukan kontainer sisi pabrik
-    part(g,13.35,2.5,0.55,0.3,8,{f:.95});part(g,13.35,2.88,0.55,0.3,8,{f:1.08});
-    part(g,13.35,2.69,0.55,0.3,8,{lift:8,f:1.02});}},
-  {v:18.7, build:g=>{ // gerbang pemindai QC di jalan produksi->qc
-    part(g,11.16,7.1,0.13,0.13,13,{f:.85});part(g,11.76,7.1,0.13,0.13,13,{f:.85});
-    part(g,11.16,7.1,0.73,0.13,2,{lift:13,f:1.2});}},
+  {v:17.4, build:g=>{ // tumpukan kontainer sisi pabrik
+    part(g,13.7,3.55,0.55,0.3,8,{f:.95});part(g,13.7,3.93,0.55,0.3,8,{f:1.08});
+    part(g,13.7,3.74,0.55,0.3,8,{lift:8,f:1.02});}},
+  {v:12.6, build:g=>{ // gerbang QC material di jalan menuju gudang (transit)
+    part(g,10.75,1.5,0.13,0.13,13,{f:.85});part(g,10.75,2.12,0.13,0.13,13,{f:.85});
+    part(g,10.75,1.5,0.13,0.75,2,{lift:13,f:1.2});}},
   {v:22.4, build:g=>{ // truk parkir dekat gudang kirim
     part(g,8.15,13.95,0.62,0.32,7,{f:1.12});part(g,8.77,13.98,0.22,0.26,5,{f:1.28});}},
   {v:24.6, build:g=>{ // kontainer sisi logistik
@@ -1914,7 +1950,7 @@ function lamp(g,tx,ty){
   mk('line',{x1:px,y1:py,x2:px,y2:py-15,stroke:C.lampPost,'stroke-width':1.2},g);
   mk('circle',{cx:px,cy:py-16,r:1.7,fill:C.lampBulb},g);
 }
-[[3.5,10.6],[5.6,8.1],[9.5,3.1],[11.9,11.2],[7.6,12.6]].forEach(([tx,ty])=>{
+[[2.6,11.0],[4.7,8.6],[6.3,4.7],[11.5,5.9],[7.6,12.6]].forEach(([tx,ty])=>{
   PROPS.push({v:tx+ty, build:g=>lamp(g,tx,ty)});
 });
 // pohon: kanopi 2 lingkaran + batang + bayangan; hijau lembut di siang, gelap di malam
@@ -1944,10 +1980,10 @@ function bush(g,tx,ty,s){
 PROPS.push({v:9.15, build:g=>{part(g,3.05,5.9,0.45,0.24,5,{f:1.05});part(g,3.14,5.93,0.24,0.18,4,{lift:5,f:.85});}});
 PROPS.push({v:9.85, build:g=>{part(g,3.65,5.95,0.45,0.24,5,{f:.9});part(g,3.74,5.98,0.24,0.18,4,{lift:5,f:.75});}});
 // pagar sisi utara zona pabrik
-PROPS.push({v:12.4, build:g=>{
+PROPS.push({v:14.2, build:g=>{
   const top=[];
-  for(let x=10.2;x<=14.2;x+=0.66){
-    const[px,py]=proj(x,2.25);
+  for(let x=10.9;x<=14.7;x+=0.66){
+    const[px,py]=proj(x,3.3);
     mk('line',{x1:px,y1:py,x2:px,y2:py-8,stroke:C.fence,'stroke-width':1.1},g);
     top.push(`${px.toFixed(1)},${(py-8).toFixed(1)}`);
   }
@@ -1974,18 +2010,18 @@ PROPS.push({v:9.3, build:g=>{
     style:'font-family:var(--mono);font-weight:600'},g);
   tx.textContent='ATLAS';
 }});
-// tiang bendera di plaza review
-PROPS.push({v:10.55, build:g=>{
-  const[px,py]=proj(3.25,7.3);
+// tiang bendera di plaza PPIC
+PROPS.push({v:8.1, build:g=>{
+  const[px,py]=proj(3.1,5.0);
   mk('line',{x1:px,y1:py,x2:px,y2:py-30,stroke:C.fence,'stroke-width':1.3},g);
   mk('polygon',{points:`${px},${py-30} ${px+13},${py-26.5} ${px},${py-23}`,fill:'var(--accent)',opacity:.85},g);
 }});
 // forklift di dok pabrik
-PROPS.push({v:16.1, build:g=>{
-  part(g,10.55,5.35,0.34,0.24,5,{f:1.1});
-  const[mx,my]=proj(10.6,5.34);
+PROPS.push({v:17.8, build:g=>{
+  part(g,11.55,6.15,0.34,0.24,5,{f:1.1});
+  const[mx,my]=proj(11.6,6.14);
   mk('line',{x1:mx,y1:my-4,x2:mx,y2:my-14,stroke:C.fence,'stroke-width':1.6},g);
-  const[fx,fy]=proj(10.52,5.3);
+  const[fx,fy]=proj(11.52,6.1);
   mk('line',{x1:fx,y1:fy-1,x2:fx-7,y2:fy+2.6,stroke:C.fence,'stroke-width':1.3},g);
   mk('line',{x1:fx+3,y1:fy+1,x2:fx-4,y2:fy+4.6,stroke:C.fence,'stroke-width':1.3},g);
 }});
@@ -2059,15 +2095,15 @@ function buildScene(){
     mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill:C.zoneTint[zi],
       stroke:C.zoneStroke,'stroke-width':1,'stroke-dasharray':'3 7'},gZones);
   });
-  // jalan (underlay gelap + permukaan)
-  routePts.forEach(pts=>{
-    const d='M'+pts.map(p=>p.join(' ')).join(' L');
+  // jalan (underlay gelap + permukaan) — termasuk cabang material & jalan vendor
+  EDGES.forEach(e=>{
+    const d='M'+e.p.map(p=>p.join(' ')).join(' L');
     mk('path',{d,fill:'none',stroke:C.routeUnder,'stroke-width':8,'stroke-linecap':'round','stroke-linejoin':'round'},gRoutes);
     mk('path',{d,fill:'none',stroke:C.route,'stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round'},gRoutes);
   });
   // chevron arah statis
-  routePts.forEach(pts=>{
-    const L=polyLen(pts);
+  EDGES.forEach(e=>{
+    const pts=e.p, L=polyLen(pts);
     for(let d=52; d<L-58; d+=90){
       const p=pointAt(pts,d), q=pointAt(pts,Math.min(L,d+6));
       const ang=Math.atan2(q[1]-p[1],q[0]-p[0])*180/Math.PI;
@@ -2083,7 +2119,7 @@ function buildScene(){
   });
   // marka jalan: zebra cross di jalur kantor
   {
-    const pts=routePts[2], p=pointAt(pts,54), q=pointAt(pts,60);
+    const pts=EDGE(1,2).p, p=pointAt(pts,54), q=pointAt(pts,60);
     const dx=q[0]-p[0], dy=q[1]-p[1], L=Math.hypot(dx,dy)||1;
     const ux=dx/L, uy=dy/L, px=-uy, py=ux;
     for(let k=-1;k<=2;k++){
@@ -2264,7 +2300,7 @@ function zoomToWorld(wx,wy,w){
    FLOW    = pita 7 stasiun (bbox .st-grp 234,142 1014x397 + margin label) — dipakai
              membingkai alur di layar kecil, di mana pulau utuh jadi terlalu kecil. */
 const CONTENT={x:20,y:0,w:1392,h:664};
-const FLOW={x:200,y:115,w:1090,h:480};
+const FLOW={x:150,y:55,w:1180,h:560};
 const isSmall=()=>window.matchMedia('(max-width:900px)').matches;
 function fitContent(animate){
   const A=petaAspect();
@@ -2403,9 +2439,8 @@ layoutQueues(false);
 function travel(o,fromStage,toStage,onEnd){
   const tk=tokens[o.id]; if(!tk){onEnd&&onEnd();return;}
   const path=[tk.pos];
-  for(let s=fromStage;s<toStage;s++){
-    routePts[s+1].forEach(p=>path.push(p));
-  }
+  const eg=EDGE(fromStage,toStage);
+  if(eg)eg.p.forEach(p=>path.push(p));
   const targetSlot=slotPoint(toStage, Math.max(0,ORDERS.filter(x=>x.stage===toStage).indexOf(o)));
   path.push(targetSlot);
   const dur=clamp(polyLen(path)*5.5,1100,2600);
@@ -2415,7 +2450,7 @@ function travel(o,fromStage,toStage,onEnd){
 function travelBack(o,fromStage,toStage,onEnd){
   const tk=tokens[o.id]; if(!tk){onEnd&&onEnd();return;}
   const path=[tk.pos];
-  for(let s=fromStage;s>toStage;s--) routePts[s].slice().reverse().forEach(p=>path.push(p));
+  for(let s=fromStage;s>toStage;s--){const e=EDGE(s-1,s); if(e)e.p.slice().reverse().forEach(p=>path.push(p));}
   path.push(slotPoint(toStage, Math.max(0,ORDERS.filter(x=>x.stage===toStage).indexOf(o))));
   glide(tk,path,clamp(polyLen(path)*5.5,1100,2600),
     ()=>{arriveFx(tk);blinkStation(toStage);layoutQueues(true);onEnd&&onEnd();});
@@ -2431,7 +2466,7 @@ function travelExit(o,onEnd){
     tk.inner.appendChild(tg);
     tk._truckG=tg;
   }
-  const path=[tk.pos,...routePts[7]];
+  const path=[tk.pos,...EDGE(9,99).p];
   glide(tk,path,2200,()=>{
     tk.g.style.transition='opacity .5s var(--ease)';tk.g.style.opacity=0;
     setTimeout(()=>{tk.g.remove();delete tokens[o.id];},550);
@@ -2530,21 +2565,25 @@ function nextStepText(o){
   const st=STAGES[o.stage];
   if(docsLack(o)){
     const m=docsMissing(o);
-    return `<b>${st.pic}</b> melengkapi <b>${m[0]}</b>${m.length>1?` (+${m.length-1} berkas lagi)`:''} — tahap terkunci sampai lengkap`;
+    return `<b>${st.pic}</b> melengkapi <b>${m[0]}</b>${m.length>1?` (+${m.length-1} lagi)`:''} — tahap terkunci sampai lengkap`;
   }
-  if(o.stage===1) return `<b>Matthew</b> menyetujui, lalu lanjut ke <b>Finance</b> (Rina)`;
-  if(o.stage>=6)  return `<b>Raka</b> mengantar ke customer — order keluar dari pipeline`;
-  const nx=STAGES[o.stage+1];
+  if(o.stage===1) return `<b>ABA</b> selesai verifikasi → request <b>SSA</b> (Annisa) proses SO`;
+  if(o.stage===4) return o.matKurang
+    ? `Material <b>KURANG</b> → ke <b>Purchasing</b> (Dimas) untuk PO supplier`
+    : `Material <b>CUKUP</b> → langsung serah data ke <b>Produksi</b>`;
+  if(o.stage===7) return `✅ Serah WO + material — <b>produksi mulai membuat barang</b> (checkpoint fokus selesai)`;
+  if(o.stage>=9)  return `<b>Raka</b> kirim ke customer — Surat Jalan/DO, BAST, invoice ke FAT`;
+  const nx=STAGES[nextOf(o)];
   return `Berkas lengkap — siap diserahkan ke <b>${nx.nm}</b> (${nx.pic}) untuk ${nx.act}`;
 }
 
 /* ================= SETUJUI / MINTA REVISI (tahap Review) ================= */
 function approveOrder(oid){
   const o=ORDERS.find(x=>x.id===oid); if(!o||o.stage!==1)return;
-  if(docsLack(o)){toast('Lengkapi berkas dulu — persetujuan terkunci');return;}
-  pushFeed({kind:'stage',html:`<b>Matthew</b> menyetujui penawaran <b>${o.cust}</b> <span class="oid">${o.id}</span>`});
+  if(docsLack(o)){toast('Selesaikan semua cek ABA dulu — terkunci');return;}
+  pushFeed({kind:'stage',html:`<b>ABA</b> menyelesaikan 7 cek &amp; me-request SSA <b>${o.cust}</b> <span class="oid">${o.id}</span>`});
   advanceOrder(oid);
-  toast(`Disetujui — ${o.cust} lanjut ke Finance`);
+  toast(`Verifikasi selesai — ${o.cust} lanjut ke SSA (Annisa)`);
   if(openOid===oid)closeOrderPanel();
 }
 function rejectOrder(oid){
@@ -2553,15 +2592,15 @@ function rejectOrder(oid){
   o.rev=(o.rev||0)+1; o.stage=0; o.age=0.05; o.slaH=null;
   resetDocs(o,1);                       /* RAB tetap ada, penawaran harus disusun ulang */
   travelBack(o,from,0,()=>{});
-  getPersonTasks('sari').unshift({id:'R-'+Math.floor(performance.now()),oid:o.id,
-    title:`Revisi penawaran — ${o.cust}`,due:'hari ini',age:0.02,p85:1,prio:'penting',fresh:true,from:'Matthew',
-    desc:'Dikembalikan Matthew dari Review & Approval. Susun ulang penawaran lalu ajukan lagi.',
-    docs:[{n:'Penawaran revisi',up:false}]});
-  pushFeed({kind:'eksepsi',html:`<b>Matthew</b> mengembalikan <b>${o.cust}</b> ke Penawaran — revisi ke-${o.rev} <span class="oid">${o.id}</span>`});
+  getPersonTasks('rio').unshift({id:'R-'+Math.floor(performance.now()),oid:o.id,
+    title:`Lengkapi data order — ${o.cust}`,due:'hari ini',age:0.02,p85:1,prio:'penting',fresh:true,from:'ABA',
+    desc:'Dikembalikan ABA dari Verifikasi (ada cek yang gagal). Lengkapi data PO lalu ajukan lagi.',
+    docs:[{n:'Data PO diperbaiki',up:false}]});
+  pushFeed({kind:'eksepsi',html:`<b>ABA</b> mengembalikan <b>${o.cust}</b> ke Sales — revisi ke-${o.rev} <span class="oid">${o.id}</span>`});
   tabsFor('kerja').forEach(t=>t.classList.add('hasnotif'));
-  toast('Dikembalikan ke Sari untuk revisi');
+  toast('Dikembalikan ke Sales (Rio) untuk dilengkapi');
   if(openOid===oid)closeOrderPanel();
-  if(persona==='sari')switchPersona('sari');
+  if(persona==='rio')switchPersona('rio');
   rerenderMenara(oid,null);
 }
 function closeOrderPanel(){
@@ -2659,47 +2698,57 @@ function refreshPeta(){
     const bad=ORDERS.some(o=>o.stage===i&&orderStatus(o)==='crit');
     stGroups[i]&&stGroups[i].classList.toggle('attn',bad);
   });
-  stGroups[4]&&stGroups[4].classList.toggle('working',stationCount(4)>0);
+  stGroups[8]&&stGroups[8].classList.toggle('working',stationCount(8)>0);
   if(openOid){ORDERS.some(o=>o.id===openOid)?showOrderPop(openOid):closeOrderPanel();}
   if(curView==='sektor'&&curSektor!=null)openSektor(curSektor,true);
 }
 
 /* ================= HALAMAN SEKTOR: hirarki tim ================= */
 const STATC={aktif:['var(--ok)','Aktif'],lapangan:['var(--info)','Di lapangan'],cuti:['rgba(255,255,255,.3)','Cuti']};
-const ZONE_OF=['Kantor','Kantor','Kantor','Pengadaan','Pabrik','Pabrik','Logistik'];
-const SEKTOR_DONE=[38,31,29,27,22,21,19];
-const SEKTOR_THRU=[[7,9,8,10,9,11,10,12],[6,7,7,8,8,9,8,10],[6,8,7,9,8,9,9,10],[5,7,6,8,7,8,8,9],[4,5,5,6,5,6,6,7],[5,6,6,7,6,7,7,8],[4,5,6,6,5,7,6,8]];
+const ZONE_OF=['Kantor','Kantor','Kantor','Kantor','Pabrik','Pengadaan','Pengadaan','Pabrik','Pabrik','Logistik'];
+const SEKTOR_DONE=[40,38,35,33,31,27,25,30,22,19];
+const SEKTOR_THRU=[
+ [8,9,9,10,10,11,10,12],[7,8,8,9,9,10,9,11],[6,7,7,8,8,9,8,10],[6,8,7,9,8,9,9,10],
+ [7,8,8,9,8,10,9,11],[5,7,6,8,7,8,8,9],[4,6,5,7,6,7,7,8],[7,8,8,9,9,10,10,11],
+ [4,5,5,6,5,6,6,7],[4,5,6,6,5,7,6,8]];
+/* Struktur tim mengikuti flow asli. NAMA NYATA: Annisa (SSA), Bu Liana (PPIC).
+   Sisanya masih placeholder — menunggu struktur organisasi lengkap dari Matthew. */
 const TEAMS=[
- {mgr:{id:'sari',nm:'Sari Wulandari',ini:'SW',role:'Kepala Admin Penawaran',status:'aktif',tel:'0812-5501-2210',beban:3,kpi:{sel:14,avg:'0,8 jam',med:'1,2 jam',q:'2%'},tugas:['Rekap penawaran masuk harian','Follow-up penawaran umur > 3 hari'],reports:[
-   {id:'maya',nm:'Maya Anjani',ini:'MA',role:'Estimator',status:'aktif',tel:'0813-4402-8871',beban:4,kpi:{sel:9,avg:'2,1 jam',med:'2,5 jam',q:'4%'},tugas:['RAB 40 pintu Sekolah Pelita','Estimasi Medical Line Klinik Medika']},
-   {id:'putri',nm:'Putri Ramadhani',ini:'PR',role:'Admin Dokumen',status:'cuti',tel:'0821-7733-0092',beban:0,kpi:{sel:6,avg:'1,0 jam',med:'1,1 jam',q:'1%'},tugas:['Cuti sampai 4 Agustus']}]}},
- {mgr:{id:'mt',nm:'Matthew',ini:'MT',role:'Owner — Review & Approval',status:'aktif',tel:'—',beban:2,kpi:{sel:12,avg:'0,6 hari',med:'1 hari',q:'—'},tugas:['Approve penawaran > Rp 100 jt','Review harga khusus proyek'],reports:[]}},
- {mgr:{id:'rina',nm:'Rina Kusuma',ini:'RK',role:'Finance Lead',status:'aktif',tel:'0812-9931-4405',beban:3,kpi:{sel:11,avg:'1,4 jam',med:'1,9 jam',q:'2%'},tugas:['Verifikasi DP masuk','Rekonsiliasi harian'],reports:[
-   {id:'dewi',nm:'Dewi Safitri',ini:'DS',role:'Admin Invoice & AR',status:'aktif',tel:'0813-2208-6634',beban:4,kpi:{sel:13,avg:'0,9 jam',med:'1,2 jam',q:'3%'},tugas:['Terbitkan invoice DP','Tagih AR jatuh tempo']},
-   {id:'eko',nm:'Eko Prasetyo',ini:'EP',role:'Kasir',status:'aktif',tel:'0857-1140-2318',beban:2,kpi:{sel:10,avg:'0,5 jam',med:'0,6 jam',q:'1%'},tugas:['Input mutasi bank pagi & sore']}]}},
- {mgr:{id:'dimas',nm:'Dimas Saputra',ini:'DM',role:'Purchasing Manager',status:'aktif',tel:'0812-5588-7741',beban:3,kpi:{sel:9,avg:'1,8 hari',med:'2,4 hari',q:'3%'},tugas:['Terbitkan PO pabrik','Negosiasi harga supplier'],reports:[
-   {id:'fitri',nm:'Fitri Handayani',ini:'FH',role:'Staf Pembelian',status:'aktif',tel:'0822-4419-0937',beban:4,kpi:{sel:8,avg:'2,0 hari',med:'2,4 hari',q:'5%'},tugas:['Quote plat baja 0,8 mm','Order engsel & handle batch 7']},
-   {id:'andi',nm:'Andi Wijaya',ini:'AW',role:'Admin PO & Kontrak',status:'aktif',tel:'0838-6671-2245',beban:3,kpi:{sel:11,avg:'1,1 jam',med:'1,4 jam',q:'2%'},tugas:['Arsip SPK ditandatangani','Update status PO mingguan']}]}},
- {mgr:{id:'bayu',nm:'Bayu Nugroho',ini:'BN',role:'PPIC Manager',status:'aktif',tel:'0812-3345-9160',beban:4,kpi:{sel:7,avg:'13 hari',med:'14 hari',q:'2%'},tugas:['Jadwal produksi mingguan','Lapor progres ke owner'],reports:[
-   {id:'joko',nm:'Joko Santoso',ini:'JS',role:'Kepala Produksi',status:'lapangan',tel:'0813-9982-4471',beban:5,kpi:{sel:6,avg:'12 hari',med:'14 hari',q:'3%'},tugas:['Rakitan 200 unit Skyline','Finishing Medical Line'],reports:[
-     {id:'slamet',nm:'Slamet Riyadi',ini:'SR',role:'Operator CNC',status:'lapangan',tel:'0858-2214-7708',beban:4,kpi:{sel:22,avg:'45 mnt/panel',med:'50 mnt',q:'1%'},tugas:['Potong rangka WPC batch 12']},
-     {id:'udin',nm:'Udin Kurnia',ini:'UK',role:'Operator Finishing',status:'lapangan',tel:'0877-5530-1194',beban:4,kpi:{sel:19,avg:'1,1 jam/unit',med:'1,2 jam',q:'2%'},tugas:['Coating duco 60 pintu Dinas PU']}]},
-   {id:'wati',nm:'Wati Suryani',ini:'WS',role:'Admin Produksi',status:'aktif',tel:'0812-7845-3390',beban:2,kpi:{sel:12,avg:'0,7 jam',med:'0,9 jam',q:'1%'},tugas:['Input progres harian ke sistem']}]}},
- {mgr:{id:'tono',nm:'Tono Hartono',ini:'TH',role:'QC Lead',status:'aktif',tel:'0813-6650-9982',beban:3,kpi:{sel:21,avg:'38 mnt/unit',med:'45 mnt',q:'0,5%'},tugas:['Inspeksi final batch RS Hermina'],reports:[
-   {id:'rudi',nm:'Rudi Gunawan',ini:'RG',role:'Inspektor QC',status:'lapangan',tel:'0821-3308-7761',beban:4,kpi:{sel:18,avg:'42 mnt/unit',med:'45 mnt',q:'1%'},tugas:['Cek dimensi 10 pintu Ruko Pasar Baru']},
-   {id:'yani',nm:'Yani Puspita',ini:'YP',role:'Staf Packing',status:'aktif',tel:'0856-9917-2240',beban:3,kpi:{sel:24,avg:'25 mnt/unit',med:'30 mnt',q:'1%'},tugas:['Packing 6 pintu Masjid Al-Ikhlas']}]}},
- {mgr:{id:'raka',nm:'Raka Pratama',ini:'RP',role:'Kepala Logistik',status:'aktif',tel:'0812-4470-6612',beban:3,kpi:{sel:12,avg:'3,1 hari',med:'3,0 hari',q:'2%'},tugas:['Jadwal armada minggu ini','Konfirmasi penerimaan customer'],reports:[
+ {mgr:{id:'rio',nm:'Rio Pratama',ini:'RP',role:'Sales Lead',status:'aktif',tel:'0812-0000-0101',beban:3,kpi:{sel:11,avg:'0,3 hari',med:'0,3 hari',q:'2%'},tugas:['Follow-up PO customer','Update pipeline penawaran'],reports:[
+   {id:'gina',nm:'Gina Safira',ini:'GS',role:'Sales Support',status:'aktif',tel:'0813-0000-0102',beban:2,kpi:{sel:9,avg:'0,4 hari',med:'0,3 hari',q:'2%'},tugas:['Input PO masuk & data customer']}]}},
+ {mgr:{id:'aba1',nm:'Kepala ABA',ini:'KA',role:'Admin Business Analyst Lead',status:'aktif',tel:'0812-0000-0201',beban:4,kpi:{sel:16,avg:'0,4 hari',med:'0,5 hari',q:'1%'},tugas:['Monitoring semua order sampai terkirim & terbayar lunas','Eskalasi cek gagal ke Sales'],reports:[
+   {id:'aba2',nm:'Analis ABA 1',ini:'A1',role:'Business Analyst',status:'aktif',tel:'0813-0000-0202',beban:4,kpi:{sel:14,avg:'0,4 hari',med:'0,5 hari',q:'2%'},tugas:['Cek PO=Penawaran & Harga-TOP','Cek historis pelanggan']},
+   {id:'aba3',nm:'Analis ABA 2',ini:'A2',role:'Business Analyst',status:'aktif',tel:'0821-0000-0203',beban:3,kpi:{sel:12,avg:'0,5 hari',med:'0,5 hari',q:'1%'},tugas:['Cek standard/custom & survey/gambar','Cek ketersediaan & deadline']}]}},
+ {mgr:{id:'annisa',nm:'Annisa',ini:'AN',role:'SSA Lead — Sales Support Administration',status:'aktif',tel:'0812-0000-0301',beban:4,kpi:{sel:13,avg:'0,9 hari',med:'1 hari',q:'2%'},tugas:['Klarifikasi ulang semua data sebelum SO','Koordinasi balik ke Sales jika kendala','Tindak lanjut PO: Finance, PPIC, Gudang, N1/N2, Project'],reports:[
+   {id:'ssa2',nm:'Staf SSA 1',ini:'S1',role:'Sales Support Admin',status:'aktif',tel:'0813-0000-0302',beban:3,kpi:{sel:11,avg:'1,0 hari',med:'1 hari',q:'3%'},tugas:['Terbitkan SO','Kawal approval gambar N1/N2']},
+   {id:'ssa3',nm:'Staf SSA 2',ini:'S2',role:'Sales Support Admin',status:'aktif',tel:'0821-0000-0303',beban:3,kpi:{sel:10,avg:'1,1 hari',med:'1 hari',q:'2%'},tugas:['Info invoice ke Finance','Update progress ke Project']}]}},
+ {mgr:{id:'liana',nm:'Bu Liana',ini:'BL',role:'PPIC Lead — Prod. Planning, Inv. Controller & SCM',status:'aktif',tel:'0812-0000-0401',beban:5,kpi:{sel:12,avg:'0,9 hari',med:'1 hari',q:'1%'},tugas:['Klarifikasi ulang data sebelum WO','Jadwal produksi & jadwal material','Kendali produksi & koordinasi gudang'],reports:[
+   {id:'ppic2',nm:'Staf PPIC 1',ini:'P1',role:'Production Planner',status:'aktif',tel:'0813-0000-0402',beban:4,kpi:{sel:10,avg:'1,0 hari',med:'1 hari',q:'2%'},tugas:['Susun jadwal produksi mingguan']},
+   {id:'ppic3',nm:'Staf PPIC 2',ini:'P2',role:'SCM & Material Planner',status:'aktif',tel:'0821-0000-0403',beban:4,kpi:{sel:9,avg:'1,1 hari',med:'1 hari',q:'2%'},tugas:['Jadwal material & koreksi pekerjaan']}]}},
+ {mgr:{id:'ic1',nm:'Inv. Controller',ini:'IC',role:'Inventory Controller Gudang Material',status:'aktif',tel:'0812-0000-0501',beban:3,kpi:{sel:15,avg:'0,4 hari',med:'0,5 hari',q:'1%'},tugas:['Cek stok & alokasi material per WO','Rekonsiliasi stok harian'],reports:[
+   {id:'gud2',nm:'Staf Gudang Material',ini:'GM',role:'Checker Gudang',status:'lapangan',tel:'0813-0000-0502',beban:3,kpi:{sel:14,avg:'0,5 hari',med:'0,5 hari',q:'1%'},tugas:['Hitung fisik material','Siapkan alokasi ke produksi']}]}},
+ {mgr:{id:'dimas',nm:'Dimas Saputra',ini:'DM',role:'Purchasing Manager',status:'aktif',tel:'0812-5588-7741',beban:3,kpi:{sel:9,avg:'1,8 hari',med:'2 hari',q:'3%'},tugas:['PO material ke supplier','Negosiasi vendor & harga'],reports:[
+   {id:'fitri',nm:'Fitri Handayani',ini:'FH',role:'Staf Pembelian',status:'aktif',tel:'0822-4419-0937',beban:4,kpi:{sel:8,avg:'2,0 hari',med:'2 hari',q:'5%'},tugas:['Quote plat & aksesoris','Follow-up konfirmasi vendor']},
+   {id:'andi',nm:'Andi Wijaya',ini:'AW',role:'Admin PO & Kontrak',status:'aktif',tel:'0838-6671-2245',beban:3,kpi:{sel:11,avg:'1,1 jam',med:'1,4 jam',q:'2%'},tugas:['Arsip PO supplier','Update jadwal kedatangan']}]}},
+ {mgr:{id:'eks1',nm:'Koord. Ekspedisi',ini:'KE',role:'Koordinator Material In Transit',status:'lapangan',tel:'0812-0000-0701',beban:3,kpi:{sel:8,avg:'4 hari',med:'4 hari',q:'1%'},tugas:['Pantau kedatangan material','QC material masuk bersama gudang'],reports:[
+   {id:'eks2',nm:'Checker QC Masuk',ini:'CQ',role:'QC Material Diterima',status:'lapangan',tel:'0813-0000-0702',beban:2,kpi:{sel:12,avg:'0,3 hari',med:'0,3 hari',q:'1%'},tugas:['Cek surat jalan supplier vs fisik']}]}},
+ {mgr:{id:'admwo',nm:'Adm. Serah Data',ini:'AS',role:'Admin WO → Produksi (di bawah PPIC)',status:'aktif',tel:'0812-0000-0801',beban:2,kpi:{sel:14,avg:'0,3 hari',med:'0,3 hari',q:'1%'},tugas:['Pastikan checklist final lengkap (gambar/material/deadline/detail)','Serah WO ke Kep. Produksi'],reports:[]}},
+ {mgr:{id:'kprod',nm:'Kep. Produksi',ini:'KP',role:'Kepala Produksi & QC',status:'lapangan',tel:'0812-0000-0901',beban:5,kpi:{sel:6,avg:'13 hari',med:'14 hari',q:'2%'},tugas:['Eksekusi WO','Kendali mutu produksi'],reports:[
+   {id:'op1',nm:'Operator 1',ini:'O1',role:'Operator Produksi',status:'lapangan',tel:'0858-0000-0902',beban:4,kpi:{sel:22,avg:'45 mnt/panel',med:'50 mnt',q:'1%'},tugas:['Potong & rakit rangka']},
+   {id:'op2',nm:'Operator 2',ini:'O2',role:'Operator Finishing',status:'lapangan',tel:'0877-0000-0903',beban:4,kpi:{sel:19,avg:'1,1 jam/unit',med:'1,2 jam',q:'2%'},tugas:['Coating & finishing']},
+   {id:'qc1',nm:'Inspektor QC',ini:'IQ',role:'QC Produksi & FG',status:'lapangan',tel:'0821-0000-0904',beban:3,kpi:{sel:18,avg:'40 mnt/unit',med:'45 mnt',q:'1%'},tugas:['QC proses & finish good']}]}},
+ {mgr:{id:'raka',nm:'Raka Pratama',ini:'RK',role:'Kepala Gudang FG & Kirim',status:'aktif',tel:'0812-4470-6612',beban:3,kpi:{sel:12,avg:'3 hari',med:'3 hari',q:'2%'},tugas:['Jadwal armada & surat jalan/DO','BAST & serah terima customer'],reports:[
    {id:'ujang',nm:'Ujang Setiawan',ini:'US',role:'Driver',status:'lapangan',tel:'0857-8821-3049',beban:2,kpi:{sel:9,avg:'—',med:'—',q:'0 klaim'},tugas:['Kirim ORD-0138 Toko Sinar Abadi']},
-   {id:'asep',nm:'Asep Maulana',ini:'AM',role:'Driver',status:'aktif',tel:'0838-1129-8850',beban:1,kpi:{sel:8,avg:'—',med:'—',q:'1 klaim'},tugas:['Standby pengiriman Kariangau']},
-   {id:'lina',nm:'Lina Marlina',ini:'LM',role:'Admin Gudang',status:'aktif',tel:'0822-6604-1173',beban:3,kpi:{sel:15,avg:'0,4 jam',med:'0,5 jam',q:'1%'},tugas:['Surat jalan & serah terima']}]}},
+   {id:'lina',nm:'Lina Marlina',ini:'LM',role:'Admin Gudang FG',status:'aktif',tel:'0822-6604-1173',beban:3,kpi:{sel:15,avg:'0,4 jam',med:'0,5 jam',q:'1%'},tugas:['Surat jalan, BAST & invoice ke FAT']}]}},
 ];
 if(SAVED&&Array.isArray(SAVED.teams)&&SAVED.teams.length===TEAMS.length)
   TEAMS.splice(0,TEAMS.length,...SAVED.teams);
 let curSektor=null, curAssign={}, curFlat=[], curPerson=null;
 function flatTeam(p,parent,out){out.push({p,parent});(p.reports||[]).forEach(k=>flatTeam(k,p,out));return out;}
 /* rona avatar mengikuti zona sektor — kartu terasa "satu regu" */
-const ZONE_AV=['rgba(94,106,210,.16)','rgba(94,106,210,.16)','rgba(94,106,210,.16)',
-  'rgba(94,106,210,.10)','rgba(245,166,35,.15)','rgba(245,166,35,.15)','rgba(47,168,154,.17)'];
+const ZONE_AV=['rgba(94,106,210,.16)','rgba(94,106,210,.16)','rgba(94,106,210,.16)','rgba(94,106,210,.16)',
+  'rgba(245,166,35,.15)','rgba(94,106,210,.10)','rgba(94,106,210,.10)',
+  'rgba(245,166,35,.15)','rgba(245,166,35,.15)','rgba(47,168,154,.17)'];
 function personCard(p,mgr,delay){
   const c=(STATC[p.status]||STATC.aktif)[0];
   const w=clamp(p.beban/5*100,4,100);
@@ -3186,20 +3235,23 @@ function advanceOrder(oid){
   const o=ORDERS.find(x=>x.id===oid); if(!o)return;
   const from=o.stage;
   (o.hist=o.hist||[]).push({i:from,d:Math.round(o.age*10)/10});
-  if(o.stage>=6){ // terkirim -> keluar
+  if(o.stage>=9){ // FG terkirim -> keluar peta (BAST & invoice tercatat di feed)
     travelExit(o,()=>{});
     const i=ORDERS.indexOf(o); ORDERS.splice(i,1);
     DELIVERED.count++;
-    pushFeed({kind:'done',html:`Barang diterima customer — <b>${o.cust}</b> <span class="oid">${o.id}</span>`});
+    pushFeed({kind:'done',html:`Barang diterima customer — BAST & invoice diproses <b>${o.cust}</b> <span class="oid">${o.id}</span>`});
     rerenderMenara(null,'kirim');
     return;
   }
-  o.stage++; o.age=0.05; o.slaH=null;
+  o.stage=nextOf(o); o.age=0.05; o.slaH=null;
   resetDocs(o,0);                       /* tahap baru = berkas wajib baru */
   tokens[oid]?.g.classList.remove('stuck');
   travel(o,from,o.stage,()=>{});
   /* serah terima antar orang — inti janji produknya, jadi namanya disebut */
   showHandoff(from,o.stage);
+  if(from===7){ // keluar dari "Produksi Terima Data" = checkpoint fokus tercapai
+    pushFeed({kind:'done',html:`✅ <b>Checkpoint tercapai</b> — produksi menerima data &amp; material <b>${o.cust}</b> <span class="oid">${o.id}</span>`});
+  }
   pushFeed({kind:'stage',html:`<b>${STAGES[from].pic}</b> → <b>${STAGES[o.stage].pic}</b> · <b>${o.cust}</b> masuk tahap <b>${STAGES[o.stage].nm}</b> <span class="oid">${o.id}</span>`});
   rerenderMenara(oid,null);
 }
@@ -3273,26 +3325,28 @@ window.addEventListener('keydown',e=>{
 
 /* ================= SIMULASI LIVE ================= */
 const SCRIPT=[
-  ()=>pushFeed({kind:'stage',html:`<b>Bayu</b> update pabrik: pintu Medical Line mulai finishing <span class="oid">ORD-0142</span>`}),
-  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0140');if(o&&docsLack(o)){resetDocs(o,docsNeed(o));
-      pushFeed({kind:'dok',html:`Faktur DP diterima dari <b>Perum Citra Bukit</b> — dokumen lengkap <span class="oid">ORD-0140</span>`});
-      rerenderMenara('ORD-0140',null);}},
-  ()=>advanceOrder('ORD-0135'),
+  ()=>pushFeed({kind:'stage',html:`<b>Bu Liana</b> memperbarui jadwal material mingguan <span class="oid">ORD-0140</span>`}),
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0131');if(o&&o.stage===1&&docsLack(o)){resetDocs(o,docsNeed(o));
+      pushFeed({kind:'dok',html:`<b>Kepala ABA</b> menyelesaikan 7 cek verifikasi <span class="oid">ORD-0131</span>`});
+      rerenderMenara('ORD-0131',null);}},
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0135');o&&o.stage===4&&advanceOrder('ORD-0135');}, // material CUKUP -> langsung ke serah data
   ()=>advanceOrder('ORD-0138'),
   ()=>{if(ORDERS.some(x=>x.id==='ORD-0143')||tokens['ORD-0143'])return;
       ORDERS.push({id:'ORD-0143',cust:'Café Tepian Kopi',proj:'6 Pintu Custom Rotan',val:52,type:'custom',stage:0,age:0.02,docs:[0,2]});
-      const o=ORDERS[ORDERS.length-1];resetDocs(o,0);const tk=mkToken(o);setPos(tk,routePts[0][0]);
+      const o=ORDERS[ORDERS.length-1];resetDocs(o,0);const tk=mkToken(o);setPos(tk,EDGE(-1,0).p[0]);
       tk.inner.style.transform='scale(0)';requestAnimationFrame(()=>tk.inner.style.transform='');
-      glide(tk,[routePts[0][0],...routePts[0].slice(1),slotPoint(0,stationCount(0)-1)],1600,()=>layoutQueues(true));
-      pushFeed({kind:'stage',html:`Penawaran baru masuk — <b>Café Tepian Kopi</b> <span class="oid">ORD-0143</span>`});
+      glide(tk,[...EDGE(-1,0).p,slotPoint(0,stationCount(0)-1)],1600,()=>layoutQueues(true));
+      pushFeed({kind:'stage',html:`PO baru masuk — <b>Café Tepian Kopi</b> <span class="oid">ORD-0143</span>`});
       rerenderMenara('ORD-0143','aktif');},
-  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0139');o&&advanceOrder('ORD-0139');},
-  ()=>pushFeed({kind:'done',html:`<b>Rina</b> menyelesaikan verifikasi invoice dalam 1,2 jam`}),
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0139');o&&o.stage===2&&advanceOrder('ORD-0139');}, // SSA -> PPIC
+  ()=>pushFeed({kind:'done',html:`<b>Annisa</b> menyelesaikan klarifikasi SO dalam 1,1 jam`}),
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0142');o&&o.stage===7&&advanceOrder('ORD-0142');}, // serah data -> produksi (✅ checkpoint)
   ()=>advanceOrder('ORD-0133'),
-  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0142');o&&o.stage===4&&advanceOrder('ORD-0142');},
-  ()=>pushFeed({kind:'stage',html:`<b>Sari</b> mengirim penawaran revisi ke <b>Sekolah Pelita</b> <span class="oid">ORD-0131</span>`}),
-  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0136');o&&pushFeed({kind:'stage',html:`<b>Bayu</b>: rakitan 200 unit 82% — on schedule <span class="oid">ORD-0136</span>`});},
-  ()=>pushFeed({kind:'dok',html:`Surat jalan ditandatangani gudang <span class="oid">ORD-0134</span>`}),
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0137');if(o&&o.stage===6&&docsLack(o)){resetDocs(o,docsNeed(o));
+      pushFeed({kind:'dok',html:`QC material diterima — sesuai surat jalan supplier <span class="oid">ORD-0137</span>`});
+      rerenderMenara('ORD-0137',null);}},
+  ()=>{const o=ORDERS.find(x=>x.id==='ORD-0136');o&&pushFeed({kind:'stage',html:`<b>Kep. Produksi</b>: rakitan 200 unit 82% — on schedule <span class="oid">ORD-0136</span>`});},
+  ()=>pushFeed({kind:'dok',html:`Surat jalan &amp; BAST disiapkan gudang FG <span class="oid">ORD-0134</span>`}),
 ];
 let si=0, simSpeed=1, simPaused=false, simTimer=null;
 function simTick(){
@@ -3322,16 +3376,16 @@ const TOUR=[
   {t:'Ini <b>Menara Kendali</b> — yang dilihat owner tiap pagi. Lima KPI di atas, lalu antrean <b>Perlu Perhatian</b> yang sudah diurutkan dari yang paling mendesak. Bukan log, tapi daftar kerja.',
    run(){switchView('menara');flowFilter=null;renderFlow();renderPipe();window.scrollTo(0,0);$('#view-menara').scrollTop=0;}, ms:8000},
 
-  {t:'Di bawahnya <b>Alur Proses</b>: tujuh tahap dari penawaran masuk sampai barang diterima customer, lengkap dengan PIC dan waktu normalnya. Angka di kanan tiap tahap = order yang sedang antre di situ.',
-   run(){$('#view-menara').scrollTop=0;flash('.flow-ribbon');}, ms:9000},
+  {t:'Di bawahnya <b>Alur Proses asli perusahaan</b>: Order → ABA verifikasi → SSA (Annisa) proses SO → PPIC (Bu Liana) proses WO → cek material — cukup langsung, kurang lewat Purchasing &amp; vendor — sampai <b>✅ produksi menerima data</b>. Itu checkpoint fokusnya; tahap kelabu setelahnya di luar fokus.',
+   run(){$('#view-menara').scrollTop=0;flash('.flow-ribbon');}, ms:10000},
 
-  {t:'Masalah hari ini: <b>ORD-0141 — Hotel Grand Kaltim</b> macet <b>6 hari</b> di Purchasing. Normalnya 3 hari. Ini order Rp 412 juta yang diam tanpa ada yang sadar.',
+  {t:'Masalah hari ini: <b>ORD-0141 — Hotel Grand Kaltim</b> macet <b>5 hari</b> di Purchasing, normalnya 2 hari — menunggu konfirmasi vendor. Order Rp 412 juta yang diam, dan checkpoint produksinya ikut tertahan.',
    run(){switchView('menara');const r=$('#attList .att-row');if(r){r.scrollIntoView({block:'center',behavior:'smooth'});flashEl(r);}}, ms:8500},
 
-  {t:'Di <b>Peta Bisnis Live</b> hambatan itu kelihatan tanpa perlu dicari — gedung Purchasing menyala merah dengan label "macet 6 hari". Inilah gunanya peta: satu pandangan, langsung tahu di mana macetnya.',
-   run(){switchView('peta');const st=STAGES[3],[wx,wy]=proj(st.tile[0],st.tile[1]);zoomToWorld(wx,wy,isSmall()?520:760);}, ms:9000},
+  {t:'Di <b>Peta Bisnis Live</b> hambatan itu kelihatan tanpa perlu dicari — gedung Purchasing menyala merah dengan label "macet". Cabang material juga terlihat: jalur pendek kalau stok cukup, jalur vendor kalau kurang.',
+   run(){switchView('peta');const st=STAGES[5],[wx,wy]=proj(st.tile[0],st.tile[1]);zoomToWorld(wx,wy,isSmall()?520:760);}, ms:9000},
 
-  {t:'Buka ordernya — <b>penyebabnya dokumen</b>. Tahap Purchasing butuh 3 berkas wajib dan baru 1 yang masuk. Baris <b>Berikutnya</b> menyebut persis siapa yang harus melakukan apa.',
+  {t:'Buka ordernya — <b>penyebabnya berkas</b>. Purchasing butuh 3 berkas wajib (PO supplier sudah, konfirmasi vendor &amp; jadwal kedatangan belum). Baris <b>Berikutnya</b> menyebut persis siapa harus melakukan apa.',
    run(){showOrderPop('ORD-0141');}, ms:10000},
 
   {t:'Owner menugaskan langsung dari sini — <b>tanpa WhatsApp</b>. Pilih orangnya, tenggat, prioritas, dan yang penting: <b>dokumen wajib</b>, yang otomatis jadi gerbang penyelesaian.',
@@ -3349,7 +3403,7 @@ const TOUR=[
          const ups=[...$('#todayList').querySelectorAll('[data-up]')];
          ups.forEach((b,i)=>setTimeout(()=>{const live=$(`[data-up="${b.dataset.up}"]`);live&&live.click();},600+i*1100));}, ms:9500},
 
-  {t:'Selesai — dan semuanya ikut bergerak: token jalan di peta, hambatan terurai, alert owner hilang, KPI naik. <b>Satu aksi karyawan, tiga layar langsung rekonsil.</b>',
+  {t:'Selesai — dan semuanya ikut bergerak: order jalan lagi menuju gudang, material dijadwalkan, hambatan terurai, dan begitu data lengkap sampai ke pos serah data, <b>✅ checkpoint tercapai: produksi mulai membuat barang</b>.',
    /* tidak menganggap langkah sebelumnya sudah selesai: presenter boleh
       menekan Lanjut lebih cepat dari animasi unggah. */
    run(){switchView('kerja');openTask='T1';renderTasks();
@@ -3358,7 +3412,7 @@ const TOUR=[
          const c=$('#todayList [data-check]');c&&c.click();
          setTimeout(()=>switchView('peta'),1400);}, ms:10000},
 
-  {t:'Kembali ke Menara: antrean "Perlu Perhatian" berkurang, dan ORD-0141 sudah pindah tahap. Itu keseluruhan lingkarannya — <b>tugas turun, berkas terkunci, kerja terlacak, semua terlihat</b>.',
+  {t:'Kembali ke Menara: antrean "Perlu Perhatian" berkurang, ORD-0141 bergerak menuju checkpoint. Itu keseluruhan alurnya — <b>flow asli perusahaan, berkas terkunci per tahap, kerja terlacak, semua terlihat</b>.',
    run(){switchView('menara');$('#view-menara').scrollTop=0;}, ms:9000},
 ];
 function flash(sel){flashEl($(sel));}
