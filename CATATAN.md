@@ -135,6 +135,19 @@ terangkat halus saat hover. Catatan: sebelum mulai, pull dulu (sesi cloud
 sempat menambah 8 commit: responsif + Pages + Alur Proses + Tur; sudah
 dianalisis & diuji, 0 error).
 
+## Update 1 Agu (3): penyimpanan lokal + unggah file sungguhan
+
+1. State demo tersimpan per browser (localStorage, debounce 700 ms): orders +
+   docState + hist, tugas semua persona (PT), TEAMS (beban/tugas), saran,
+   persona aktif, hitungan terkirim. Refresh tidak me-reset. Muat ulang aman:
+   simulasi lanjut dari state tersimpan (event untuk order yang sudah terkirim
+   otomatis no-op). Reset: Ctrl+K -> "Reset demo".
+2. Unggah file sungguhan: file picker asli, blob ke IndexedDB (atlas-files),
+   nama+ukuran file tampil di slot, tombol "Lihat" membuka kembali filenya.
+   Pola sama dengan lampiran kartu PETA BISNIS. Tur tetap jalur demo (klik
+   programatik tidak bisa membuka dialog file).
+3. Perbaikan kecil: urutan deklarasi penyimpanan (TDZ), koma param.
+
 ## Isi prototipe
 
 1. **Menara Kendali (owner)**: 5 KPI + sparkline, antrean "Perlu Perhatian"

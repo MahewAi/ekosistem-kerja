@@ -77,13 +77,16 @@ Riwayat keputusan lengkap: [CATATAN.md](CATATAN.md).
 Alur penugasan, gerbang dokumen, dan persetujuan benar-benar jalan, tapi ini
 masih peraga:
 
-- **Tombol "Unggah" tidak mengunggah file.** Menandai slot dokumen jadi terisi;
-  tidak ada file picker maupun penyimpanan.
+- **Unggah file kini sungguhan (per browser).** Tombol Unggah membuka pemilih
+  file; berkas tersimpan di IndexedDB browser, nama file tampil di slot, tombol
+  "Lihat" membukanya lagi. Catatan: per browser, tidak sinkron antar perangkat.
+  (Tur otomatis tetap memakai jalur demo tanpa dialog file.)
 - **Nama berkas wajib masih dummy.** Daftar per tahap di `STAGES[].docs`
   (mis. Finance: Faktur DP, Bukti transfer DP, Rekap pajak) dikarang untuk
   konteks pabrik pintu — ikut diganti saat flow asli masuk.
-- **Tidak ada yang tersimpan.** Refresh = semua tugas, dokumen, persetujuan, dan
-  penyelesaian kembali ke awal.
+- **State kini tersimpan (per browser).** Tugas, dokumen, persetujuan, dan
+  posisi order bertahan setelah refresh (localStorage). Bersihkan lewat
+  Ctrl+K → "Reset demo".
 - **Tidak ada login.** Pemilih 22 persona adalah dropdown demo, bukan otentikasi.
 - **Order tetap maju sendiri.** Di luar tahap Review, perpindahan tahap
   dijalankan timer simulasi tiap 6,5 detik, bukan oleh aksi orang.

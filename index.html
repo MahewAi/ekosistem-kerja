@@ -1283,6 +1283,8 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<input type="file" id="fileInput" style="display:none">
+
 
 <!-- ============ TUR TERPANDU ============ -->
 <div class="tour" id="tour" role="dialog" aria-live="polite">
@@ -1381,10 +1383,34 @@ const ORDERS = [
 const TYPE_C = {proyek:'var(--c-proyek)', retail:'var(--c-retail)', custom:'var(--c-custom)'};
 const TYPE_N = {proyek:'Proyek', retail:'Retail', custom:'Custom'};
 // riwayat sintetis tahap yang sudah dilalui (deterministik, untuk timeline "Perjalanan Order")
-ORDERS.forEach((o,oi)=>{o.hist=[];for(let i=0;i<o.stage;i++){
-  const f=0.55+(((oi+1)*(i+2)*37)%80)/100;
-  o.hist.push({i,d:Math.round(STAGES[i].median*f*10)/10});
-}});
+/* ============ PENYIMPANAN LOKAL (localStorage + IndexedDB) ============
+   State demo tersimpan per browser: refresh tidak me-reset. Reset lewat Ctrl+K. */
+const SAVE_KEY='atlas-state-v1';
+function loadStateRaw(){
+  try{const s=localStorage.getItem(SAVE_KEY);return s?JSON.parse(s):null;}catch(e){return null;}
+}
+const SAVED=loadStateRaw();
+let idb=null;
+function idbOpen(){return new Promise(res=>{
+  const r=indexedDB.open('atlas-files',1);
+  r.onupgradeneeded=()=>r.result.createObjectStore('f');
+  r.onsuccess=()=>res(r.result); r.onerror=()=>res(null);
+});}
+async function idbPut(k,v){idb=idb||await idbOpen(); if(!idb)return false;
+  return new Promise(res=>{const t=idb.transaction('f','readwrite');
+    t.objectStore('f').put(v,k); t.oncomplete=()=>res(true); t.onerror=()=>res(false);});}
+async function idbGet(k){idb=idb||await idbOpen(); if(!idb)return null;
+  return new Promise(res=>{const q=idb.transaction('f','readonly').objectStore('f').get(k);
+    q.onsuccess=()=>res(q.result||null); q.onerror=()=>res(null);});}
+
+if(SAVED&&Array.isArray(SAVED.orders)){
+  ORDERS.length=0; SAVED.orders.forEach(o=>ORDERS.push(o));
+}else{
+  ORDERS.forEach((o,oi)=>{o.hist=[];for(let i=0;i<o.stage;i++){
+    const f=0.55+(((oi+1)*(i+2)*37)%80)/100;
+    o.hist.push({i,d:Math.round(STAGES[i].median*f*10)/10});
+  }});
+}
 /* docs:[sudah,total] di data awal jadi daftar berkas bernama per tahap */
 const stDocs   = o => STAGES[o.stage].docs;
 const docsNeed = o => stDocs(o).length;
@@ -1392,7 +1418,7 @@ const docsDone = o => (o.docState||[]).filter(Boolean).length;
 const docsLack = o => docsNeed(o)-docsDone(o);
 const docsMissing = o => stDocs(o).filter((_,i)=>!o.docState[i]);
 const resetDocs = (o,done)=>{o.docState=stDocs(o).map((_,i)=>i<(done||0));};
-ORDERS.forEach(o=>resetDocs(o,o.docs[0]));
+ORDERS.forEach(o=>{if(!o.docState)resetDocs(o,o.docs?o.docs[0]:0);});
 const SDM = [
   {ini:'SR', nm:'Sari',  role:'Admin Penawaran', done:14, t:'0,8 hr', med:'1,2 hr', spark:[3,4,2,5,4,6,5], st:0, pid:'sari'},
   {ini:'RN', nm:'Rina',  role:'Finance',         done:11, t:'1,4 hr', med:'1,9 hr', spark:[2,3,3,4,3,4,5], st:2, pid:'rina'},
@@ -1414,6 +1440,7 @@ const SARAN = [
   {title:'Follow-up penawaran supplier engsel', why:'tertinggal dari kemarin'},
   {title:'Review draft PO batch 2 — Apartemen Skyline', why:'jatuh tempo hari ini'},
 ];
+if(SAVED&&Array.isArray(SAVED.saran))SARAN.splice(0,SARAN.length,...SAVED.saran);
 
 /* ================= UTIL ================= */
 const $ = s=>document.querySelector(s);
@@ -1477,7 +1504,7 @@ const KPIS = [
   {id:'perhatian',lab:'Perlu Perhatian',   val:()=>ORDERS.filter(o=>orderStatus(o)!=='ok').length, unit:'order', delta:'1 kritis', dir:'down', spark:null, dot:'var(--warn)'},
   {id:'kirim',   lab:'Terkirim Bulan Ini', val:()=>DELIVERED.count, unit:'order', delta:'+3 vs bulan lalu', dir:'up', spark:[1,2,2,3,3,4,5]},
 ];
-const DELIVERED = {count:9};
+const DELIVERED = {count:(SAVED&&typeof SAVED.delivered==='number')?SAVED.delivered:9};
 function sparkSvg(data,w=84,h=24,color='currentColor'){
   const mn=Math.min(...data), mx=Math.max(...data), sp=mx-mn||1;
   const pts=data.map((v,i)=>`${(i/(data.length-1)*(w-2)+1).toFixed(1)},${(h-3-(v-mn)/sp*(h-6)).toFixed(1)}`).join(' ');
@@ -2666,6 +2693,8 @@ const TEAMS=[
    {id:'asep',nm:'Asep Maulana',ini:'AM',role:'Driver',status:'aktif',tel:'0838-1129-8850',beban:1,kpi:{sel:8,avg:'—',med:'—',q:'1 klaim'},tugas:['Standby pengiriman Kariangau']},
    {id:'lina',nm:'Lina Marlina',ini:'LM',role:'Admin Gudang',status:'aktif',tel:'0822-6604-1173',beban:3,kpi:{sel:15,avg:'0,4 jam',med:'0,5 jam',q:'1%'},tugas:['Surat jalan & serah terima']}]}},
 ];
+if(SAVED&&Array.isArray(SAVED.teams)&&SAVED.teams.length===TEAMS.length)
+  TEAMS.splice(0,TEAMS.length,...SAVED.teams);
 let curSektor=null, curAssign={}, curFlat=[], curPerson=null;
 function flatTeam(p,parent,out){out.push({p,parent});(p.reports||[]).forEach(k=>flatTeam(k,p,out));return out;}
 /* rona avatar mengikuti zona sektor — kartu terasa "satu regu" */
@@ -2867,7 +2896,22 @@ function openSdm(){
 /* ================= KERJA (karyawan, multi-persona) ================= */
 const TASKS_DIMAS=TASKS;
 const PT={};
+if(SAVED){
+  if(Array.isArray(SAVED.tasksD))TASKS_DIMAS.splice(0,TASKS_DIMAS.length,...SAVED.tasksD);
+  if(SAVED.pt)Object.assign(PT,SAVED.pt);
+}
 let persona='dimas', openTask=null;
+/* simpan state (debounce) — dipanggil dari rerenderMenara & renderTasks */
+let saveT=null;
+function queueSave(){clearTimeout(saveT);saveT=setTimeout(saveState,700);}
+function saveState(){
+  try{
+    localStorage.setItem(SAVE_KEY,JSON.stringify({
+      v:1, at:Date.now(), orders:ORDERS, delivered:DELIVERED.count,
+      teams:TEAMS, tasksD:TASKS_DIMAS, pt:PT, saran:SARAN, persona,
+    }));
+  }catch(e){}
+}
 function getPersonTasks(pid){
   if(pid==='dimas')return TASKS_DIMAS;
   if(!PT[pid]){
@@ -2938,8 +2982,8 @@ function renderTasks(){
           <div class="doc-slot ${d.up?'up':''}">
             <span class="ds-ic">${I(d.up?'check':'file')}</span>
             <span class="ds-name">${d.n}</span>
-            <span class="ds-state">${d.up?'diterima':'belum ada'}</span>
-            ${d.up?'':`<button class="btn" data-up="${t.id}:${di}">Unggah</button>`}
+            <span class="ds-state" ${d.fileName?`title="${d.fileName}"`:''}>${d.up?(d.fileName?`${d.fileName.length>20?d.fileName.slice(0,17)+'…':d.fileName} · ${d.fileSize>1e6?(d.fileSize/1e6).toFixed(1)+' MB':Math.max(1,Math.round((d.fileSize||0)/1024))+' KB'}`:'diterima'):'belum ada'}</span>
+            ${d.up?(d.fileKey?`<button class="btn" data-vf="${t.id}:${di}">Lihat</button>`:''):`<button class="btn" data-up="${t.id}:${di}">Unggah</button>`}
           </div>`).join('')}</div>
         <div class="gate">
           <button class="btn-primary" data-gate="${t.id}" ${need?'disabled':''}>${o?'Selesai & lanjutkan order':'Tandai selesai'}</button>
@@ -2964,11 +3008,17 @@ function renderTasks(){
   $('#todayList').querySelectorAll('[data-up]').forEach(b=>b.onclick=e=>{
     e.stopPropagation();
     const [tid,di]=b.dataset.up.split(':');
-    const t=TASKS.find(x=>x.id===tid); t.docs[di].up=true;
-    if(t.oid){const o=ORDERS.find(x=>x.id===t.oid);
-      if(o){const k=o.docState.findIndex(v=>!v); if(k>=0)o.docState[k]=true;}}
-    pushFeed({kind:'dok',html:`<b>${curNm()}</b> mengunggah “${t.docs[di].n}” ${t.oid?`<span class="oid">${t.oid}</span>`:''}`});
-    renderTasks();renderPipe(t.oid);renderAttention();
+    if(tourOn){doUpload(tid,+di,null);return;}   // tur memakai jalur demo, tanpa dialog file
+    upTarget={tid,di:+di};
+    $('#fileInput').click();
+  });
+  $('#todayList').querySelectorAll('[data-vf]').forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    const [tid,di]=b.dataset.vf.split(':');
+    const t=TASKS.find(x=>x.id===tid); const d=t&&t.docs[+di]; if(!d||!d.fileKey)return;
+    const rec=await idbGet(d.fileKey);
+    if(!rec){toast('File tidak ditemukan di penyimpanan browser ini');return;}
+    window.open(URL.createObjectURL(rec.blob),'_blank');
   });
   $('#todayList').querySelectorAll('[data-gate]').forEach(b=>b.onclick=e=>{
     e.stopPropagation();completeTask(b.dataset.gate);
@@ -2987,7 +3037,29 @@ function renderTasks(){
     completeTask(t.id);
   });
   renderAging();
+  queueSave();
 }
+/* tanda slot berkas terisi — dipakai unggahan nyata maupun jalur demo/tur */
+let upTarget=null;
+function doUpload(tid,di,meta){
+  const t=TASKS.find(x=>x.id===tid); if(!t||!t.docs[di]||t.docs[di].up)return;
+  const d=t.docs[di]; d.up=true;
+  if(meta){d.fileName=meta.name;d.fileSize=meta.size;d.fileKey=meta.key;}
+  if(t.oid){const o=ORDERS.find(x=>x.id===t.oid);
+    if(o&&o.docState){const k=o.docState.findIndex(v=>!v); if(k>=0)o.docState[k]=true;}}
+  pushFeed({kind:'dok',html:`<b>${curNm()}</b> mengunggah “${d.n}”${meta?` <span class="oid">${meta.name.length>24?meta.name.slice(0,21)+'…':meta.name}</span>`:''} ${t.oid?`<span class="oid">${t.oid}</span>`:''}`});
+  renderTasks();renderPipe(t.oid);renderAttention();queueSave();
+}
+$('#fileInput').addEventListener('change',async e=>{
+  const f=e.target.files&&e.target.files[0];
+  e.target.value='';
+  if(!f||!upTarget)return;
+  const key=`${upTarget.tid}:${upTarget.di}:${Date.now()}`;
+  const ok=await idbPut(key,{name:f.name,type:f.type,size:f.size,blob:f});
+  doUpload(upTarget.tid,upTarget.di,{name:f.name,size:f.size,key:ok?key:null});
+  toast(ok?`“${f.name}” tersimpan`:'File ditandai diterima (penyimpanan browser tidak tersedia)');
+  upTarget=null;
+});
 function completeTask(tid){
   const i=TASKS.findIndex(x=>x.id===tid); if(i<0)return;
   const t=TASKS[i];
@@ -3102,11 +3174,13 @@ $('#mSend').onclick=()=>{
   closeAssign();
   tabsFor('kerja').forEach(t=>t.classList.add('hasnotif'));
   if(pid===persona)switchPersona(persona);
+  queueSave();
 };
 
 /* ================= ADVANCE ORDER (dipakai engine & aksi karyawan) ================= */
 function rerenderMenara(flashOid,flashKpi){
   renderKpis(flashKpi);renderAttention();renderFlow();renderPipe(flashOid);renderLoad();refreshPeta();
+  queueSave();
 }
 function advanceOrder(oid){
   const o=ORDERS.find(x=>x.id===oid); if(!o)return;
@@ -3140,6 +3214,11 @@ function palItems(q){
     {ic:'map',lab:'Buka Peta Live',kbd:'2',run:()=>switchView('peta')},
     {ic:'user',lab:'Buka Ruang Kerja',kbd:'3',run:()=>switchView('kerja')},
     {ic:'user',lab:'Buka KPI Seluruh SDM',kbd:'',run:openSdm},
+    {ic:'x',lab:'Reset demo (hapus data tersimpan)',kbd:'',run:()=>{
+      try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+      try{indexedDB.deleteDatabase('atlas-files');}catch(e){}
+      location.reload();
+    }},
   ].filter(x=>!q||x.lab.toLowerCase().includes(q));
   const ords=ORDERS.filter(o=>!q?false:(o.id.toLowerCase().includes(q)||o.cust.toLowerCase().includes(q)))
     .slice(0,5).map(o=>({ic:'search',lab:`${o.id} — ${o.cust}`,kbd:'',run:()=>focusOrder(o.id)}));
@@ -3346,7 +3425,7 @@ document.addEventListener('keydown',e=>{
 renderKpis();renderAttention();renderFlow();renderPipe();renderLoad();renderSdm();renderFeed(false);
 renderLegend();refreshPeta();
 setTheme((()=>{try{return localStorage.getItem('atlas-theme')||'light'}catch(e){return 'light'}})());
-switchPersona('dimas');
+switchPersona((SAVED&&SAVED.persona)||'dimas');
 initPetaCamera();
 /* rasio kanvas berubah saat rotasi layar — bingkai ulang kalau belum disentuh */
 let camTouched=false;
