@@ -42,6 +42,8 @@ berubah jadi kartu, dan peta punya navigator stasiun + cubit-untuk-zoom.
 
 ## Tangkapan layar
 
+![Peta siang (tema terang)](v6-siang.png)
+![Peta malam (tema gelap)](v6-malam.png)
 ![Peta Bisnis Live](v4-peta.png)
 ![KPI Seluruh SDM](v4-sdm.png)
 ![Profil + Jejak Kerja](v4-person-jejak.png)

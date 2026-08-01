@@ -96,6 +96,29 @@ Inti visi yang belum ada akhirnya dibangun: "atasan kirim tugas tanpa WA".
    umur tugas, streak). Peraga "dashboard sesuai role masing-masing".
 4. Nama pelaku di feed mengikuti persona aktif.
 
+## Update 31 Jul malam (4): v6 — tema terang (siang) + peta rasa game simulasi
+
+1. Toggle tema di topbar (ikon matahari/bulan), tersimpan di localStorage.
+   Seluruh UI ditokenisasi (termasuk warna status per tema supaya kontras aman).
+2. Konsep: GELAP = MALAM, TERANG = SIANG. Peta punya dua palet penuh (PAL.dark/
+   PAL.light) dan seluruh scene statis dibangun ulang saat ganti tema
+   (buildScene). Malam: jendela menyala, lampu jalan berpendar. Siang: gedung
+   putih, bayangan matahari, kaca jendela biru, lampu mati.
+3. Rasa game simulasi: pohon (hijau di siang, gelap di malam), mobil parkir,
+   pelat zona diberi rona distrik tipis ala SimCity, strip sumber daya ala
+   game strategi di atas peta (order aktif / pipeline / terkirim), dan pekerja
+   kecil berlarian keluar gedung setiap stasiun memproses peristiwa.
+4. Logo topbar dipindah ke token warna supaya tampil di kedua tema.
+
+## Update 31 Jul larut (5): v7 — terrain lembah hijau (permintaan Matthew)
+
+Peta jadi diorama game: seluruh kampus berdiri di PULAU LEMBAH HIJAU dengan
+dinding plateau di tepinya. Isi terrain: hamparan rumput dengan petak gradasi
+(blob organik low-poly, deterministik), plaza beraspal tempat gedung berdiri,
+kolam air dengan tepi terang, batu-batu, 8 semak, dan total 27 pohon.
+Semua ikut tema: siang = lembah hijau segar + kolam biru; malam = lembah
+gelap tenang. Default tema kini TERANG (permintaan "saya maunya terang").
+
 ## Isi prototipe
 
 1. **Menara Kendali (owner)**: 5 KPI + sparkline, antrean "Perlu Perhatian"

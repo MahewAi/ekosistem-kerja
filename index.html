@@ -35,7 +35,25 @@
   --top-h:52px; --nav-h:0px;
   --sans:'Geist',system-ui,-apple-system,sans-serif;
   --mono:'Geist Mono',ui-monospace,'Cascadia Mono',monospace;
+  --t-ok:#5dbd75; --t-warn:#f0b13e; --t-crit:#f2777b;
+  --track:rgba(255,255,255,.06); --barfill:rgba(255,255,255,.45);
+  --glass:rgba(10,10,11,.85); --panel-solid:#0d0d0f; --labsh:rgba(0,0,0,.9);
 }
+body[data-theme="light"]{
+  --bg:#F4F4F1; --s1:#FFFFFF; --s2:#FFFFFF; --s3:#EFEFEC; --s4:#E5E5E1;
+  --line:rgba(18,20,24,.09); --line2:rgba(18,20,24,.15); --line3:rgba(18,20,24,.24);
+  --ink:#191B20; --ink2:rgba(22,24,29,.70); --ink3:rgba(22,24,29,.46); --ink4:rgba(22,24,29,.28);
+  --accent:#5058c4; --accent-h:#3f47ad;
+  --t-ok:#1e7a3c; --t-warn:#8f6400; --t-crit:#c22f36;
+  --track:rgba(0,0,0,.08); --barfill:rgba(0,0,0,.48);
+  --glass:rgba(255,255,255,.92); --panel-solid:#ffffff; --labsh:rgba(255,255,255,.9);
+}
+body[data-theme="light"] .panel,body[data-theme="light"] .tile{box-shadow:0 1px 2px rgba(20,22,30,.05)}
+body[data-theme="light"] .opanel,body[data-theme="light"] .mod,body[data-theme="light"] .pal,body[data-theme="light"] .popover{box-shadow:0 8px 28px rgba(20,22,30,.13)}
+body[data-theme="light"] .tour,body[data-theme="light"] .botnav{box-shadow:0 -4px 20px rgba(20,22,30,.10)}
+body[data-theme="light"] .handoff,body[data-theme="light"] .nav-chip{box-shadow:0 2px 10px rgba(20,22,30,.12)}
+body[data-theme="light"] .st-grp:hover polygon.p-top{filter:brightness(.955)}
+body[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-color:var(--bg)}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -117,16 +135,16 @@ main{height:calc(100dvh - var(--top-h) - var(--nav-h));position:relative}
   display:inline-flex;align-items:center;justify-content:center;
   font:500 10.5px var(--mono);background:var(--s3);color:var(--ink2);border:1px solid var(--line);
 }
-.count-badge.crit{background:rgba(229,72,77,.14);color:#f2777b;border-color:rgba(229,72,77,.3)}
+.count-badge.crit{background:rgba(229,72,77,.14);color:var(--t-crit);border-color:rgba(229,72,77,.3)}
 .microlabel{font:500 10.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
 .chip{
   display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;
   border:1px solid var(--line);border-radius:999px;font-size:11.5px;color:var(--ink2);white-space:nowrap;
 }
 .chip .cdot{width:6px;height:6px;border-radius:50%}
-.chip.ok{color:#5dbd75;border-color:rgba(60,169,81,.35)}
-.chip.warn{color:#f0b13e;border-color:rgba(245,166,35,.35)}
-.chip.crit{color:#f2777b;border-color:rgba(229,72,77,.4)}
+.chip.ok{color:var(--t-ok);border-color:rgba(60,169,81,.35)}
+.chip.warn{color:var(--t-warn);border-color:rgba(245,166,35,.35)}
+.chip.crit{color:var(--t-crit);border-color:rgba(229,72,77,.4)}
 .btn{
   height:26px;padding:0 10px;border:1px solid var(--line2);border-radius:6px;
   font-size:12px;font-weight:500;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;
@@ -160,8 +178,8 @@ main{height:calc(100dvh - var(--top-h) - var(--nav-h));position:relative}
 .tile .val .unit{font-size:12.5px;font-weight:400;color:var(--ink3);letter-spacing:0}
 .tile .foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:8px}
 .tile .delta{font-size:11.5px;color:var(--ink3)}
-.tile .delta.up{color:#5dbd75}
-.tile .delta.down{color:#f2777b}
+.tile .delta.up{color:var(--t-ok)}
+.tile .delta.down{color:var(--t-crit)}
 .tile .spark{flex:1;max-width:84px;height:24px;color:var(--ink3)}
 .tile.flash{animation:tileFlash .7s var(--ease)}
 @keyframes tileFlash{0%{background:rgba(94,106,210,.12)}100%{background:var(--s1)}}
@@ -175,8 +193,8 @@ main{height:calc(100dvh - var(--top-h) - var(--nav-h));position:relative}
 .att-row:hover{background:var(--s2)}
 .att-ic{width:28px;height:28px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center}
 .att-ic svg{width:15px;height:15px;stroke-width:1.7}
-.att-ic.crit{background:rgba(229,72,77,.12);color:#f2777b}
-.att-ic.warn{background:rgba(245,166,35,.1);color:#f0b13e}
+.att-ic.crit{background:rgba(229,72,77,.12);color:var(--t-crit)}
+.att-ic.warn{background:rgba(245,166,35,.1);color:var(--t-warn)}
 .att-body{min-width:0;flex:1}
 .att-title{font-size:12.5px;font-weight:500;color:var(--ink)}
 .att-meta{font-size:11.5px;color:var(--ink3);margin-top:2px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -266,7 +284,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .fl-step:hover{background:var(--s3);border-color:var(--line2)}
 .fl-step.on{border-color:var(--accent);background:var(--s3)}
 .fl-step.bad{border-color:rgba(229,72,77,.45);background:rgba(229,72,77,.05)}
-.fl-step.bad .fl-n{background:rgba(229,72,77,.18);color:#f2777b}
+.fl-step.bad .fl-n{background:rgba(229,72,77,.18);color:var(--t-crit)}
 .fl-n{
   width:20px;height:20px;flex:none;border-radius:6px;background:var(--s4);color:var(--ink2);
   display:flex;align-items:center;justify-content:center;font:600 10.5px var(--mono);
@@ -279,7 +297,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
   flex:none;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--s4);
   display:flex;align-items:center;justify-content:center;font:500 10.5px var(--mono);color:var(--ink2);
 }
-.fl-ct.hot{background:rgba(245,166,35,.16);color:#f0b13e}
+.fl-ct.hot{background:rgba(245,166,35,.18);color:var(--t-warn)}
 .fl-arrow{display:flex;align-items:center;color:var(--ink4);flex:none;margin:0 -1px}
 .fl-arrow svg{width:11px;height:11px;stroke-width:2}
 .fl-end{
@@ -291,7 +309,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 /* nomor tahap di label peta — mengikat peta ke pita alur */
 .st-label .nm{display:flex;align-items:center;justify-content:center;gap:5px}
 .stnum{
-  width:14px;height:14px;border-radius:4px;background:rgba(255,255,255,.13);color:var(--ink2);
+  width:14px;height:14px;border-radius:4px;background:var(--s4);color:var(--ink2);
   display:inline-flex;align-items:center;justify-content:center;font:600 9px var(--mono);flex:none;
 }
 
@@ -299,7 +317,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .handoff{
   position:absolute;transform:translate(-50%,-50%) scale(.9);z-index:6;pointer-events:none;
   display:flex;align-items:center;gap:4px;white-space:nowrap;
-  background:rgba(10,10,11,.94);border:1px solid var(--line2);border-radius:999px;
+  background:var(--glass);border:1px solid var(--line2);border-radius:999px;backdrop-filter:blur(8px);
   padding:4px 10px;font-size:11px;color:var(--ink2);
   opacity:0;transition:opacity .25s var(--ease),transform .25s var(--ease);
 }
@@ -316,8 +334,9 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .st-grp polygon{transition:fill .4s var(--ease)}
 .st-grp:hover polygon.p-top{filter:brightness(1.22)}
 .st-grp.attn polygon.p-top,.st-grp.attn polygon.p-left,.st-grp.attn polygon.p-right{stroke:rgba(229,72,77,.75);stroke-width:1.5}
-.route{fill:none;stroke:rgba(255,255,255,.09);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
-.grid-line{stroke:rgba(255,255,255,.028);stroke-width:1}
+.hud-tc{top:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none}
+.hud-tc .hud-chip{pointer-events:none;gap:6px}
+.hud-tc .hud-chip b{color:var(--ink);font-weight:600}
 .token{cursor:pointer}
 .token circle.body{stroke:var(--bg);stroke-width:2}
 .token.stuck circle.body{stroke:var(--crit);stroke-width:2}
@@ -331,19 +350,19 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .hud-br{bottom:14px;right:16px}
 .hud-bl{bottom:14px;left:16px}
 .hud-title{font-size:13px;font-weight:600;letter-spacing:-.01em;margin-right:6px}
-.hud-chip{height:26px;padding:0 11px;border-radius:999px;border:1px solid var(--line2);background:rgba(10,10,11,.82);
+.hud-chip{height:26px;padding:0 11px;border-radius:999px;border:1px solid var(--line2);background:var(--glass);
   font-size:11.5px;font-weight:500;color:var(--ink2);display:inline-flex;align-items:center;gap:7px;
   transition:color var(--t) var(--ease),border-color var(--t) var(--ease)}
 .hud-chip:hover{color:var(--ink)}
 .hud-chip.active{border-color:var(--accent);color:var(--ink)}
-.legend{background:rgba(10,10,11,.85);border:1px solid var(--line);border-radius:10px;padding:10px 13px;display:flex;flex-direction:column;gap:7px}
+.legend{background:var(--glass);border:1px solid var(--line);border-radius:10px;padding:10px 13px;display:flex;flex-direction:column;gap:7px}
 .leg-row{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink2)}
 .leg-row .cdot{width:8px;height:8px;border-radius:50%;flex:none}
-.leg-row .sq{width:9px;height:9px;border-radius:2px;background:#23252b;border:1px solid rgba(255,255,255,.14);flex:none}
+.leg-row .sq{width:9px;height:9px;border-radius:2px;background:var(--s4);border:1px solid var(--line3);flex:none}
 .st-label{position:absolute;transform:translate(-50%,0);text-align:center;pointer-events:none;z-index:3}
-.st-label .nm{font-size:11.5px;font-weight:500;color:var(--ink2);text-shadow:0 1px 4px rgba(0,0,0,.9);white-space:nowrap}
+.st-label .nm{font-size:11.5px;font-weight:500;color:var(--ink2);text-shadow:0 1px 4px var(--labsh);white-space:nowrap}
 .st-label .ct{font:500 10px var(--mono);color:var(--ink3);margin-top:1px}
-.st-label .ct.hot{color:#f0b13e}
+.st-label .ct.hot{color:var(--t-warn)}
 .popover{
   position:absolute;z-index:8;min-width:240px;max-width:290px;
   background:var(--s2);border:1px solid var(--line2);border-radius:10px;padding:12px 14px;
@@ -357,25 +376,25 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .pop-row{display:flex;justify-content:space-between;gap:14px;font-size:11.5px}
 .pop-row .k{color:var(--ink3)}
 .pop-row .v{color:var(--ink2);font-weight:500;text-align:right}
-.pop-row .v.warn{color:#f0b13e}.pop-row .v.crit{color:#f2777b}.pop-row .v.ok{color:#5dbd75}
+.pop-row .v.warn{color:var(--t-warn)}.pop-row .v.crit{color:var(--t-crit)}.pop-row .v.ok{color:var(--t-ok)}
 .pop-actions{margin-top:11px;display:flex;gap:7px}
-.queue-panel{background:rgba(10,10,11,.85);border:1px solid var(--line);border-radius:10px;min-width:210px}
+.queue-panel{background:var(--glass);border:1px solid var(--line);border-radius:10px;min-width:210px}
 .queue-panel .qp-h{padding:9px 13px;border-bottom:1px solid var(--line);font-size:12px;font-weight:500;color:var(--ink2)}
 .queue-panel .qp-b{padding:7px 13px 10px;display:flex;flex-direction:column;gap:6px}
 .qp-row{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;color:var(--ink3)}
 .qp-row .v{font-family:var(--mono);font-size:10.5px;color:var(--ink2)}
-.qp-row .v.hot{color:#f0b13e}
+.qp-row .v.hot{color:var(--t-warn)}
 
 /* peta v2 */
 .hud-tr{top:14px;right:16px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
-.zoomctl{display:flex;flex-direction:column;background:rgba(10,10,11,.85);border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+.zoomctl{display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--line2);border-radius:8px;overflow:hidden}
 .zoomctl button{width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--ink2);transition:background var(--t) var(--ease),color var(--t) var(--ease)}
 .zoomctl button:hover{background:var(--s3);color:var(--ink)}
 .zoomctl button+button{border-top:1px solid var(--line)}
 .zoomctl svg{width:14px;height:14px;stroke-width:1.6}
 .sim-chips{display:flex;gap:6px;margin-left:10px}
 .hud-ticker{position:absolute;left:50%;bottom:16px;transform:translate(-50%,6px);z-index:5;
-  background:rgba(10,10,11,.88);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
+  background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
   font-size:12px;color:var(--ink2);opacity:0;transition:opacity .25s var(--ease),transform .25s var(--ease);
   max-width:56vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 .hud-ticker.show{opacity:1;transform:translate(-50%,0)}
@@ -387,7 +406,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .token{transition:opacity .25s var(--ease)}
 .token.dim{opacity:.12;pointer-events:none}
 .opanel{position:absolute;top:14px;right:16px;bottom:14px;width:308px;z-index:7;
-  background:#0d0d0f;border:1px solid var(--line2);border-radius:12px;
+  background:var(--panel-solid);border:1px solid var(--line2);border-radius:12px;
   opacity:0;transform:translateX(10px);pointer-events:none;display:flex;flex-direction:column;
   transition:opacity .22s var(--ease),transform .22s var(--ease)}
 .opanel.show{opacity:1;transform:none;pointer-events:auto}
@@ -412,17 +431,17 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .trip-row.future .trip-k{color:var(--ink4)}
 .trip-row.cur .trip-k{color:var(--ink);font-weight:500}
 .trip-v{font:500 10.5px var(--mono);color:var(--ink3)}
-.trip-v.slow{color:#f0b13e}
+.trip-v.slow{color:var(--t-warn)}
 .op-actions{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px}
 .op-actions.approve{justify-content:flex-end;align-items:center}
 .op-actions.approve .btn-primary{height:30px}
 .btn-rev{color:var(--ink3)}
-.btn-rev:hover{color:#f2777b;border-color:rgba(229,72,77,.45);background:transparent}
+.btn-rev:hover{color:var(--t-crit);border-color:rgba(229,72,77,.45);background:transparent}
 .op-gate{
   padding:0 16px 12px;display:flex;align-items:center;gap:6px;justify-content:flex-end;
   font-size:11px;color:var(--ink3);
 }
-.op-gate svg{width:12px;height:12px;stroke-width:1.8;color:var(--warn);flex:none}
+.op-gate svg{width:12px;height:12px;stroke-width:1.8;color:var(--t-warn);flex:none}
 
 /* baris "berikutnya" di panel order */
 .nextstep{
@@ -440,7 +459,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .dc-row:last-child{border-bottom:0}
 .dc-ic{width:18px;height:18px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--s3);color:var(--ink3)}
 .dc-ic svg{width:11px;height:11px;stroke-width:1.9}
-.dc-row.ok .dc-ic{background:rgba(60,169,81,.13);color:#5dbd75}
+.dc-row.ok .dc-ic{background:rgba(60,169,81,.15);color:var(--t-ok)}
 .dc-n{flex:1;min-width:0;font-size:11.5px;color:var(--ink3)}
 .dc-row.ok .dc-n{color:var(--ink2)}
 .dc-s{font:400 10px var(--mono);color:var(--ink4);flex:none}
@@ -546,7 +565,7 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .t-start{height:20px;padding:0 8px;border:1px solid var(--line2);border-radius:999px;font-size:10.5px;font-weight:500;
   color:var(--ink3);display:inline-flex;align-items:center;gap:4px;transition:color var(--t) var(--ease),border-color var(--t) var(--ease)}
 .t-start:hover{color:var(--ink);border-color:var(--line3)}
-.t-start.on{color:#5dbd75;border-color:rgba(60,169,81,.35)}
+.t-start.on{color:var(--t-ok);border-color:rgba(60,169,81,.35)}
 .t-start svg{width:10px;height:10px;stroke-width:2}
 
 /* v5: beri tugas + multi-persona */
@@ -565,7 +584,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .doc-add .fin{flex:1}
 .doc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .doc-chips .chip{cursor:pointer}
-.doc-chips .chip:hover{border-color:rgba(229,72,77,.5);color:#f2777b}
+.doc-chips .chip:hover{border-color:rgba(229,72,77,.5);color:var(--t-crit)}
 .mod-f{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
 .tab .ndot{width:6px;height:6px;border-radius:50%;background:var(--accent-h);display:none;flex:none}
 .tab.hasnotif .ndot{display:block}
@@ -620,7 +639,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .ds-ic{width:22px;height:22px;border-radius:6px;flex:none;display:flex;align-items:center;justify-content:center;
   background:var(--s3);color:var(--ink3)}
 .ds-ic svg{width:12px;height:12px;stroke-width:1.8}
-.doc-slot.up .ds-ic{background:rgba(60,169,81,.12);color:#5dbd75}
+.doc-slot.up .ds-ic{background:rgba(60,169,81,.12);color:var(--t-ok)}
 .ds-name{flex:1;font-size:12.5px;color:var(--ink2)}
 .doc-slot.up .ds-name{color:var(--ink)}
 .ds-state{font-size:11px;color:var(--ink3)}
@@ -644,7 +663,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .pair-card .pv .unit{font-size:11.5px;font-weight:400;color:var(--ink3)}
 .pair-card .pk{font-size:11px;color:var(--ink3);margin-top:2px}
 .pair-card .pc{font-size:10.5px;margin-top:5px;color:var(--ink3)}
-.pair-card .pc.good{color:#5dbd75}
+.pair-card .pc.good{color:var(--t-ok)}
 .bullet-rows{padding:4px 14px 12px}
 .bullet-row{padding:7px 0;border-bottom:1px solid var(--line)}
 .bullet-row:last-child{border-bottom:0}
@@ -703,7 +722,7 @@ select.fin{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .tour-act .btn-primary{height:30px}
 .tour-x{width:30px;padding:0;justify-content:center}
 .tour-x svg{width:13px;height:13px}
-.tour-prog{height:2px;background:rgba(255,255,255,.07)}
+.tour-prog{height:2px;background:var(--track)}
 .tour-prog i{display:block;height:100%;width:0;background:var(--accent)}
 /* elemen yang sedang disorot tur */
 .tour-hl{animation:tourHl 2.4s var(--ease)}
@@ -872,7 +891,7 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
     overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
   .hud-nav::-webkit-scrollbar{display:none}
-  .nav-chip{flex:none;background:rgba(10,10,11,.92);backdrop-filter:blur(8px)}
+  .nav-chip{flex:none;background:var(--glass);backdrop-filter:blur(8px)}
 
   /* legenda & hambatan ditumpuk di atas navigator, selebar layar */
   .hud-bl,.hud-br{top:auto;left:0;right:0;padding:0 12px}
@@ -882,10 +901,10 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
   body.legend-on .hud-br{bottom:calc(126px + env(safe-area-inset-bottom))}
   .legend{
     flex-direction:row;flex-wrap:wrap;gap:6px 14px;
-    background:rgba(10,10,11,.92);backdrop-filter:blur(8px);
+    background:var(--glass);backdrop-filter:blur(8px);
   }
   .legend .leg-hint,.legend .leg-head,.legend .leg-sep{display:none}
-  .queue-panel{min-width:0;background:rgba(10,10,11,.92);backdrop-filter:blur(8px)}
+  .queue-panel{min-width:0;background:var(--glass);backdrop-filter:blur(8px)}
   .queue-panel .qp-antri,.queue-panel .qp-sep{display:none}  /* di ponsel cukup hambatannya */
   .queue-panel:not(:has(.qp-blok)){display:none}
   .hud-ticker{max-width:calc(100vw - 24px);bottom:auto;top:96px}
@@ -946,11 +965,11 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
 <header class="topbar">
   <div class="brand">
     <svg class="mark" viewBox="0 0 22 22" fill="none">
-      <rect x="1.5" y="1.5" width="19" height="19" rx="5" stroke="rgba(255,255,255,.35)" stroke-width="1.4"/>
-      <circle cx="7" cy="14.5" r="1.6" fill="#5e6ad2"/>
-      <circle cx="11" cy="8" r="1.6" fill="rgba(255,255,255,.85)"/>
-      <circle cx="15.4" cy="12.5" r="1.6" fill="rgba(255,255,255,.45)"/>
-      <path d="M7.8 13.4 10.3 9.2M12.2 9.1l2.3 2.4" stroke="rgba(255,255,255,.3)" stroke-width="1.2"/>
+      <rect x="1.5" y="1.5" width="19" height="19" rx="5" stroke="var(--line3)" stroke-width="1.4"/>
+      <circle cx="7" cy="14.5" r="1.6" fill="var(--accent)"/>
+      <circle cx="11" cy="8" r="1.6" fill="var(--ink)"/>
+      <circle cx="15.4" cy="12.5" r="1.6" fill="var(--ink4)"/>
+      <path d="M7.8 13.4 10.3 9.2M12.2 9.1l2.3 2.4" stroke="var(--ink4)" stroke-width="1.2"/>
     </svg>
     <span class="name">ATLAS</span>
     <span class="proto">Prototipe</span>
@@ -967,6 +986,7 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
       <span class="kh-ic" aria-hidden="true"></span>
       <span class="kh-tx">Cari / perintah <kbd>Ctrl</kbd><kbd>K</kbd></span>
     </button>
+    <button class="kbd-hint" id="themeBtn" title="Ganti tema terang / gelap" style="padding:5px 8px"></button>
     <div class="live"><span class="dot"></span>SIMULASI LIVE</div>
     <div class="clock mono" id="clock">--:--:--</div>
     <div class="avatar" id="topAvatar">MT</div>
@@ -1064,6 +1084,8 @@ body.tour-on .toast{bottom:88px}   /* jangan menutupi tombol tur */
         <button class="hud-chip" data-speed="4">4x</button>
       </div>
     </div>
+
+    <div class="hud hud-tc" id="petaRes"></div>
 
     <!-- navigator stasiun: cara menyusuri alur di layar kecil -->
     <div class="hud hud-nav" id="stNav" aria-label="Lompat ke stasiun"></div>
@@ -1274,6 +1296,8 @@ const P = {
   pause:'<path d="M9 5.5v13M15 5.5v13"/>',
   play:'<path d="M7.5 4.5 19 12 7.5 19.5V4.5Z"/>',
   arrowl:'<path d="M19 12H5M11 18l-6-6 6-6"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/>',
+  moon:'<path d="M20 13.5A8 8 0 0 1 10.5 4 8 8 0 1 0 20 13.5Z"/>',
   phone:'<path d="M5 3h4l2 5-2.5 1.5a12.5 12.5 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16.5 16.5 0 0 1 3 5a2 2 0 0 1 2-2Z"/>',
 };
 const I = (n,c)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"${c?` class="${c}"`:''}>${P[n]||''}</svg>`;
@@ -1397,6 +1421,7 @@ document.querySelector('.kh-ic').innerHTML = I('search');
 $('#sdmOpen').onclick = ()=>openSdm();
 $('#btnAssign').innerHTML = I('send')+'Beri Tugas';
 $('#btnAssign').onclick = ()=>openAssign();
+$('#themeBtn').onclick = ()=>setTheme(document.body.dataset.theme==='light'?'dark':'light');
 let curView='menara';
 function switchView(v){
   if(curView===v) return;
@@ -1612,26 +1637,53 @@ const defs=mk('defs',{});
 const filt=mk('filter',{id:'soft',x:'-60%',y:'-60%',width:'220%',height:'220%'},defs);
 mk('feGaussianBlur',{stdDeviation:4},filt);
 const gl=mk('linearGradient',{id:'gLight',x1:0,y1:0,x2:1,y2:1},defs);
-mk('stop',{offset:'0%','stop-color':'rgba(255,255,255,.13)'},gl);
-mk('stop',{offset:'60%','stop-color':'rgba(255,255,255,0)'},gl);
+const glS=[mk('stop',{offset:'0%'},gl),mk('stop',{offset:'60%'},gl)];
 const ga=mk('linearGradient',{id:'gAO',x1:0,y1:0,x2:0,y2:1},defs);
-mk('stop',{offset:'40%','stop-color':'rgba(0,0,0,0)'},ga);
-mk('stop',{offset:'100%','stop-color':'rgba(0,0,0,.30)'},ga);
+const gaS=[mk('stop',{offset:'40%'},ga),mk('stop',{offset:'100%'},ga)];
+
+/* palet peta per tema: gelap = malam, terang = siang */
+const PAL={
+ dark:{
+  face:{top:[45,48,55],left:[28,29,33],right:[17,18,21]}, stroke:'rgba(255,255,255,.05)',
+  grid:'rgba(255,255,255,.028)', zoneStroke:'rgba(255,255,255,.05)',
+  zoneTint:['rgba(94,106,210,.030)','rgba(255,255,255,.014)','rgba(245,166,35,.020)','rgba(47,168,154,.026)'],
+  routeUnder:'rgba(0,0,0,.42)', route:'rgba(255,255,255,.09)', chev:'rgba(255,255,255,.09)', notch:'rgba(255,255,255,.06)',
+  padFill:'rgba(255,255,255,.018)', padStroke:'rgba(255,255,255,.045)',
+  win:'rgba(0,0,0,.42)', winLit:'rgba(255,255,255,.10)', shadow:'rgba(0,0,0,.34)',
+  skylight:'rgba(255,255,255,.06)', antenna:'rgba(255,255,255,.28)', antennaDot:'rgba(255,255,255,.4)',
+  lampPost:'rgba(255,255,255,.18)', lampBulb:'rgba(255,255,255,.55)', lampPool:'rgba(255,255,255,.035)',
+  smoke:'rgba(255,255,255,.5)', exit:'rgba(255,255,255,.25)',
+  tree:'#2b352d', treeHi:'rgba(255,255,255,.10)', trunk:'rgba(255,255,255,.16)',
+  rim:'#040605', grass:'#0f150f', grass2:'#0c110c', grass3:'#121a11',
+  plaza:'#0c0c0f', pond:'#0a121c', pondEdge:'rgba(130,170,210,.14)', rock:'#3a3f46',
+  gLight:['rgba(255,255,255,.13)','rgba(255,255,255,0)'], gAO:['rgba(0,0,0,0)','rgba(0,0,0,.30)'],
+ },
+ light:{
+  face:{top:[247,247,244],left:[222,222,217],right:[201,201,196]}, stroke:'rgba(0,0,0,.075)',
+  grid:'rgba(0,0,0,.045)', zoneStroke:'rgba(0,0,0,.07)',
+  zoneTint:['rgba(80,88,196,.045)','rgba(0,0,0,.02)','rgba(184,124,20,.05)','rgba(30,140,125,.05)'],
+  routeUnder:'rgba(0,0,0,.10)', route:'#D9D9D3', chev:'rgba(0,0,0,.17)', notch:'rgba(0,0,0,.08)',
+  padFill:'rgba(0,0,0,.026)', padStroke:'rgba(0,0,0,.06)',
+  win:'rgba(56,72,94,.34)', winLit:'rgba(56,72,94,.34)', shadow:'rgba(45,48,60,.20)',
+  skylight:'rgba(255,255,255,.85)', antenna:'rgba(0,0,0,.32)', antennaDot:'rgba(0,0,0,.36)',
+  lampPost:'rgba(0,0,0,.30)', lampBulb:'rgba(0,0,0,.28)', lampPool:'transparent',
+  smoke:'rgba(118,124,134,.5)', exit:'rgba(0,0,0,.30)',
+  tree:'#8FB284', treeHi:'rgba(255,255,255,.4)', trunk:'rgba(92,72,52,.55)',
+  rim:'#87A079', grass:'#AAC49B', grass2:'#9FBA8F', grass3:'#B6CDA6',
+  plaza:'#EFEFEA', pond:'#9FC0D8', pondEdge:'rgba(255,255,255,.65)', rock:'#B9B9B1',
+  gLight:['rgba(255,255,255,.55)','rgba(255,255,255,0)'], gAO:['rgba(0,0,0,0)','rgba(0,0,0,.10)'],
+ }
+};
+let C=PAL.dark;
 
 // lapisan
-const gGrid=mk('g',{}); const gZones=mk('g',{}); const gShadow=mk('g',{}); const gRoutes=mk('g',{}); const gBlocks=mk('g',{}); const gTokens=mk('g',{});
+const gTerrain=mk('g',{}); const gGrid=mk('g',{}); const gZones=mk('g',{}); const gShadow=mk('g',{}); const gRoutes=mk('g',{}); const gBlocks=mk('g',{}); const gTokens=mk('g',{});
 
-// grid lantai
-for(let x=-2;x<=16;x+=2){const[a,b]=proj(x,-1),[c,d]=proj(x,17);mk('line',{x1:a,y1:b,x2:c,y2:d,class:'grid-line'},gGrid);}
-for(let y=-1;y<=17;y+=2){const[a,b]=proj(-2,y),[c,d]=proj(16,y);mk('line',{x1:a,y1:b,x2:c,y2:d,class:'grid-line'},gGrid);}
+// (grid lantai digambar di buildScene supaya ikut tema)
 
 // rute
 const routePts = ROUTES.map(r=>r.map(([x,y])=>proj(x,y)));
-routePts.forEach(pts=>{
-  const d='M'+pts.map(p=>p.join(' ')).join(' L');
-  mk('path',{d,fill:'none',stroke:'rgba(0,0,0,.42)','stroke-width':8,'stroke-linecap':'round','stroke-linejoin':'round'},gRoutes);
-  mk('path',{d,class:'route'},gRoutes);
-});
+// (rute digambar di buildScene supaya ikut tema)
 // panjang polyline & titik pada jarak
 function polyLen(pts){let L=0;for(let i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return L;}
 function pointAt(pts,dist){
@@ -1651,22 +1703,7 @@ function slotPoint(stageIdx,slot){
   const pts=routePts[stageIdx]; const L=polyLen(pts);
   return pointAt(pts, Math.max(0, L-SLOT_BACK[stageIdx]-slot*24));
 }
-// chevron arah statis di sepanjang rute (arah terbaca tanpa animasi)
-routePts.forEach(pts=>{
-  const L=polyLen(pts);
-  for(let d=52; d<L-58; d+=90){
-    const p=pointAt(pts,d), q=pointAt(pts,Math.min(L,d+6));
-    const ang=Math.atan2(q[1]-p[1],q[0]-p[0])*180/Math.PI;
-    mk('polygon',{points:'4,0 -3,3.2 -3,-3.2',transform:`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)}) rotate(${ang.toFixed(1)})`,fill:'rgba(255,255,255,.09)'},gRoutes);
-  }
-});
-// takik slot antrian di aspal: apron kosong vs terisi langsung terbaca
-STAGES.forEach((st,i)=>{
-  for(let s=0;s<4;s++){
-    const p=slotPoint(i,s);
-    mk('rect',{x:p[0]-2.2,y:p[1]-2.2,width:4.4,height:4.4,rx:1,fill:'rgba(255,255,255,.06)'},gRoutes);
-  }
-});
+// (chevron & takik slot digambar di buildScene supaya ikut tema)
 
 /* --- zona kampus (pelat lantai) --- */
 const ZONES=[
@@ -1675,14 +1712,7 @@ const ZONES=[
   {nm:'PABRIK',    a:[9.8,2.2],  b:[14.4,10.6]},
   {nm:'LOGISTIK',  a:[7.6,11.4], b:[11.8,15.2]},
 ];
-ZONES.forEach(z=>{
-  const pts=[proj(z.a[0],z.a[1]),proj(z.b[0],z.a[1]),proj(z.b[0],z.b[1]),proj(z.a[0],z.b[1])];
-  mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill:'rgba(255,255,255,.013)',
-    stroke:'rgba(255,255,255,.05)','stroke-width':1,'stroke-dasharray':'3 7'},gZones);
-});
-
 /* --- pembangun blok isometrik --- */
-const FACE={top:[45,48,55],left:[28,29,33],right:[17,18,21]};
 const shadeC=(rgb,f)=>`rgb(${rgb.map(v=>Math.round(Math.min(255,v*f))).join(',')})`;
 function part(g,x,y,w,d,h,opt){
   const {lift=0,f=1,main=false}=opt||{};
@@ -1691,19 +1721,19 @@ function part(g,x,y,w,d,h,opt){
   const l=[PZ(x,y+d,lift+h),PZ(x+w,y+d,lift+h),PZ(x+w,y+d,lift),PZ(x,y+d,lift)];
   const r=[PZ(x+w,y,lift+h),PZ(x+w,y+d,lift+h),PZ(x+w,y+d,lift),PZ(x+w,y,lift)];
   const po=(pts,fill,cls)=>mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill,class:cls,
-    stroke:cls?'rgba(255,255,255,.05)':'none','stroke-width':cls?1:0},g);
-  po(l,shadeC(FACE.left,f),'p-left');  po(l,'url(#gAO)','');
-  po(r,shadeC(FACE.right,f),'p-right'); po(r,'url(#gAO)','');
-  const tp=po(t,shadeC(FACE.top,f),'p-top'); if(main)tp.setAttribute('data-main','1');
+    stroke:cls?C.stroke:'none','stroke-width':cls?1:0},g);
+  po(l,shadeC(C.face.left,f),'p-left');  po(l,'url(#gAO)','');
+  po(r,shadeC(C.face.right,f),'p-right'); po(r,'url(#gAO)','');
+  const tp=po(t,shadeC(C.face.top,f),'p-top'); if(main)tp.setAttribute('data-main','1');
   po(t,'url(#gLight)','');
   mk('polyline',{points:[t[3],t[2],t[1]].map(p=>p.join(',')).join(' '),fill:'none',
-    stroke:'rgba(255,255,255,.14)','stroke-width':1,'stroke-linejoin':'round'},g);
+    stroke:C.stroke,'stroke-width':1,'stroke-linejoin':'round'},g);
 }
 function pad(g,x,y,w,d,m){
   m=m||0.26;
   const pts=[proj(x-m,y-m),proj(x+w+m,y-m),proj(x+w+m,y+d+m),proj(x-m,y+d+m)];
-  mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill:'rgba(255,255,255,.018)',
-    stroke:'rgba(255,255,255,.045)','stroke-width':1},g);
+  mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill:C.padFill,
+    stroke:C.padStroke,'stroke-width':1},g);
 }
 function topDetail(g,px,py,w,d,z,fill){ // panel tipis di bidang atap (skylight dsb)
   const pts=[proj(px,py),proj(px+w,py),proj(px+w,py+d),proj(px,py+d)].map(p=>[p[0],p[1]-z]);
@@ -1715,9 +1745,9 @@ function winFace(g,side,fx,fy,off,wd,z1,z2,lit){
   const B=side==='r'?[fx,fy+off+wd]:[fx+off+wd,fy];
   const PZ=(pt,dz)=>{const[a,b]=proj(pt[0],pt[1]);return[a,b-dz];};
   mk('polygon',{points:[PZ(A,z2),PZ(B,z2),PZ(B,z1),PZ(A,z1)].map(q=>q.join(',')).join(' '),
-    fill:lit?'rgba(255,255,255,.10)':'rgba(0,0,0,.42)'},g);
+    fill:lit?C.winLit:C.win},g);
 }
-function shadowAt(cx,cy,rx,ry){mk('ellipse',{cx:cx+5,cy:cy+4,rx,ry,fill:'rgba(0,0,0,.34)',filter:'url(#soft)'},gShadow);}
+function shadowAt(cx,cy,rx,ry){mk('ellipse',{cx:cx+5,cy:cy+4,rx,ry,fill:C.shadow,filter:'url(#soft)'},gShadow);}
 
 function buildStation(idx,g){
   const st=STAGES[idx];const[wc,dc]=st.size;
@@ -1737,8 +1767,8 @@ function buildStation(idx,g){
       part(g,x+0.46,y+0.46,wc-0.92,dc-0.92,6,{lift:30,f:1.16});
       { // antena tipis di puncak menara
         const [ax,ay]=proj(x+wc/2,y+dc/2);
-        mk('line',{x1:ax,y1:ay-36,x2:ax,y2:ay-50,stroke:'rgba(255,255,255,.28)','stroke-width':1},g);
-        mk('circle',{cx:ax,cy:ay-51.5,r:1.5,fill:'rgba(255,255,255,.4)'},g);
+        mk('line',{x1:ax,y1:ay-36,x2:ax,y2:ay-50,stroke:C.antenna,'stroke-width':1},g);
+        mk('circle',{cx:ax,cy:ay-51.5,r:1.5,fill:C.antennaDot},g);
       }
       winFace(g,'r',x+0.24+(wc-0.48),y+0.24,0.16,0.26,7,25,true);winFace(g,'r',x+0.24+(wc-0.48),y+0.24,0.6,0.26,7,25);
       break;
@@ -1759,11 +1789,11 @@ function buildStation(idx,g){
     case 'produksi':
       part(g,x,y,wc,dc,32,{main:true});
       part(g,x+0.28,y+0.4,wc-0.56,0.6,9,{lift:32,f:1.15});
-      for(let k=0;k<3;k++)topDetail(g,x+0.5+k*0.62,y+0.5,0.4,0.4,41,'rgba(255,255,255,.06)'); // skylight monitor
+      for(let k=0;k<3;k++)topDetail(g,x+0.5+k*0.62,y+0.5,0.4,0.4,41,C.skylight); // skylight monitor
       part(g,x+wc-0.42,y+0.14,0.26,0.26,17,{lift:32,f:.78}); // cerobong
       { // asap: hidup hanya saat sektor .working
         const [smx,smy]=proj(x+wc-0.29,y+0.27);
-        [0,1,2].forEach(k=>mk('circle',{cx:smx,cy:smy-51,r:3+k*0.9,fill:'rgba(255,255,255,.5)',class:'smoke s'+(k+1)},g));
+        [0,1,2].forEach(k=>mk('circle',{cx:smx,cy:smy-51,r:3+k*0.9,fill:C.smoke,class:'smoke s'+(k+1)},g));
       }
       winFace(g,'l',x,y+dc,0.5,1.5,5,23);
       winFace(g,'r',x+wc,y,0.35,0.5,6,15,true);winFace(g,'r',x+wc,y,1.15,0.5,6,15);
@@ -1794,36 +1824,143 @@ const PROPS=[
   {v:24.6, build:g=>{ // kontainer sisi logistik
     part(g,10.55,13.75,0.5,0.28,7,{f:1.05});part(g,11.12,13.78,0.5,0.28,7,{f:.9});}},
 ];
-// lampu jalan: tiang + bohlam + kolam cahaya halus di aspal
+// lampu jalan: tiang + bohlam + kolam cahaya (menyala hanya di tema malam)
 function lamp(g,tx,ty){
   const [px,py]=proj(tx,ty);
-  mk('ellipse',{cx:px,cy:py+1,rx:13,ry:6,fill:'rgba(255,255,255,.035)'},g);
-  mk('line',{x1:px,y1:py,x2:px,y2:py-15,stroke:'rgba(255,255,255,.18)','stroke-width':1.2},g);
-  mk('circle',{cx:px,cy:py-16,r:1.7,fill:'rgba(255,255,255,.55)'},g);
+  mk('ellipse',{cx:px,cy:py+1,rx:13,ry:6,fill:C.lampPool},g);
+  mk('line',{x1:px,y1:py,x2:px,y2:py-15,stroke:C.lampPost,'stroke-width':1.2},g);
+  mk('circle',{cx:px,cy:py-16,r:1.7,fill:C.lampBulb},g);
 }
 [[3.5,10.6],[5.6,8.1],[9.5,3.1],[11.9,11.2],[7.6,12.6]].forEach(([tx,ty])=>{
   PROPS.push({v:tx+ty, build:g=>lamp(g,tx,ty)});
 });
-
-/* --- gambar semua dengan painter's algorithm (urut kedalaman) --- */
-const stGroups={};
-const drawJobs=[
-  ...STAGES.map((st,i)=>({v:st.tile[0]+st.tile[1],st:i})),
-  ...PROPS.map(p=>({v:p.v,prop:p})),
-].sort((a,b)=>a.v-b.v);
-for(const job of drawJobs){
-  if(job.prop){const g=mk('g',{},gBlocks);job.prop.build(g);continue;}
-  const idx=job.st, st=STAGES[idx];
-  const [cx,cy]=proj(st.tile[0],st.tile[1]);
-  shadowAt(cx,cy,(st.size[0]+st.size[1])*TW*.42,(st.size[0]+st.size[1])*TH*.34);
-  const g=mk('g',{class:'st-grp','data-st':idx},gBlocks);
-  buildStation(idx,g);
-  g.addEventListener('click',e=>{e.stopPropagation();showStationPop(idx);});
-  stGroups[idx]=g;
+// pohon: kanopi 2 lingkaran + batang + bayangan; hijau lembut di siang, gelap di malam
+function tree(g,tx,ty,s){
+  s=s||1;const[px,py]=proj(tx,ty);
+  mk('ellipse',{cx:px+3,cy:py+2,rx:8*s,ry:3.5*s,fill:C.shadow,opacity:.5},g);
+  mk('line',{x1:px,y1:py,x2:px,y2:py-7*s,stroke:C.trunk,'stroke-width':1.6},g);
+  mk('circle',{cx:px,cy:py-11*s,r:6.5*s,fill:C.tree},g);
+  mk('circle',{cx:px-2*s,cy:py-13*s,r:3.1*s,fill:C.treeHi},g);
 }
-// titik exit customer
-{const [cx,cy]=proj(...EXIT_TILE);
- mk('circle',{cx,cy,r:5,fill:'none',stroke:'rgba(255,255,255,.25)','stroke-width':1.5,'stroke-dasharray':'2 4'},gRoutes);}
+[[1.15,7.3,1],[2.1,6.6,.85],[0.9,12.8,1.05],[4.2,12.6,.9],[3.2,3.2,.9],[8.5,14.7,1],[13.1,12.1,1],[14.3,6.6,.9],[6.9,6.7,.8],
+ [0.1,9.4,1.1],[3.6,16.1,1],[9.2,16.2,.95],[15.3,4.6,1],[15.8,9.6,.9],[12.6,0.7,.95],[6.4,-0.4,.9],[1.9,15.6,.8],[14.9,11.2,.85]].forEach(([tx,ty,s])=>{
+  PROPS.push({v:tx+ty, build:g=>tree(g,tx,ty,s)});
+});
+// semak di padang rumput
+function bush(g,tx,ty,s){
+  s=s||1;const[px,py]=proj(tx,ty);
+  mk('ellipse',{cx:px+2,cy:py+1.5,rx:5*s,ry:2.2*s,fill:C.shadow,opacity:.4},g);
+  mk('circle',{cx:px,cy:py-2.5*s,r:3.4*s,fill:C.tree},g);
+  mk('circle',{cx:px+2.8*s,cy:py-1.6*s,r:2.5*s,fill:C.tree},g);
+  mk('circle',{cx:px-1.5*s,cy:py-3.5*s,r:1.6*s,fill:C.treeHi},g);
+}
+[[0.3,10.8,1],[1.4,15.2,.9],[10.7,16,1],[15.7,6.4,.95],[13.5,1.1,.9],[5.3,-0.1,.85],[2.6,3.9,.8],[12.2,14.9,.9]].forEach(([tx,ty,s])=>{
+  PROPS.push({v:tx+ty, build:g=>bush(g,tx,ty,s)});
+});
+// mobil parkir dekat zona kantor
+PROPS.push({v:9.15, build:g=>{part(g,3.05,5.9,0.45,0.24,5,{f:1.05});part(g,3.14,5.93,0.24,0.18,4,{lift:5,f:.85});}});
+PROPS.push({v:9.85, build:g=>{part(g,3.65,5.95,0.45,0.24,5,{f:.9});part(g,3.74,5.98,0.24,0.18,4,{lift:5,f:.75});}});
+
+/* --- buildScene: seluruh lapisan statis, dibangun ulang saat ganti tema --- */
+const stGroups={};
+function blobPts(cx,cy,r,seed,irr,n){ // blob organik low-poly di ruang tile -> titik terproyeksi
+  irr=irr||0.28; n=n||14;
+  const pts=[];
+  for(let i=0;i<n;i++){
+    const a=i/n*Math.PI*2;
+    const rr=r*(1+((((seed*31+i*17)%13)/13)-0.5)*irr);
+    pts.push(proj(cx+Math.cos(a)*rr, cy+Math.sin(a)*rr*0.92));
+  }
+  return pts;
+}
+const blobStr=(cx,cy,r,seed,irr,n)=>blobPts(cx,cy,r,seed,irr,n).map(p=>p.join(',')).join(' ');
+function buildScene(){
+  [gTerrain,gGrid,gZones,gShadow,gRoutes,gBlocks].forEach(g=>{while(g.firstChild)g.firstChild.remove();});
+  glS[0].setAttribute('stop-color',C.gLight[0]); glS[1].setAttribute('stop-color',C.gLight[1]);
+  gaS[0].setAttribute('stop-color',C.gAO[0]);   gaS[1].setAttribute('stop-color',C.gAO[1]);
+  /* --- terrain: pulau lembah hijau gaya diorama game --- */
+  const IC=[7.2,8.2], IR=10.3;
+  // dinding plateau (rim) di bawah pulau
+  mk('polygon',{points:blobPts(IC[0],IC[1],IR,7).map(p=>`${p[0]},${p[1]+10}`).join(' '),fill:C.rim},gTerrain);
+  // hamparan rumput utama
+  mk('polygon',{points:blobStr(IC[0],IC[1],IR,7),fill:C.grass},gTerrain);
+  // gradasi padang: petak rumput lebih gelap / lebih terang
+  mk('polygon',{points:blobStr(1.6,4.3,1.9,3),fill:C.grass2},gTerrain);
+  mk('polygon',{points:blobStr(13.6,12.6,2.1,11),fill:C.grass2},gTerrain);
+  mk('polygon',{points:blobStr(14.6,3.0,1.7,5),fill:C.grass3},gTerrain);
+  mk('polygon',{points:blobStr(3.4,15.2,1.6,9),fill:C.grass3},gTerrain);
+  mk('polygon',{points:blobStr(0.4,9.8,1.5,13),fill:C.grass3},gTerrain);
+  // plaza beraspal tempat kampus berdiri
+  mk('polygon',{points:blobStr(7.4,8.0,6.6,17,.16,16),fill:C.plaza},gTerrain);
+  mk('polygon',{points:blobStr(12.2,6.4,3.4,4,.2),fill:C.plaza},gTerrain);
+  mk('polygon',{points:blobStr(3.4,11.6,3.0,8,.2),fill:C.plaza},gTerrain);
+  // kolam
+  mk('polygon',{points:blobStr(0.7,14.1,1.45,21,.32),fill:C.pond,stroke:C.pondEdge,'stroke-width':1.6},gTerrain);
+  // batu-batu kecil
+  [[2.1,1.9],[15.4,7.6],[8.9,16.3]].forEach(([bx,by],bi)=>{
+    mk('polygon',{points:blobStr(bx,by,0.28,bi*7+2,.5,7),fill:C.rock},gTerrain);
+    mk('polygon',{points:blobStr(bx+0.32,by+0.18,0.16,bi*5+3,.5,6),fill:C.rock,opacity:.8},gTerrain);
+  });
+  // grid lantai
+  for(let x=-2;x<=16;x+=2){const[a,b]=proj(x,-1),[c2,d2]=proj(x,17);mk('line',{x1:a,y1:b,x2:c2,y2:d2,stroke:C.grid,'stroke-width':1},gGrid);}
+  for(let y=-1;y<=17;y+=2){const[a,b]=proj(-2,y),[c2,d2]=proj(16,y);mk('line',{x1:a,y1:b,x2:c2,y2:d2,stroke:C.grid,'stroke-width':1},gGrid);}
+  // pelat zona dengan rona distrik tipis
+  ZONES.forEach((z,zi)=>{
+    const pts=[proj(z.a[0],z.a[1]),proj(z.b[0],z.a[1]),proj(z.b[0],z.b[1]),proj(z.a[0],z.b[1])];
+    mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill:C.zoneTint[zi],
+      stroke:C.zoneStroke,'stroke-width':1,'stroke-dasharray':'3 7'},gZones);
+  });
+  // jalan (underlay gelap + permukaan)
+  routePts.forEach(pts=>{
+    const d='M'+pts.map(p=>p.join(' ')).join(' L');
+    mk('path',{d,fill:'none',stroke:C.routeUnder,'stroke-width':8,'stroke-linecap':'round','stroke-linejoin':'round'},gRoutes);
+    mk('path',{d,fill:'none',stroke:C.route,'stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round'},gRoutes);
+  });
+  // chevron arah statis
+  routePts.forEach(pts=>{
+    const L=polyLen(pts);
+    for(let d=52; d<L-58; d+=90){
+      const p=pointAt(pts,d), q=pointAt(pts,Math.min(L,d+6));
+      const ang=Math.atan2(q[1]-p[1],q[0]-p[0])*180/Math.PI;
+      mk('polygon',{points:'4,0 -3,3.2 -3,-3.2',transform:`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)}) rotate(${ang.toFixed(1)})`,fill:C.chev},gRoutes);
+    }
+  });
+  // takik slot antrian
+  STAGES.forEach((st,i)=>{
+    for(let s=0;s<4;s++){
+      const p=slotPoint(i,s);
+      mk('rect',{x:p[0]-2.2,y:p[1]-2.2,width:4.4,height:4.4,rx:1,fill:C.notch},gRoutes);
+    }
+  });
+  // bangunan & properti (painter's algorithm)
+  const jobs=[
+    ...STAGES.map((st,i)=>({v:st.tile[0]+st.tile[1],st:i})),
+    ...PROPS.map(p=>({v:p.v,prop:p})),
+  ].sort((a,b)=>a.v-b.v);
+  for(const job of jobs){
+    if(job.prop){const g=mk('g',{},gBlocks);job.prop.build(g);continue;}
+    const idx=job.st, st=STAGES[idx];
+    const [cx,cy]=proj(st.tile[0],st.tile[1]);
+    shadowAt(cx,cy,(st.size[0]+st.size[1])*TW*.42,(st.size[0]+st.size[1])*TH*.34);
+    const g=mk('g',{class:'st-grp','data-st':idx},gBlocks);
+    buildStation(idx,g);
+    g.addEventListener('click',e=>{e.stopPropagation();showStationPop(idx);});
+    stGroups[idx]=g;
+  }
+  // titik exit customer
+  const [ecx,ecy]=proj(...EXIT_TILE);
+  mk('circle',{cx:ecx,cy:ecy,r:5,fill:'none',stroke:C.exit,'stroke-width':1.5,'stroke-dasharray':'2 4'},gRoutes);
+}
+/* tema terang/gelap = siang/malam */
+function setTheme(t){
+  t=t==='light'?'light':'dark';
+  document.body.dataset.theme=t;
+  try{localStorage.setItem('atlas-theme',t)}catch(e){}
+  C=PAL[t];
+  const b=document.getElementById('themeBtn'); if(b)b.innerHTML=I(t==='light'?'moon':'sun');
+  buildScene();
+  refreshPeta();
+}
 
 /* label stasiun (HTML upright layer) */
 const labWrap=$('#stLabels');
@@ -1841,7 +1978,7 @@ function renderLabels(){
     const stuckO=ORDERS.filter(o=>o.stage===i&&orderStatus(o)==='crit')[0];
     el.innerHTML=`<div class="nm"><span class="stnum">${i+1}</span>${st.nm}</div>
       <div class="ct ${n>=3?'hot':''}">${n} order<span class="picpart"> · PIC ${st.pic}</span></div>
-      ${stuckO?`<div class="ct" style="color:#f2777b">${stuckO.id} macet ${fmtAge(stuckO.age)}</div>`:''}`;
+      ${stuckO?`<div class="ct" style="color:var(--t-crit)">${stuckO.id} macet ${fmtAge(stuckO.age)}</div>`:''}`;
     el._world=[cx,cy+TH*(st.size[1]/2)+12];
     labWrap.appendChild(el);
   });
@@ -1851,7 +1988,7 @@ function renderLabels(){
   ZONES.forEach(z=>{
     const [zx,zy]=proj(z.a[0],z.a[1]);
     const zl=document.createElement('div');zl.className='st-label';
-    zl.innerHTML=`<div class="ct" style="font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.22)">${z.nm}</div>`;
+    zl.innerHTML=`<div class="ct" style="font-size:9px;letter-spacing:.14em;color:var(--ink4)">${z.nm}</div>`;
     zl._world=[zx,zy+4];labWrap.appendChild(zl);
   });
   layoutPeta();
@@ -1871,7 +2008,7 @@ function layoutPeta(){
   svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
   const s=r.width/vb.w;
   VS={s,ox:-vb.x*s,oy:-vb.y*s};
-  labWrap.classList.toggle('far',vb.w>1200);   /* ambang disesuaikan dengan kamera baru */
+  labWrap.classList.toggle('far',vb.w>1450);   /* ambang mengikuti bingkai pulau utuh */
   [...labWrap.querySelectorAll('.st-label'),...fxWrap.children].forEach(el=>{
     if(!el._world)return;
     const[wx,wy]=el._world;
@@ -1949,12 +2086,16 @@ function zoomToWorld(wx,wy,w){
   w=clamp(w||820,ZMIN,ZMAX);const h=w/petaAspect();
   /* di potret pita isi peta jauh lebih pendek dari layar — pusatkan ke pita,
      bukan ke titiknya, supaya stasiun tetangga ikut terlihat */
-  const cy = h>CONTENT.h*1.6 ? CONTENT.y+CONTENT.h/2 : wy+h*0.02;
+  const cy = h>FLOW.h*1.6 ? FLOW.y+FLOW.h/2 : wy+h*0.02;
   animateVb({x:wx-w/2,y:cy-h/2,w,h});
 }
-/* Kotak isi peta yang sebenarnya (tanpa area kosong di tepi kanvas 1500x780).
-   Diukur dari bbox 7 .st-grp (234,142 1014x397) lalu diberi margin untuk label. */
-const CONTENT={x:200,y:115,w:1090,h:480};
+/* Dua kotak berbeda, jangan disatukan:
+   CONTENT = seluruh pulau diorama (gTerrain 35,10 1362x634) — dipakai "muat semua"
+             dan tombol reset, supaya lembahnya utuh terlihat, tidak terpotong.
+   FLOW    = pita 7 stasiun (bbox .st-grp 234,142 1014x397 + margin label) — dipakai
+             membingkai alur di layar kecil, di mana pulau utuh jadi terlalu kecil. */
+const CONTENT={x:20,y:0,w:1392,h:664};
+const FLOW={x:200,y:115,w:1090,h:480};
 const isSmall=()=>window.matchMedia('(max-width:900px)').matches;
 function fitContent(animate){
   const A=petaAspect();
@@ -2006,11 +2147,11 @@ function initPetaCamera(){
   const r=petaEl.getBoundingClientRect();
   if(isSmall()&&r.width){
     /* skala layar ~0.85 supaya gedung terbaca; tablet lebar otomatis muat seluruh alur */
-    const w=clamp(r.width/0.85, ZMIN, CONTENT.w*1.12), h=w/petaAspect();
-    const cx = w>=CONTENT.w*0.85
-      ? CONTENT.x+CONTENT.w/2                       /* cukup lebar — tampilkan seluruh alur */
+    const w=clamp(r.width/0.85, ZMIN, FLOW.w*1.12), h=w/petaAspect();
+    const cx = w>=FLOW.w*0.85
+      ? FLOW.x+FLOW.w/2                             /* cukup lebar — tampilkan seluruh alur */
       : proj(STAGES[0].tile[0],STAGES[0].tile[1])[0]; /* ponsel — mulai dari stasiun pertama */
-    Object.assign(vb,{x:cx-w/2, y:CONTENT.y+CONTENT.h/2-h/2, w, h});
+    Object.assign(vb,{x:cx-w/2, y:FLOW.y+FLOW.h/2-h/2, w, h});
   }else{
     fitContent(false);
   }
@@ -2036,6 +2177,19 @@ function blinkStation(i){
   const g=stGroups[i]; if(!g)return;
   g.classList.remove('blink');void g.getBoundingClientRect();g.classList.add('blink');
   setTimeout(()=>g.classList.remove('blink'),620);
+  scurry(i);
+}
+function scurry(i){ // pekerja kecil berlarian keluar gedung saat ada aktivitas
+  const st=STAGES[i];
+  const[cx,cy]=proj(st.tile[0]-st.size[0]*0.1, st.tile[1]+st.size[1]/2+0.18);
+  for(let k=0;k<2;k++){
+    const c=mk('circle',{cx:cx+(k?5:-3),cy:cy+1,r:2.2,fill:'var(--ink2)',opacity:.9},gTokens);
+    const dx=k?15:-13, dy=6+k*2;
+    const a=c.animate(
+      [{transform:'translate(0,0)',opacity:.9},{transform:`translate(${dx}px,${dy}px)`,opacity:0}],
+      {duration:640,easing:'cubic-bezier(.25,1,.5,1)',delay:k*90});
+    a.onfinish=()=>c.remove();
+  }
 }
 function setPos(tk,p){tk.pos=p;tk.g.setAttribute('transform',`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)})`);}
 function layoutQueues(animate){
@@ -2150,8 +2304,8 @@ function showOrderPop(oid){
    <div class="op-body">
      <div class="op-kv"><span class="k">Pesanan</span><span class="v">${o.proj}</span></div>
      <div class="op-kv"><span class="k">PIC tahap ini</span><span class="v">${st.pic}</span></div>
-     <div class="op-kv"><span class="k">Status</span><span class="v" style="${s==='crit'?'color:#f2777b':s==='warn'?'color:#f0b13e':'color:#5dbd75'}">${s==='ok'?'On track':s==='warn'?'Perlu perhatian':'Kritis'}</span></div>
-     ${o.rev?`<div class="op-kv"><span class="k">Revisi</span><span class="v" style="color:#f0b13e">${o.rev}× dikembalikan</span></div>`:''}
+     <div class="op-kv"><span class="k">Status</span><span class="v" style="${s==='crit'?'color:var(--t-crit)':s==='warn'?'color:var(--t-warn)':'color:var(--t-ok)'}">${s==='ok'?'On track':s==='warn'?'Perlu perhatian':'Kritis'}</span></div>
+     ${o.rev?`<div class="op-kv"><span class="k">Revisi</span><span class="v" style="color:var(--t-warn)">${o.rev}× dikembalikan</span></div>`:''}
 
      <div class="nextstep ${docsLack(o)?'blocked':''}">
        <span class="ns-l">Berikutnya</span>
@@ -2280,7 +2434,7 @@ function renderLegend(){
 }
 function renderQp(){
   const stuck=ORDERS.filter(o=>orderStatus(o)==='crit').map(o=>
-    `<div class="qp-row" data-qo="${o.id}" style="cursor:pointer"><span style="color:#f2777b">${o.id} ${o.stuck?'macet':'kritis'}</span><span class="v hot">${fmtAge(o.age)}</span></div>`).join('');
+    `<div class="qp-row" data-qo="${o.id}" style="cursor:pointer"><span style="color:var(--t-crit)">${o.id} ${o.stuck?'macet':'kritis'}</span><span class="v hot">${fmtAge(o.age)}</span></div>`).join('');
   const rows=STAGES.map((st,i)=>({st,i,n:stationCount(i)})).filter(r=>r.n>0)
     .sort((a,b)=>b.n-a.n).slice(0,4)
     .map(r=>`<div class="qp-row" data-qst="${r.i}" style="cursor:pointer"><span>${r.st.nm}</span><span class="v ${r.n>=3?'hot':''}">${r.n} order</span></div>`).join('');
@@ -2300,9 +2454,9 @@ function applyLoad(){
     const tops=stGroups[i]?stGroups[i].querySelectorAll('[data-main]'):[];
     tops.forEach(top=>{
       if(loadOn){
-        const t=clamp(stationCount(i)/4,0,1)*0.5;
-        top.setAttribute('fill',`rgb(${Math.round(45+(94-45)*t)},${Math.round(48+(106-48)*t)},${Math.round(55+(210-55)*t)})`);
-      } else top.setAttribute('fill',shadeC(FACE.top,1));
+        const t=clamp(stationCount(i)/4,0,1)*0.5, b=C.face.top;
+        top.setAttribute('fill',`rgb(${Math.round(b[0]+(94-b[0])*t)},${Math.round(b[1]+(106-b[1])*t)},${Math.round(b[2]+(210-b[2])*t)})`);
+      } else top.setAttribute('fill',shadeC(C.face.top,1));
     });
   });
 }
@@ -2318,8 +2472,15 @@ $('#ovLegend').onclick=()=>{
   const on=document.body.classList.toggle('legend-on');
   $('#ovLegend').classList.toggle('active',on);
 };
+function renderPetaRes(){
+  const el=document.getElementById('petaRes'); if(!el)return;
+  el.innerHTML=`
+    <span class="hud-chip"><b>${ORDERS.length}</b>&nbsp;order aktif</span>
+    <span class="hud-chip"><b>${fmtVal(ORDERS.reduce((s,o)=>s+o.val,0))}</b>&nbsp;pipeline</span>
+    <span class="hud-chip"><b>${DELIVERED.count}</b>&nbsp;terkirim bulan ini</span>`;
+}
 function refreshPeta(){
-  renderLabels();renderQp();renderStNav();applyLoad();applyFilter();
+  renderLabels();renderQp();renderStNav();applyLoad();applyFilter();renderPetaRes();
   Object.values(tokens).forEach(tk=>{
     const s=orderStatus(tk.o);
     tk.g.classList.toggle('stuck',s==='crit');
@@ -2403,7 +2564,7 @@ function openSektor(i,isRefresh){
     const mn=Math.min(...d),mx=Math.max(...d),sp=mx-mn||1;
     const pts=d.map((v,k)=>`${(k/(d.length-1)*258+1).toFixed(1)},${(26-(v-mn)/sp*22).toFixed(1)}`).join(' ');
     return `<svg viewBox="0 0 260 30" style="width:100%;height:30px" preserveAspectRatio="none">
-      <polyline points="${pts}" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+      <polyline points="${pts}" fill="none" stroke="var(--barfill)" stroke-width="1.5" stroke-linecap="round"/></svg>`;
   };
   const leadV=Math.round(st.median*0.92*10)/10;
   const leadPct=clamp(leadV/(st.median*1.4)*100,6,100);
@@ -2491,8 +2652,8 @@ function jejakHtml(p){
     const bx=t=>(t-8)/9*W;
     return `<div class="gantt-day"><span class="gd">${d}</span>
       <svg viewBox="0 0 ${W} 10" style="width:100%;height:10px" preserveAspectRatio="none">
-        <rect x="0" y="3.5" width="${W}" height="3" rx="1.5" fill="rgba(255,255,255,.05)"/>
-        ${blocks.map(([s,e])=>`<rect x="${bx(s).toFixed(1)}" y="1.5" width="${(bx(e)-bx(s)).toFixed(1)}" height="7" rx="2" fill="rgba(255,255,255,.42)"><title>${fmtH(s)}–${fmtH(e)}</title></rect>`).join('')}
+        <rect x="0" y="3.5" width="${W}" height="3" rx="1.5" fill="var(--track)"/>
+        ${blocks.map(([s,e])=>`<rect x="${bx(s).toFixed(1)}" y="1.5" width="${(bx(e)-bx(s)).toFixed(1)}" height="7" rx="2" fill="var(--barfill)"><title>${fmtH(s)}–${fmtH(e)}</title></rect>`).join('')}
       </svg></div>`;
   }).join('');
   return rows+`<div class="gantt-axis"><span></span><span class="ax"><span>08.00</span><span>12.00</span><span>17.00</span></span></div>`;
@@ -2712,9 +2873,9 @@ function renderScore(p){
     return `<div class="bullet-row">
       <div class="br-top"><span class="k">${b.k}</span><span class="v">${(''+b.v).replace('.',',')}${b.unit} <span>/ ${(''+b.tgt).replace('.',',')}${b.unit}</span></span></div>
       <svg viewBox="0 0 ${w} ${h}" style="width:100%;height:${h}px">
-        <rect x="0" y="0" width="${w}" height="${h}" rx="3" fill="rgba(255,255,255,.05)"/>
-        <rect x="0" y="0" width="${w*.6}" height="${h}" rx="3" fill="rgba(255,255,255,.03)"/>
-        <rect x="0" y="3" width="${vx}" height="${h-6}" rx="2" fill="rgba(255,255,255,.55)"/>
+        <rect x="0" y="0" width="${w}" height="${h}" rx="3" fill="var(--track)"/>
+        <rect x="0" y="0" width="${w*.6}" height="${h}" rx="3" fill="var(--track)" opacity=".55"/>
+        <rect x="0" y="3" width="${vx}" height="${h-6}" rx="2" fill="var(--barfill)"/>
         <rect x="${tx}" y="1" width="1.6" height="${h-2}" fill="var(--accent-h)"/>
       </svg></div>`;
   }).join('');
@@ -3019,6 +3180,7 @@ document.addEventListener('keydown',e=>{
 /* ================= INIT ================= */
 renderKpis();renderAttention();renderFlow();renderPipe();renderLoad();renderSdm();renderFeed(false);
 renderLegend();refreshPeta();
+setTheme((()=>{try{return localStorage.getItem('atlas-theme')||'light'}catch(e){return 'light'}})());
 switchPersona('dimas');
 initPetaCamera();
 /* rasio kanvas berubah saat rotasi layar — bingkai ulang kalau belum disentuh */
