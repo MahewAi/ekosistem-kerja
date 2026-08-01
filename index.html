@@ -1769,20 +1769,27 @@ function winFace(g,side,fx,fy,off,wd,z1,z2,lit){
 }
 function shadowAt(cx,cy,rx,ry){mk('ellipse',{cx:cx+5,cy:cy+4,rx,ry,fill:C.shadow,filter:'url(#soft)'},gShadow);}
 
-/* SPRITE UJI: aset art gaya game (Higgsfield Seedream). Kalau gaya disetujui
-   Matthew, semua gedung & properti diganti set sprite yang konsisten. */
-const SPRITES={produksi:'assets/spr-produksi.png'};
+/* Aset art gaya game (Higgsfield Seedream 4.5, referensi gaya = sprite pabrik).
+   s = lebar sprite relatif diagonal footprint; ay = anchor dasar (fraksi tinggi).
+   Gedung tanpa entri masih memakai builder vektor (menunggu kuota generasi). */
+const SPRITES={
+  produksi:{src:'assets/spr-produksi.png', s:1.18, ay:.84},
+  penawaran:{src:'assets/spr-penawaran.png', s:1.34, ay:.80},
+  review:{src:'assets/spr-review.png', s:1.42, ay:.86},
+  finance:{src:'assets/spr-finance.png', s:1.32, ay:.82},
+};
 function buildStation(idx,g){
   const st=STAGES[idx];const[wc,dc]=st.size;
   const x=st.tile[0]-wc/2, y=st.tile[1]-dc/2;
   pad(g,x,y,wc,dc);
-  if(SPRITES[st.id]){
+  const spr=SPRITES[st.id];
+  if(spr){
     // pelat dasar tipis = target sorot status (attn merah / tint Beban) di bawah sprite
     part(g,x,y,wc,dc,2,{main:true});
-    const IMW=(wc+dc)*TW*1.18;
+    const IMW=(wc+dc)*TW*spr.s;
     const [icx,icy]=proj(x+wc/2,y+dc/2);
     const baseY=icy+(wc+dc)/2*TH;
-    mk('image',{href:SPRITES[st.id],x:icx-IMW/2,y:baseY-IMW*0.84,width:IMW,height:IMW,class:'spr'},g);
+    mk('image',{href:spr.src,x:icx-IMW/2,y:baseY-IMW*spr.ay,width:IMW,height:IMW,class:'spr'},g);
     return;
   }
   switch(st.id){
@@ -2097,7 +2104,7 @@ function renderLabels(){
     el.innerHTML=`<div class="nm"><span class="stnum">${i+1}</span>${st.nm}</div>
       <div class="ct ${n>=3?'hot':''}">${n} order<span class="picpart"> · PIC ${st.pic}</span></div>
       ${stuckO?`<div class="ct" style="color:var(--t-crit)">${stuckO.id} macet ${fmtAge(stuckO.age)}</div>`:''}`;
-    el._world=[cx,cy+TH*(st.size[1]/2)+12];
+    el._world=[cx,cy+TH*(st.size[1]/2)+(SPRITES[st.id]?26:12)];
     labWrap.appendChild(el);
   });
   const [ex,ey]=proj(...EXIT_TILE);
