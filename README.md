@@ -15,8 +15,16 @@ gaya game (eagle eye).
 Terbit otomatis dari `main` lewat GitHub Actions
 ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) — tidak ada
 build step, isi repo langsung disajikan. Setiap push ke `main` menerbitkan ulang
-dalam ~1 menit. Run pertama menyalakan GitHub Pages sendiri; kalau gagal karena
-izin, nyalakan manual di **Settings → Pages → Source: GitHub Actions**.
+dalam ~1 menit.
+
+> **Satu langkah manual sekali saja, harus oleh pemilik repo.**
+> Buka **Settings → Pages → Build and deployment → Source: "GitHub Actions"**.
+>
+> Workflow tidak bisa menyalakan Pages sendiri: endpoint *create a Pages site*
+> butuh hak **admin** repo, dan `GITHUB_TOKEN` tidak punya itu — percobaan
+> otomatis gagal dengan `Resource not accessible by integration`. Setelah
+> Source disetel, jalankan ulang workflow (**Actions → Deploy ke GitHub Pages →
+> Re-run jobs**) dan seterusnya berjalan otomatis.
 
 ## Cara membuka
 

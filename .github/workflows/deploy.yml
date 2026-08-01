@@ -27,12 +27,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # enablement:true menyalakan GitHub Pages sendiri pada run pertama,
-      # jadi tidak perlu buka Settings secara manual.
+      # Membuat situs Pages butuh hak ADMIN repo; GITHUB_TOKEN tidak punya itu
+      # (gagal "Resource not accessible by integration"). Jadi jangan coba
+      # menyalakannya sendiri — cek dulu, lalu beri instruksi yang jelas.
+      - name: Pastikan GitHub Pages sudah aktif
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh api "repos/${GITHUB_REPOSITORY}/pages" >/dev/null 2>&1; then
+            echo "GitHub Pages aktif — lanjut deploy."
+            exit 0
+          fi
+          echo "::error title=GitHub Pages belum aktif::Nyalakan Pages sekali secara manual, lalu jalankan ulang workflow ini."
+          cat <<'TXT'
+
+          GitHub Pages belum dinyalakan untuk repo ini.
+
+          Workflow tidak bisa menyalakannya sendiri: endpoint "create a Pages
+          site" butuh hak ADMIN repo, sedangkan GITHUB_TOKEN tidak punya itu.
+
+          Satu langkah manual oleh pemilik repo (sekali saja):
+            Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+
+          Lalu: Actions -> "Deploy ke GitHub Pages" -> Re-run jobs.
+
+          Kalau setelah itu masih gagal dengan pesan izin, cek juga:
+            Settings -> Actions -> General -> Workflow permissions
+            -> "Read and write permissions"
+          TXT
+          exit 1
+
       - name: Siapkan Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Unggah isi repo sebagai artefak situs
         uses: actions/upload-pages-artifact@v3
