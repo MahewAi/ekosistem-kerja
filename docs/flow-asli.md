@@ -29,7 +29,10 @@ Sumber: 2 gambar business process dari Matthew (1 Agu 2026).
 | A–B | **Annisa & Team** (Sales Support Administration / SSA) | Klarifikasi ulang semua data sebelum SO; koordinasi balik ke Sales jika kendala; Tindak lanjut PO → Finance (invoice), PPIC (jadwal produksi), Gudang (pengiriman), N1/N2 (approval gambar), ABA/Sales (perubahan), Project (progress) |
 | B–C | **Bu Liana & Team** (Production Planning Inventory Controller & SCM / PPIC) | Klarifikasi ulang semua data sebelum WO; koordinasi balik ke Sales jika kendala; Tindak lanjut SO/WO → Jadwal produksi, Jadwal material (kurang), Koreksi pekerjaan, Kendali produksi, Koordinasi jadwal ke SSA/ABA/Sales/Project, Koordinasi Gudang (Material & FG) |
 
-## Pemetaan ke stasiun peta ATLAS (10 stasiun)
+## Pemetaan ke stasiun peta ATLAS (9 stasiun)
+
+Koreksi Matthew (1 Agu): **cek material adalah pekerjaan Purchasing** — digabung
+jadi satu stasiun; Inventory Controller gudang berada di bawah Purchasing.
 
 | # | Stasiun | PIC | Berkas/cek wajib (gerbang keluar) | Ket |
 |---|---|---|---|---|
@@ -37,11 +40,10 @@ Sumber: 2 gambar business process dari Matthew (1 Agu 2026).
 | 2 | ABA — Verifikasi | ABA | 7 cek ABA (lihat C–A) | Setujui / minta revisi di sini |
 | 3 | SSA — Proses SO | **Annisa** | Klarifikasi data, SO terbit, Approval gambar N1/N2, Info invoice ke Finance | |
 | 4 | PPIC — Proses WO | **Bu Liana** | Klarifikasi WO, Jadwal produksi, Jadwal material | |
-| 5 | Cek Material | Inv. Controller | Hasil cek stok, Alokasi material | **CABANG**: cukup → #8; kurang → #6 |
-| 6 | Purchasing | (placeholder: Dimas) | PO supplier, Konfirmasi vendor & harga, Jadwal kedatangan | jalur material kurang |
-| 7 | Material In Transit | Ekspedisi/IC | Surat jalan supplier, QC material diterima | vendor dari luar peta |
-| 8 | **Produksi Terima Data** | Bu Liana → Produksi | Gambar final, Material siap, Deadline terkonfirmasi, Detail lengkap | ✅ **CHECKPOINT SELESAI** |
-| 9 | Produksi & QC | Kep. Produksi | SPK produksi, Checklist QC | di luar fokus |
-| 10 | Gudang FG & Kirim | (placeholder: Raka) | QC FG, Surat Jalan/DO, BAST, Invoice→FAT | di luar fokus |
+| 5 | **Purchasing — Cek Material** | (placeholder: Dimas) | Hasil cek stok, Alokasi / PO ke supplier, Konfirmasi vendor & jadwal | **CABANG**: cukup → #7; kurang → #6 |
+| 6 | Material In Transit | Ekspedisi/IC | Surat jalan supplier, QC material diterima | vendor dari luar peta |
+| 7 | **Produksi Terima Data** | Bu Liana → Produksi | Gambar final, Material siap, Deadline terkonfirmasi, Detail lengkap | ✅ **CHECKPOINT SELESAI** |
+| 8 | Produksi & QC | Kep. Produksi | SPK produksi, Checklist QC | di luar fokus |
+| 9 | Gudang FG & Kirim | (placeholder: Raka) | QC FG, Surat Jalan/DO, BAST, Invoice→FAT | di luar fokus |
 
 Nama selain Annisa & Bu Liana masih placeholder — menunggu struktur organisasi lengkap.
