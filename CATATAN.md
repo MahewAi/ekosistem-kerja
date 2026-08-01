@@ -119,6 +119,22 @@ kolam air dengan tepi terang, batu-batu, 8 semak, dan total 27 pohon.
 Semua ikut tema: siang = lembah hijau segar + kolam biru; malam = lembah
 gelap tenang. Default tema kini TERANG (permintaan "saya maunya terang").
 
+## Update 1 Agu: v8 — dekorasi game penuh (peta + hirarki)
+
+Peta: papan nama ATLAS di gerbang masuk, tiang bendera aksen di plaza Review,
+pagar semak zona kantor, garis parkir + zebra cross + strip dok muat (marka
+jalan), pagar besi sisi utara pabrik, dermaga kayu di kolam, forklift di dok
+pabrik, truk trailer staging, kontainer kargo biru (part() kini menerima warna
+kustom), bayangan awan lembut di rumput (siang), burung samar di langit (siang).
+Semua ikut palet siang/malam.
+
+Hirarki (halaman sektor) ikut di-game-kan: header memakai MINI-DIORAMA gedung
+sektor yang dirender dari peta (klik = terbang ke gedungnya di peta), kartu
+manager berbendera "PIC" ungu, konektor bagan diberi titik simpul, kartu orang
+terangkat halus saat hover. Catatan: sebelum mulai, pull dulu (sesi cloud
+sempat menambah 8 commit: responsif + Pages + Alur Proses + Tur; sudah
+dianalisis & diuji, 0 error).
+
 ## Isi prototipe
 
 1. **Menara Kendali (owner)**: 5 KPI + sparkline, antrean "Perlu Perhatian"

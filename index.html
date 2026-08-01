@@ -486,6 +486,8 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .sk-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 .sk-ic{width:40px;height:40px;border-radius:10px;background:var(--s2);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;color:var(--ink2);flex:none}
 .sk-ic svg{width:19px;height:19px;stroke-width:1.5}
+.sk-dio{width:110px;height:74px;border-radius:12px;overflow:hidden;background:var(--s2)}
+.sk-dio svg{width:100%;height:100%;stroke-width:initial}
 .sk-head h1{font-size:19px;font-weight:600;letter-spacing:-.015em}
 .sk-head .sub{font-size:12px;color:var(--ink3);margin-top:2px}
 .sk-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
@@ -495,8 +497,10 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .tree{padding:20px 12px 16px;overflow-x:auto}
 .tree ul{display:flex;justify-content:center;list-style:none;position:relative;margin-top:24px}
 .tree ul::before{content:'';position:absolute;top:-24px;left:50%;height:24px;border-left:1px solid var(--line2)}
+.tree ul::after{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);
+  width:5px;height:5px;border-radius:50%;background:var(--line3)}
 .tree>ul{margin-top:0}
-.tree>ul::before{display:none}
+.tree>ul::before,.tree>ul::after{display:none}
 .tree li{position:relative;display:flex;flex-direction:column;align-items:center;padding:24px 9px 0}
 .tree>ul>li{padding-top:0}
 .tree li::before{content:'';position:absolute;top:0;left:50%;height:24px;border-left:1px solid var(--line2)}
@@ -508,8 +512,15 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .tree li:only-child::after{display:none}
 
 .pcard{min-width:150px;max-width:176px;background:var(--s1);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
-  transition:background var(--t) var(--ease),border-color var(--t) var(--ease)}
-.pcard:hover{background:var(--s2);border-color:var(--line3)}
+  position:relative;
+  transition:background var(--t) var(--ease),border-color var(--t) var(--ease),transform var(--t) var(--ease)}
+.pcard:hover{background:var(--s2);border-color:var(--line3);transform:translateY(-1px)}
+.pcard.mgr{border-color:var(--line2)}
+.pcard.mgr::after{
+  content:'PIC';position:absolute;top:-8px;right:10px;
+  font:600 8.5px var(--mono);letter-spacing:.1em;
+  background:var(--accent);color:#fff;padding:2.5px 6px;border-radius:4px;
+}
 .pcard.cuti{opacity:.55}
 .pcard .top{display:flex;align-items:center;gap:9px}
 .pav{width:28px;height:28px;border-radius:50%;background:var(--s3);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;
@@ -1656,6 +1667,9 @@ const PAL={
   tree:'#2b352d', treeHi:'rgba(255,255,255,.10)', trunk:'rgba(255,255,255,.16)',
   rim:'#040605', grass:'#0f150f', grass2:'#0c110c', grass3:'#121a11',
   plaza:'#0c0c0f', pond:'#0a121c', pondEdge:'rgba(130,170,210,.14)', rock:'#3a3f46',
+  paint:'rgba(255,255,255,.14)', fence:'rgba(255,255,255,.17)', wood:'#4a4036',
+  cloud:'rgba(0,0,0,0)', bird:'rgba(0,0,0,0)',
+  cargoFace:{top:[74,90,124],left:[58,70,97],right:[44,53,74]},
   gLight:['rgba(255,255,255,.13)','rgba(255,255,255,0)'], gAO:['rgba(0,0,0,0)','rgba(0,0,0,.30)'],
  },
  light:{
@@ -1671,6 +1685,9 @@ const PAL={
   tree:'#8FB284', treeHi:'rgba(255,255,255,.4)', trunk:'rgba(92,72,52,.55)',
   rim:'#87A079', grass:'#AAC49B', grass2:'#9FBA8F', grass3:'#B6CDA6',
   plaza:'#EFEFEA', pond:'#9FC0D8', pondEdge:'rgba(255,255,255,.65)', rock:'#B9B9B1',
+  paint:'rgba(255,255,255,.92)', fence:'rgba(58,58,64,.42)', wood:'#B08F6C',
+  cloud:'rgba(50,60,50,.055)', bird:'rgba(0,0,0,.22)',
+  cargoFace:{top:[130,145,175],left:[108,121,148],right:[88,99,122]},
   gLight:['rgba(255,255,255,.55)','rgba(255,255,255,0)'], gAO:['rgba(0,0,0,0)','rgba(0,0,0,.10)'],
  }
 };
@@ -1715,16 +1732,17 @@ const ZONES=[
 /* --- pembangun blok isometrik --- */
 const shadeC=(rgb,f)=>`rgb(${rgb.map(v=>Math.round(Math.min(255,v*f))).join(',')})`;
 function part(g,x,y,w,d,h,opt){
-  const {lift=0,f=1,main=false}=opt||{};
+  const {lift=0,f=1,main=false,base}=opt||{};
+  const F=base||C.face;
   const PZ=(px,py,dz)=>{const[a,b]=proj(px,py);return[a,b-dz];};
   const t=[PZ(x,y,lift+h),PZ(x+w,y,lift+h),PZ(x+w,y+d,lift+h),PZ(x,y+d,lift+h)];
   const l=[PZ(x,y+d,lift+h),PZ(x+w,y+d,lift+h),PZ(x+w,y+d,lift),PZ(x,y+d,lift)];
   const r=[PZ(x+w,y,lift+h),PZ(x+w,y+d,lift+h),PZ(x+w,y+d,lift),PZ(x+w,y,lift)];
   const po=(pts,fill,cls)=>mk('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill,class:cls,
     stroke:cls?C.stroke:'none','stroke-width':cls?1:0},g);
-  po(l,shadeC(C.face.left,f),'p-left');  po(l,'url(#gAO)','');
-  po(r,shadeC(C.face.right,f),'p-right'); po(r,'url(#gAO)','');
-  const tp=po(t,shadeC(C.face.top,f),'p-top'); if(main)tp.setAttribute('data-main','1');
+  po(l,shadeC(F.left,f),'p-left');  po(l,'url(#gAO)','');
+  po(r,shadeC(F.right,f),'p-right'); po(r,'url(#gAO)','');
+  const tp=po(t,shadeC(F.top,f),'p-top'); if(main)tp.setAttribute('data-main','1');
   po(t,'url(#gLight)','');
   mk('polyline',{points:[t[3],t[2],t[1]].map(p=>p.join(',')).join(' '),fill:'none',
     stroke:C.stroke,'stroke-width':1,'stroke-linejoin':'round'},g);
@@ -1860,6 +1878,67 @@ function bush(g,tx,ty,s){
 // mobil parkir dekat zona kantor
 PROPS.push({v:9.15, build:g=>{part(g,3.05,5.9,0.45,0.24,5,{f:1.05});part(g,3.14,5.93,0.24,0.18,4,{lift:5,f:.85});}});
 PROPS.push({v:9.85, build:g=>{part(g,3.65,5.95,0.45,0.24,5,{f:.9});part(g,3.74,5.98,0.24,0.18,4,{lift:5,f:.75});}});
+// pagar sisi utara zona pabrik
+PROPS.push({v:12.4, build:g=>{
+  const top=[];
+  for(let x=10.2;x<=14.2;x+=0.66){
+    const[px,py]=proj(x,2.25);
+    mk('line',{x1:px,y1:py,x2:px,y2:py-8,stroke:C.fence,'stroke-width':1.1},g);
+    top.push(`${px.toFixed(1)},${(py-8).toFixed(1)}`);
+  }
+  mk('polyline',{points:top.join(' '),fill:'none',stroke:C.fence,'stroke-width':1},g);
+}});
+// pagar tanaman (barisan semak rapat) tepi zona kantor
+PROPS.push({v:6.9, build:g=>{[0,1,2,3].forEach(k=>bush(g,1.05+k*0.5,5.55,.62));}});
+// dermaga kayu kecil di kolam
+PROPS.push({v:15.2, build:g=>{
+  const[ax,ay]=proj(1.55,13.85),[bx,by]=proj(0.8,14.2);
+  mk('line',{x1:ax,y1:ay,x2:bx,y2:by,stroke:C.wood,'stroke-width':6,'stroke-linecap':'round'},g);
+  for(let t=0.15;t<=0.95;t+=0.27){
+    const cx=ax+(bx-ax)*t, cy=ay+(by-ay)*t;
+    mk('line',{x1:cx-4,y1:cy+2.6,x2:cx+4,y2:cy-2.6,stroke:C.wood,'stroke-width':1.3},g);
+  }
+}});
+// papan nama ATLAS di gerbang masuk (dekat jalan spawn)
+PROPS.push({v:9.3, build:g=>{
+  const[px,py]=proj(-0.35,9.75);
+  mk('line',{x1:px,y1:py,x2:px,y2:py-24,stroke:C.fence,'stroke-width':1.6},g);
+  mk('rect',{x:px-27,y:py-43,width:54,height:20,rx:3,fill:shadeC(C.face.top,1),stroke:C.stroke,'stroke-width':1},g);
+  mk('circle',{cx:px-17,cy:py-33,r:2.1,fill:'var(--accent)'},g);
+  const tx=mk('text',{x:px-10,y:py-29.6,fill:'var(--ink2)','font-size':'8','letter-spacing':'1.6',
+    style:'font-family:var(--mono);font-weight:600'},g);
+  tx.textContent='ATLAS';
+}});
+// tiang bendera di plaza review
+PROPS.push({v:10.55, build:g=>{
+  const[px,py]=proj(3.25,7.3);
+  mk('line',{x1:px,y1:py,x2:px,y2:py-30,stroke:C.fence,'stroke-width':1.3},g);
+  mk('polygon',{points:`${px},${py-30} ${px+13},${py-26.5} ${px},${py-23}`,fill:'var(--accent)',opacity:.85},g);
+}});
+// forklift di dok pabrik
+PROPS.push({v:16.1, build:g=>{
+  part(g,10.55,5.35,0.34,0.24,5,{f:1.1});
+  const[mx,my]=proj(10.6,5.34);
+  mk('line',{x1:mx,y1:my-4,x2:mx,y2:my-14,stroke:C.fence,'stroke-width':1.6},g);
+  const[fx,fy]=proj(10.52,5.3);
+  mk('line',{x1:fx,y1:fy-1,x2:fx-7,y2:fy+2.6,stroke:C.fence,'stroke-width':1.3},g);
+  mk('line',{x1:fx+3,y1:fy+1,x2:fx-4,y2:fy+4.6,stroke:C.fence,'stroke-width':1.3},g);
+}});
+// truk trailer staging di sisi gudang kirim
+PROPS.push({v:23.5, build:g=>{
+  part(g,10.85,12.45,0.72,0.3,9,{f:1.12});
+  part(g,11.57,12.48,0.22,0.26,6,{f:1.3});
+}});
+// kontainer kargo biru (aksen muatan)
+PROPS.push({v:24.1, build:g=>{part(g,10.45,13.35,0.5,0.28,8,{base:C.cargoFace});}});
+// burung-burung samar di langit (hanya siang)
+PROPS.push({v:999, build:g=>{
+  [[12.2,-1.7],[13.0,-1.25],[11.5,-1.15]].forEach(([tx,ty])=>{
+    const[px,py]=proj(tx,ty);
+    mk('path',{d:`M${px-6} ${py} Q${px-3} ${py-4} ${px} ${py} Q${px+3} ${py-4} ${px+6} ${py}`,
+      fill:'none',stroke:C.bird,'stroke-width':1.2,'stroke-linecap':'round'},g);
+  });
+}});
 
 /* --- buildScene: seluruh lapisan statis, dibangun ulang saat ganti tema --- */
 const stGroups={};
@@ -1901,6 +1980,11 @@ function buildScene(){
     mk('polygon',{points:blobStr(bx,by,0.28,bi*7+2,.5,7),fill:C.rock},gTerrain);
     mk('polygon',{points:blobStr(bx+0.32,by+0.18,0.16,bi*5+3,.5,6),fill:C.rock,opacity:.8},gTerrain);
   });
+  // bayangan awan lembut di lembah (hanya terlihat di siang)
+  [[3.8,4.2,150,58],[11.8,12.5,120,48]].forEach(([tx,ty,rx,ry])=>{
+    const[px,py]=proj(tx,ty);
+    mk('ellipse',{cx:px,cy:py,rx,ry,fill:C.cloud},gTerrain);
+  });
   // grid lantai
   for(let x=-2;x<=16;x+=2){const[a,b]=proj(x,-1),[c2,d2]=proj(x,17);mk('line',{x1:a,y1:b,x2:c2,y2:d2,stroke:C.grid,'stroke-width':1},gGrid);}
   for(let y=-1;y<=17;y+=2){const[a,b]=proj(-2,y),[c2,d2]=proj(16,y);mk('line',{x1:a,y1:b,x2:c2,y2:d2,stroke:C.grid,'stroke-width':1},gGrid);}
@@ -1932,6 +2016,26 @@ function buildScene(){
       mk('rect',{x:p[0]-2.2,y:p[1]-2.2,width:4.4,height:4.4,rx:1,fill:C.notch},gRoutes);
     }
   });
+  // marka jalan: zebra cross di jalur kantor
+  {
+    const pts=routePts[2], p=pointAt(pts,54), q=pointAt(pts,60);
+    const dx=q[0]-p[0], dy=q[1]-p[1], L=Math.hypot(dx,dy)||1;
+    const ux=dx/L, uy=dy/L, px=-uy, py=ux;
+    for(let k=-1;k<=2;k++){
+      const cx=p[0]+ux*k*4, cy=p[1]+uy*k*4;
+      mk('line',{x1:cx-px*5.5,y1:cy-py*5.5,x2:cx+px*5.5,y2:cy+py*5.5,stroke:C.paint,'stroke-width':2},gRoutes);
+    }
+  }
+  // garis parkir di samping mobil kantor
+  for(let k=0;k<4;k++){
+    const[ax,ay]=proj(2.95+k*0.6,5.82),[bx,by]=proj(2.95+k*0.6,6.28);
+    mk('line',{x1:ax,y1:ay,x2:bx,y2:by,stroke:C.paint,'stroke-width':1.4},gRoutes);
+  }
+  // strip dok muat di depan gudang kirim
+  for(let k=0;k<4;k++){
+    const[ax,ay]=proj(8.55+k*0.3,14.55);
+    mk('line',{x1:ax,y1:ay,x2:ax+6,y2:ay+3,stroke:C.paint,'stroke-width':2},gRoutes);
+  }
   // bangunan & properti (painter's algorithm)
   const jobs=[
     ...STAGES.map((st,i)=>({v:st.tile[0]+st.tile[1],st:i})),
@@ -2548,8 +2652,21 @@ function openSektor(i,isRefresh){
   const assign={}; here.forEach((o,k)=>assign[o.id]=who[k%who.length].id);
   curAssign=assign; curFlat=flat;
   $('#skCrumb').innerHTML=`<a id="skBack">${I('arrowl')}Peta Live</a><span>/</span><span style="color:var(--ink2)">${st.nm}</span>`;
-  $('#skHead').innerHTML=`<div class="sk-ic">${I(st.icon)}</div>
+  $('#skHead').innerHTML=`<div class="sk-ic sk-dio" title="${st.nm} di peta"></div>
     <div><h1>${st.nm}</h1><div class="sub">Zona ${ZONE_OF[i]} · PIC ${st.pic} · ${flat.length} orang</div></div>`;
+  { // mini-diorama: gedung sektor ini dirender dari peta
+    const ic=$('#skHead .sk-dio');
+    const[dcx,dcy]=proj(st.tile[0],st.tile[1]);
+    const dw=Math.max(206,(st.size[0]+st.size[1])*TW*1.2), dh=dw*0.685;
+    const dio=document.createElementNS(NS,'svg');
+    dio.setAttribute('viewBox',`${dcx-dw/2} ${dcy-dh*0.76} ${dw} ${dh}`);
+    const dg=document.createElementNS(NS,'g');
+    dio.appendChild(dg);
+    buildStation(i,dg);
+    ic.appendChild(dio);
+    ic.style.cursor='pointer';
+    ic.onclick=()=>{switchView('peta');setTimeout(()=>zoomToWorld(dcx,dcy,isSmall()?520:760),250);};
+  }
   const oldest=here.slice().sort((a,b)=>b.age-a.age)[0];
   $('#skStats').innerHTML=[
     ['Order di sektor', here.length, 'order'],
