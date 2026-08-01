@@ -471,6 +471,8 @@ body[data-theme="dark"] image.spr{filter:brightness(.56) saturate(.8) contrast(1
 .token:hover .inner{transform:scale(1.22)}
 .token .ring2{fill:none;stroke:rgba(255,255,255,.5);stroke-width:1.4;opacity:0}
 .token.arrived .ring2{animation:ringOut .55s var(--ease) 1}
+.token.arrived .inner{animation:arriveBounce .5s var(--ease) 1}
+@keyframes arriveBounce{0%{transform:scale(1)}35%{transform:scale(1.38)}70%{transform:scale(.92)}100%{transform:scale(1)}}
 .smoke{opacity:0}
 .st-grp.working .smoke{animation:smokeRise 4.2s linear infinite}
 .st-grp.working .smoke.s2{animation-duration:5.1s;animation-delay:1.5s}
@@ -503,6 +505,21 @@ body[data-theme="dark"] image.spr{filter:brightness(.56) saturate(.8) contrast(1
   width:5px;height:5px;border-radius:50%;background:var(--line3)}
 .tree>ul{margin-top:0}
 .tree>ul::before,.tree>ul::after{display:none}
+/* animasi masuk hanya saat halaman dibuka (.anim), bukan saat data menyegar */
+.tree.anim .pcard{animation:cardIn .5s var(--ease) both;animation-delay:var(--d,0ms)}
+.tree.anim ul{animation-delay:var(--d,0ms)}
+.tree.anim ul::before{transform-origin:top;animation:linGrow .45s var(--ease) both;animation-delay:inherit}
+.tree.anim ul::after{animation:fadeIn .35s var(--ease) both;animation-delay:inherit}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes linGrow{from{transform:scaleY(0)}}
+@keyframes fadeIn{from{opacity:0}}
+.pcard .ft .load i{transition:width .7s var(--ease)}
+.pcard .rl{display:flex;align-items:center;gap:4px}
+.pcard .rl svg{width:10px;height:10px;stroke-width:1.8;flex:none;opacity:.7}
+.pcard .subcnt{
+  font:500 9px var(--mono);color:var(--ink3);border:1px solid var(--line2);
+  border-radius:999px;padding:1px 6px;margin-left:auto;
+}
 .tree li{position:relative;display:flex;flex-direction:column;align-items:center;padding:24px 9px 0}
 .tree>ul>li{padding-top:0}
 .tree li::before{content:'';position:absolute;top:0;left:50%;height:24px;border-left:1px solid var(--line2)}
@@ -2651,17 +2668,23 @@ const TEAMS=[
 ];
 let curSektor=null, curAssign={}, curFlat=[], curPerson=null;
 function flatTeam(p,parent,out){out.push({p,parent});(p.reports||[]).forEach(k=>flatTeam(k,p,out));return out;}
-function personCard(p,mgr){
+/* rona avatar mengikuti zona sektor — kartu terasa "satu regu" */
+const ZONE_AV=['rgba(94,106,210,.16)','rgba(94,106,210,.16)','rgba(94,106,210,.16)',
+  'rgba(94,106,210,.10)','rgba(245,166,35,.15)','rgba(245,166,35,.15)','rgba(47,168,154,.17)'];
+function personCard(p,mgr,delay){
   const c=(STATC[p.status]||STATC.aktif)[0];
-  return `<div class="pcard ${mgr?'mgr':''} ${p.status==='cuti'?'cuti':''}" data-p="${p.id}">
-    <div class="top"><span class="pav">${p.ini}<span class="sdot" style="background:${c}"></span></span>
-      <div><div class="nm">${p.nm}</div><div class="rl">${p.role}</div></div></div>
-    <div class="ft"><span class="load"><i class="${p.beban>=4?'hi':''}" style="width:${clamp(p.beban/5*100,4,100)}%"></i></span><span class="bn">${p.beban} tugas</span></div>
+  const w=clamp(p.beban/5*100,4,100);
+  return `<div class="pcard ${mgr?'mgr':''} ${p.status==='cuti'?'cuti':''}" data-p="${p.id}" style="--d:${delay||0}ms">
+    <div class="top"><span class="pav" style="background:${ZONE_AV[curSektor]||''}">${p.ini}<span class="sdot" style="background:${c}"></span></span>
+      <div><div class="nm">${p.nm}</div><div class="rl">${I(STAGES[curSektor]?STAGES[curSektor].icon:'user')}${p.role}</div></div></div>
+    <div class="ft"><span class="load"><i class="${p.beban>=4?'hi':''}" data-w="${w}%" style="width:4%"></i></span><span class="bn">${p.beban} tugas</span>${(p.reports&&p.reports.length)?`<span class="subcnt">${p.reports.length} tim</span>`:''}</div>
   </div>`;
 }
-function treeHtml(p,mgr){
+function treeHtml(p,mgr,depth,idx){
+  depth=depth||0; idx=idx||0;
   const kids=p.reports||[];
-  return `<li>${personCard(p,mgr)}${kids.length?`<ul>${kids.map(k=>treeHtml(k,false)).join('')}</ul>`:''}</li>`;
+  const delay=depth*150+idx*70;
+  return `<li>${personCard(p,mgr,delay)}${kids.length?`<ul style="--d:${(depth+1)*150}ms">${kids.map((k,ki)=>treeHtml(k,false,depth+1,ki)).join('')}</ul>`:''}</li>`;
 }
 function openSektor(i,isRefresh){
   curSektor=i;
@@ -2695,8 +2718,12 @@ function openSektor(i,isRefresh){
     ['Selesai bulan ini', SEKTOR_DONE[i], 'order'],
     ['Paling lama', oldest?fmtAge(oldest.age):'—', oldest?oldest.id:''],
   ].map(([k,v,u])=>`<div class="tile"><div class="lab">${k}</div><div class="val">${v}${u?`<span class="unit">${u}</span>`:''}</div></div>`).join('');
-  $('#skTree').innerHTML=`<ul>${treeHtml(team.mgr,true)}</ul>`;
+  $('#skTree').classList.toggle('anim',!isRefresh);
+  $('#skTree').innerHTML=`<ul>${treeHtml(team.mgr,true,0,0)}</ul>`;
   $('#skTree').querySelectorAll('.pcard').forEach(c=>c.onclick=()=>showPerson(c.dataset.p));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ // bar beban mengisi setelah kartu masuk
+    $('#skTree').querySelectorAll('.load i').forEach(el=>{el.style.width=el.dataset.w;});
+  }));
   const thr=SEKTOR_THRU[i];
   const skSpark=d=>{
     const mn=Math.min(...d),mx=Math.max(...d),sp=mx-mn||1;
