@@ -334,6 +334,8 @@ table.pipe{width:100%;border-collapse:collapse;min-width:900px}
 .st-grp polygon{transition:fill .4s var(--ease)}
 .st-grp:hover polygon.p-top{filter:brightness(1.22)}
 .st-grp.attn polygon.p-top,.st-grp.attn polygon.p-left,.st-grp.attn polygon.p-right{stroke:rgba(229,72,77,.75);stroke-width:1.5}
+image.spr{pointer-events:none}
+body[data-theme="dark"] image.spr{filter:brightness(.56) saturate(.8) contrast(1.04)}
 .hud-tc{top:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none}
 .hud-tc .hud-chip{pointer-events:none;gap:6px}
 .hud-tc .hud-chip b{color:var(--ink);font-weight:600}
@@ -1568,7 +1570,7 @@ function renderPipe(flashOid){
           <div class="stage-lab">${st.nm}</div></td>
       <td class="age-cell" data-l="Umur tahap">${fmtAge(o.age)}${ageDots(o)}</td>
       <td data-l="SLA">${slaChip(o)}</td>
-      <td data-l="Dok"><span class="chip ${docsLack(o)&&o.age>0.5?'warn':''}" title="${stDocs(o).map((d,i)=>`${o.docState[i]?'✓':'○'} ${d}`).join('\n')}">${docsDone(o)}/${docsNeed(o)}</span></td>
+      <td data-l="Dok"><span class="chip ${docsLack(o)&&o.age>0.5?'warn':''}" title="${stDocs(o).map((d,i)=>`${(o.docState||[])[i]?'✓':'○'} ${d}`).join('\n')}">${docsDone(o)}/${docsNeed(o)}</span></td>
       <td data-l="PIC"><div class="pic-cell"><span class="mini-av">${st.pic.slice(0,2).toUpperCase()}</span>${st.pic}</div></td>
     </tr>`;
   }).join('');
@@ -1767,10 +1769,22 @@ function winFace(g,side,fx,fy,off,wd,z1,z2,lit){
 }
 function shadowAt(cx,cy,rx,ry){mk('ellipse',{cx:cx+5,cy:cy+4,rx,ry,fill:C.shadow,filter:'url(#soft)'},gShadow);}
 
+/* SPRITE UJI: aset art gaya game (Higgsfield Seedream). Kalau gaya disetujui
+   Matthew, semua gedung & properti diganti set sprite yang konsisten. */
+const SPRITES={produksi:'assets/spr-produksi.png'};
 function buildStation(idx,g){
   const st=STAGES[idx];const[wc,dc]=st.size;
   const x=st.tile[0]-wc/2, y=st.tile[1]-dc/2;
   pad(g,x,y,wc,dc);
+  if(SPRITES[st.id]){
+    // pelat dasar tipis = target sorot status (attn merah / tint Beban) di bawah sprite
+    part(g,x,y,wc,dc,2,{main:true});
+    const IMW=(wc+dc)*TW*1.18;
+    const [icx,icy]=proj(x+wc/2,y+dc/2);
+    const baseY=icy+(wc+dc)/2*TH;
+    mk('image',{href:SPRITES[st.id],x:icx-IMW/2,y:baseY-IMW*0.84,width:IMW,height:IMW,class:'spr'},g);
+    return;
+  }
   switch(st.id){
     case 'penawaran':
       part(g,x,y,wc,dc,20,{main:true});
@@ -3154,7 +3168,7 @@ const SCRIPT=[
   ()=>advanceOrder('ORD-0138'),
   ()=>{if(ORDERS.some(x=>x.id==='ORD-0143')||tokens['ORD-0143'])return;
       ORDERS.push({id:'ORD-0143',cust:'Café Tepian Kopi',proj:'6 Pintu Custom Rotan',val:52,type:'custom',stage:0,age:0.02,docs:[0,2]});
-      const o=ORDERS[ORDERS.length-1];const tk=mkToken(o);setPos(tk,routePts[0][0]);
+      const o=ORDERS[ORDERS.length-1];resetDocs(o,0);const tk=mkToken(o);setPos(tk,routePts[0][0]);
       tk.inner.style.transform='scale(0)';requestAnimationFrame(()=>tk.inner.style.transform='');
       glide(tk,[routePts[0][0],...routePts[0].slice(1),slotPoint(0,stationCount(0)-1)],1600,()=>layoutQueues(true));
       pushFeed({kind:'stage',html:`Penawaran baru masuk — <b>Café Tepian Kopi</b> <span class="oid">ORD-0143</span>`});
