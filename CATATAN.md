@@ -247,3 +247,31 @@ Keputusan:
 3. Ditolak sadar: tugas Ujang tetap generik (dokumen struktur, bukan
    penugasan live) dan notasi "PO = Penawaran" dipertahankan karena itu
    notasi asli gambar proses Matthew.
+
+## 2 Agu 2026 (sore) - Hierarki divisi DITULIS ULANG dari dokumen sumber asli
+
+Koreksi Matthew: PDF hierarki harus diserap dari dokumen business process
+yang pernah dia kasih (Selaras Lawang Sewu), bukan dari TEAMS prototipe.
+docs/hirarki-divisi.html/.pdf dirombak total:
+
+- Sumber: Projects/selaras-ekosistem/ringkasan-alur-hirarki.md (bagian C)
+  + peta-business-process.md (transkrip 7 lembar) + flow-asli.md.
+- Isi sekarang 100% nama/peran asli dokumen: Evelyn, Sarah, Nadia, Nita/
+  Citra, Annisa, Sinta, Esti, Bu Liana, Riki, Bobby, Fischa, Hardy, Kidam,
+  Yenni, Dilla, Agus, Titok, Athoko, Andy Pang, dst. Nol nama karangan.
+- Ketidakjelasan dokumen ditandai jujur: tag "tidak dijelaskan" (nama/
+  kepanjangan/garis), tag amber "PIC belum ada" (survey Modern Outlet
+  masih "Siapa?"), Riki vs RIKI belum dipastikan orang yang sama.
+- Panel verifikasi 3 agen menemukan 16 hal; 2 kritis terbukti benar
+  (Bobby dan Fischa/RABT-MIU hilang) dan semua klaim dicek manual ke
+  transkrip sebelum diterapkan. Ditolak sadar: usulan ganti "All ABA"
+  dan potong "terkirim &" karena keduanya persis tulisan dokumen
+  Back Office Detail.
+- Struktur 3 halaman: (1) Pimpinan + ABA + SSA + Sales 4 kanal,
+  (2) PPIC/Inventory/SCM + Produksi + Gudang (otoritas 5 gudang) +
+  Quality, (3) Project + Finance + After Sales + Tim Expert + Segitiga
+  Kontrol.
+
+Catatan: TEAMS di index.html (peta live) masih memakai struktur lama
+9 stasiun; penyelarasan prototipe ke struktur Selaras asli = pekerjaan
+lanjutan bila Matthew minta.
