@@ -219,3 +219,31 @@ feed bekerja.
 
 - `index.html` - prototipe (1 file, semua di dalamnya)
 - `shot-*.png` - bukti verifikasi visual
+
+## 2 Agu 2026 - Dokumen PDF: flowchart + hierarki per divisi
+
+Dua dokumen cetak A4 landscape di `docs/` (sumber HTML bisa diedit, PDF hasil render):
+
+- `flowchart-alur-bisnis.html/.pdf` - 1 halaman, alur order masuk sampai
+  Produksi Terima Data (checkpoint fokus), cabang material cukup/kurang,
+  zona kelabu di luar fokus.
+- `hirarki-divisi.html/.pdf` - 3 halaman: (1) strip alur 9 divisi + tabel
+  ringkas + daftar singkatan, (2) bagan garis komando divisi 1-5,
+  (3) bagan divisi 6-9. Nomor divisi = nomor stasiun flowchart supaya dua
+  PDF bisa dibaca berdampingan.
+
+Keputusan:
+
+1. Data personel diambil apa adanya dari TEAMS di index.html (26 orang,
+   9 divisi); hanya Annisa & Bu Liana nama nyata, sisanya placeholder dan
+   ditandai jelas di dokumen. Reversibel: regenerasi PDF setelah struktur
+   organisasi resmi masuk.
+2. Panel verifikasi 3 agen (data/bahasa/visual) dijalankan sebelum ekspor;
+   22 temuan, hampir semua diterapkan: em-dash dibuang total dari KEDUA
+   dokumen (pemisah jadi titik tengah), ejaan hierarki/standar/survei/riwayat,
+   istilah dikunci (supplier bukan vendor, barang jadi bukan finish good,
+   "fokus checkpoint" bukan "checkpoint fokus"), daftar singkatan ditambah,
+   font kartu dinaikkan untuk keterbacaan cetak, garis pohon dipertegas.
+3. Ditolak sadar: tugas Ujang tetap generik (dokumen struktur, bukan
+   penugasan live) dan notasi "PO = Penawaran" dipertahankan karena itu
+   notasi asli gambar proses Matthew.

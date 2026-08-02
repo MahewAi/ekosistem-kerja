@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Hierarki Organisasi per Divisi · Berdasarkan Flowchart Alur Bisnis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page{size:A4 landscape;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#fff}
+  body{font-family:'Geist',system-ui,sans-serif;color:#1a1c22;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:1123px;height:794px;position:relative;padding:44px 50px 40px;page-break-after:always;overflow:hidden;background:#fff}
+  .page:last-child{page-break-after:auto}
+
+  h1{font-size:23px;font-weight:700;letter-spacing:-.02em}
+  .sub{font-size:10.5px;color:#5b5e66;margin-top:5px}
+  .sub b{color:#1a1c22;font-weight:600}
+
+  .legend{position:absolute;top:48px;right:50px;display:flex;gap:14px;font-size:9px;color:#5b5e66;align-items:center}
+  .legend .sw{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+  .foot{position:absolute;left:50px;right:50px;bottom:26px;display:flex;justify-content:space-between;font-size:8.5px;color:#8a8d94;border-top:1px solid #ececea;padding-top:9px}
+  .foot b{color:#5b5e66;font-weight:600}
+
+  /* ---------- halaman 1: strip alur + tabel ---------- */
+  .strip{display:flex;align-items:stretch;gap:0;margin-top:26px;flex-wrap:nowrap}
+  .chip{flex:1;border:1.4px solid #5058C4;background:#F5F6FD;border-radius:9px;padding:8px 9px;min-width:0}
+  .chip .no{display:inline-flex;width:16px;height:16px;border-radius:50%;background:#5058C4;color:#fff;font-size:9px;font-weight:700;align-items:center;justify-content:center;margin-bottom:4px}
+  .chip .dn{font-size:9.5px;font-weight:600;line-height:1.25}
+  .chip .pn{font-size:8px;color:#5b5e66;margin-top:2px}
+  .chip.amber{border-color:#B87C14;background:#FCF7EE}
+  .chip.amber .no{background:#B87C14}
+  .chip.green{border-color:#1E7A3C;background:#F2F8F3}
+  .chip.green .no{background:#1E7A3C}
+  .chip.grey{border-color:#c9cacd;background:#FAFAF8}
+  .chip.grey .no{background:#9a9da3}
+  .arr{align-self:center;color:#9a9da3;font-size:11px;padding:0 4px;flex:0 0 auto}
+  .stripnote{font-size:8.8px;color:#8a8d94;margin-top:8px}
+  .stripnote b{color:#B87C14;font-weight:600}
+  .stripnote .g{color:#1E7A3C;font-weight:600}
+
+  table{width:100%;border-collapse:collapse;margin-top:22px;font-size:10.2px}
+  th{text-align:left;font-size:8.6px;letter-spacing:.12em;color:#8a8d94;font-weight:600;padding:8px 10px;border-bottom:1.4px solid #dcdce0}
+  td{padding:9px 10px;border-bottom:1px solid #ececea;vertical-align:top}
+  td.no{font-family:'Geist Mono',monospace;color:#8a8d94;width:22px}
+  td .dv{font-weight:600}
+  td .real{display:inline-block;font-size:8px;font-weight:600;color:#1E7A3C;border:1px solid #1E7A3C;border-radius:99px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+  td.c{text-align:center}
+  tr.zamber td .dv{color:#8a5a0e}
+  tr.zgreen td .dv{color:#1E7A3C}
+  tr.zgrey td{color:#7c7f86}
+  tr.zgrey td .dv{color:#7c7f86;font-weight:600}
+  .notes{margin-top:24px;display:flex;gap:26px;font-size:9.4px;color:#5b5e66;line-height:1.6}
+  .gloss{margin-top:18px;border-top:1px solid #ececea;padding-top:12px;font-size:9px;color:#5b5e66;line-height:1.75}
+  .gloss .gl{display:block;font-size:8px;letter-spacing:.14em;color:#8a8d94;font-weight:600;margin-bottom:4px}
+  .notes .n{flex:1;border-left:2.5px solid #dcdce0;padding-left:12px}
+  .notes .n b{color:#1a1c22;font-weight:600}
+  .notes .n.g{border-left-color:#1E7A3C}
+  .notes .n.i{border-left-color:#5058C4}
+
+  /* ---------- halaman 2-3: kartu bagan divisi ---------- */
+  .grid{display:grid;gap:16px;margin-top:22px}
+  .g5{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .card{border:1px solid #e2e2e0;border-radius:12px;padding:13px 14px;background:#fff}
+  .card .hd{display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid #ececea;margin-bottom:10px}
+  .card .hd .no{display:inline-flex;width:19px;height:19px;border-radius:50%;background:#5058C4;color:#fff;font-size:10px;font-weight:700;align-items:center;justify-content:center;flex:0 0 auto}
+  .card .hd .t{font-size:11.5px;font-weight:600;letter-spacing:-.01em}
+  .card .hd .s{font-size:9px;color:#8a8d94;margin-top:1px}
+  .card.amber .hd .no{background:#B87C14}
+  .card.green{border-color:#bcd9c4;background:#FCFEFC}
+  .card.green .hd .no{background:#1E7A3C}
+  .card.grey .hd .no{background:#9a9da3}
+
+  .tree ul{margin-left:15px;padding-left:16px;border-left:1.5px solid #adb0b8;list-style:none}
+  .tree>.prow{margin-top:0}
+  .tree li{position:relative;list-style:none}
+  .tree li::before{content:'';position:absolute;left:-16px;top:16px;width:12px;height:1.5px;background:#adb0b8}
+  .prow{display:flex;align-items:center;gap:8px;border:1px solid #e6e6e3;border-radius:8px;background:#fff;padding:5.5px 8px;margin:5px 0}
+  .prow.mgr{border-color:#5058C4;background:#F5F6FD}
+  .card.amber .prow.mgr{border-color:#B87C14;background:#FCF7EE}
+  .card.amber .prow.mgr .av{background:#B87C14;color:#fff}
+  .card.green .prow.mgr{border-color:#1E7A3C;background:#F2F8F3}
+  .card.grey .prow.mgr{border-color:#b9bbc0;background:#F6F6F5}
+  .av{flex:0 0 auto;width:21px;height:21px;border-radius:50%;background:#EDEEFA;color:#3f47a8;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .prow.mgr .av{background:#5058C4;color:#fff}
+  .card.green .prow.mgr .av{background:#1E7A3C}
+  .card.grey .prow.mgr .av{background:#9a9da3}
+  .card.grey .av{background:#EFEFED;color:#6b6e75}
+  .pi{min-width:0;flex:1}
+  .pi .nm{font-size:9.6px;font-weight:600;line-height:1.2;display:flex;align-items:center;gap:5px}
+  .pi .nm .real{font-size:7.8px;font-weight:600;color:#1E7A3C;border:1px solid #1E7A3C;border-radius:99px;padding:0 5px}
+  .pi .rl{font-size:9px;color:#5b5e66;margin-top:1.5px}
+  .pi .tg{font-size:9px;color:#6b6e75;margin-top:1.5px;line-height:1.35}
+  .st{flex:0 0 auto;font-size:8px;color:#5b5e66;display:flex;align-items:center;gap:4px}
+  .st i{width:6px;height:6px;border-radius:50%;display:inline-block}
+  .st.aktif i{background:#2FA85B}
+  .st.lapangan i{background:#D8940F}
+
+  .pgtitle{font-size:15px;font-weight:700;letter-spacing:-.015em}
+  .pgsub{font-size:9.5px;color:#5b5e66;margin-top:4px}
+  .cnote{border:1px dashed #dcdce0;border-radius:12px;padding:13px 16px;font-size:9px;color:#5b5e66;line-height:1.6;background:#FAFAF8}
+  .cnote b{color:#1a1c22;font-weight:600}
+  .cnote .g{color:#1E7A3C;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ============ HALAMAN 1 : RINGKASAN ============ -->
+<div class="page">
+  <h1>Hierarki Organisasi per Divisi</h1>
+  <div class="sub">Disusun mengikuti <b>flowchart alur bisnis</b> (Order Masuk sampai Produksi Terima Data) · urutan divisi = urutan stasiun di alur · total <b>9 divisi, 26 personel</b></div>
+  <div class="legend">
+    <span><span class="sw" style="background:#F5F6FD;border:1.4px solid #5058C4"></span>fokus checkpoint</span>
+    <span><span class="sw" style="background:#FCF7EE;border:1.4px solid #B87C14"></span>jalur material kurang</span>
+    <span><span class="sw" style="background:#F2F8F3;border:1.4px solid #1E7A3C"></span>checkpoint</span>
+    <span><span class="sw" style="background:#FAFAF8;border:1.4px solid #c9cacd"></span>di luar fokus</span>
+  </div>
+
+  <div class="strip">
+    <div class="chip"><span class="no">1</span><div class="dn">Sales</div><div class="pn">Rio Pratama</div></div><span class="arr">›</span>
+    <div class="chip"><span class="no">2</span><div class="dn">ABA</div><div class="pn">Kepala ABA</div></div><span class="arr">›</span>
+    <div class="chip"><span class="no">3</span><div class="dn">SSA</div><div class="pn">Annisa</div></div><span class="arr">›</span>
+    <div class="chip"><span class="no">4</span><div class="dn">PPIC</div><div class="pn">Bu Liana</div></div><span class="arr">›</span>
+    <div class="chip"><span class="no">5</span><div class="dn">Purchasing</div><div class="pn">Dimas Saputra</div></div><span class="arr">›</span>
+    <div class="chip amber"><span class="no">6</span><div class="dn">Ekspedisi</div><div class="pn">Koord. Ekspedisi</div></div><span class="arr">›</span>
+    <div class="chip green"><span class="no">7</span><div class="dn">Serah Data</div><div class="pn">Adm. Serah Data</div></div><span class="arr">›</span>
+    <div class="chip grey"><span class="no">8</span><div class="dn">Produksi &amp; QC</div><div class="pn">Kep. Produksi</div></div><span class="arr">›</span>
+    <div class="chip grey"><span class="no">9</span><div class="dn">Gudang FG</div><div class="pn">Raka Pratama</div></div>
+  </div>
+  <div class="stripnote">Cabang: dari 5 langsung ke <span class="g">7 (checkpoint)</span> jika material cukup; lewat <b>6 Ekspedisi</b> jika material kurang. Divisi 8-9 berjalan setelah checkpoint terlewati.</div>
+
+  <table>
+    <tr><th style="width:22px">#</th><th>DIVISI</th><th>KEPALA DIVISI</th><th style="width:64px;text-align:center">PERSONEL</th><th style="width:78px;text-align:center">WAKTU NORMAL</th><th>PERAN DALAM ALUR</th></tr>
+    <tr><td class="no">1</td><td><span class="dv">Sales · Order Masuk</span></td><td>Rio Pratama</td><td class="c">2</td><td class="c">0,3 hari</td><td>Terima PO customer, input data order &amp; kontak, follow-up pipeline penawaran</td></tr>
+    <tr><td class="no">2</td><td><span class="dv">ABA · Verifikasi</span></td><td>Kepala ABA</td><td class="c">3</td><td class="c">0,5 hari</td><td>Menjalankan 7 cek wajib atas tiap order; monitoring seluruh order sampai terkirim &amp; terbayar lunas</td></tr>
+    <tr><td class="no">3</td><td><span class="dv">SSA · Proses SO</span><span class="real">nama nyata</span></td><td>Annisa</td><td class="c">3</td><td class="c">1 hari</td><td>Klarifikasi data, terbitkan SO, kawal approval gambar N1/N2, info invoice ke Finance</td></tr>
+    <tr><td class="no">4</td><td><span class="dv">PPIC · Proses WO</span><span class="real">nama nyata</span></td><td>Bu Liana</td><td class="c">3</td><td class="c">1 hari</td><td>Klarifikasi WO, jadwal produksi &amp; jadwal material, kendali produksi, koordinasi gudang</td></tr>
+    <tr><td class="no">5</td><td><span class="dv">Purchasing · Cek Material</span></td><td>Dimas Saputra</td><td class="c">5</td><td class="c">1,5 hari</td><td>Cek stok &amp; alokasi material, PO ke supplier &amp; negosiasi harga; membawahi Inventory Controller (IC) gudang material</td></tr>
+    <tr class="zamber"><td class="no">6</td><td><span class="dv">Ekspedisi · Material In Transit</span></td><td>Koordinator Ekspedisi</td><td class="c">2</td><td class="c">4 hari</td><td>Pantau kedatangan material dari supplier, QC material masuk bersama gudang</td></tr>
+    <tr class="zgreen"><td class="no">7</td><td><span class="dv">Serah Data · Produksi Terima Data</span></td><td>Admin Serah Data</td><td class="c">1</td><td class="c">0,3 hari</td><td>Pastikan checklist final lengkap, serah WO ke Kepala Produksi · ✅ fokus checkpoint selesai</td></tr>
+    <tr class="zgrey"><td class="no">8</td><td><span class="dv">Produksi &amp; QC</span></td><td>Kepala Produksi</td><td class="c">4</td><td class="c">14 hari</td><td>Eksekusi WO, kendali mutu proses &amp; barang jadi</td></tr>
+    <tr class="zgrey"><td class="no">9</td><td><span class="dv">Gudang FG &amp; Kirim</span></td><td>Raka Pratama</td><td class="c">3</td><td class="c">3 hari</td><td>QC barang jadi (FG), surat jalan/DO, BAST, invoice ke FAT</td></tr>
+  </table>
+
+  <div class="notes">
+    <div class="n g"><b>Baru 2 nama nyata:</b> Annisa (SSA) dan Bu Liana (PPIC), sesuai gambar business process. Semua nama lain masih <b>placeholder</b> dan menunggu struktur organisasi resmi.</div>
+    <div class="n i"><b>Garis komando Serah Data:</b> Admin Serah Data (divisi 7) secara struktur berada <b>di bawah PPIC (Bu Liana)</b>; di peta ditampilkan sebagai pos sendiri karena menandai titik checkpoint.</div>
+    <div class="n"><b>Dua garis di dokumen ini:</b> urutan 1-9 adalah <b>garis alur order</b> (siapa memproses setelah siapa); bagan di halaman 2-3 adalah <b>garis komando</b> (siapa melapor ke siapa) di dalam tiap divisi.</div>
+  </div>
+
+  <div class="gloss"><span class="gl">DAFTAR SINGKATAN</span>ABA = Admin Business Analyst · SSA = Sales Support Administration · PPIC = Production Planning, Inventory Controller &amp; SCM (Supply Chain Management) · IC = Inventory Controller · PIC = penanggung jawab · PO = Purchase Order · SO = Sales Order · WO = Work Order · TOP = Term of Payment · N1/N2 = approval gambar tingkat 1/2 · QC = Quality Control · FG = barang jadi · DO = Delivery Order · BAST = Berita Acara Serah Terima · FAT = Finance, Accounting &amp; Tax</div>
+
+  <div class="foot">
+    <span><b>ATLAS</b> · Ekosistem Kerja Perusahaan (prototipe) · hierarki organisasi per divisi · hal. 1/3</span>
+    <span>Sumber: flowchart alur bisnis + peta live prototipe · 2 Agustus 2026</span>
+  </div>
+</div>
+
+<!-- ============ HALAMAN 2 : DIVISI 1-5 (FOKUS) ============ -->
+<div class="page">
+  <div class="pgtitle">Bagan Divisi 1-5 · Jalur Fokus Checkpoint</div>
+  <div class="pgsub">Garis komando di dalam divisi: baris berwarna di tiap kartu = kepala divisi (PIC stasiun). Titik status: <span style="color:#2FA85B">●</span> aktif kantor · <span style="color:#D8940F">●</span> lapangan.</div>
+
+  <div class="grid g5">
+    <div class="card">
+      <div class="hd"><span class="no">1</span><div><div class="t">Sales · Order Masuk</div><div class="s">2 personel · 0,3 hari</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">RP</span><div class="pi"><div class="nm">Rio Pratama</div><div class="rl">Sales Lead</div><div class="tg">Follow-up PO customer · update pipeline penawaran</div></div><span class="st aktif"><i></i>aktif</span></div>
+        <ul><li><div class="prow"><span class="av">GS</span><div class="pi"><div class="nm">Gina Safira</div><div class="rl">Sales Support</div><div class="tg">Input PO masuk &amp; data customer</div></div><span class="st aktif"><i></i>aktif</span></div></li></ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hd"><span class="no">2</span><div><div class="t">ABA · Verifikasi</div><div class="s">3 personel · 0,5 hari</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">KA</span><div class="pi"><div class="nm">Kepala ABA</div><div class="rl">Admin Business Analyst Lead</div><div class="tg">Monitoring order sampai terbayar lunas · eskalasi cek gagal ke Sales</div></div><span class="st aktif"><i></i>aktif</span></div>
+        <ul>
+          <li><div class="prow"><span class="av">A1</span><div class="pi"><div class="nm">Analis ABA 1</div><div class="rl">Business Analyst</div><div class="tg">Cek PO = Penawaran &amp; harga-TOP · riwayat customer</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+          <li><div class="prow"><span class="av">A2</span><div class="pi"><div class="nm">Analis ABA 2</div><div class="rl">Business Analyst</div><div class="tg">Cek standar/custom &amp; survei/gambar · ketersediaan &amp; deadline</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hd"><span class="no">3</span><div><div class="t">SSA · Proses SO</div><div class="s">3 personel · 1 hari</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">AN</span><div class="pi"><div class="nm">Annisa<span class="real">nama nyata</span></div><div class="rl">SSA Lead · Sales Support Administration</div><div class="tg">Klarifikasi data sebelum SO · koordinasi balik ke Sales jika kendala · tindak lanjut PO ke Finance/PPIC/Gudang/N1/N2/Project</div></div><span class="st aktif"><i></i>aktif</span></div>
+        <ul>
+          <li><div class="prow"><span class="av">S1</span><div class="pi"><div class="nm">Staf SSA 1</div><div class="rl">Sales Support Admin</div><div class="tg">Terbitkan SO · kawal approval gambar N1/N2</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+          <li><div class="prow"><span class="av">S2</span><div class="pi"><div class="nm">Staf SSA 2</div><div class="rl">Sales Support Admin</div><div class="tg">Info invoice ke Finance · update progress ke Project</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hd"><span class="no">4</span><div><div class="t">PPIC · Proses WO</div><div class="s">3 personel · 1 hari</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">BL</span><div class="pi"><div class="nm">Bu Liana<span class="real">nama nyata</span></div><div class="rl">PPIC Lead · Production Planning, Inventory Controller &amp; SCM</div><div class="tg">Klarifikasi data sebelum WO · koordinasi balik ke Sales jika kendala · jadwal produksi &amp; material · kendali produksi</div></div><span class="st aktif"><i></i>aktif</span></div>
+        <ul>
+          <li><div class="prow"><span class="av">P1</span><div class="pi"><div class="nm">Staf PPIC 1</div><div class="rl">Production Planner</div><div class="tg">Susun jadwal produksi mingguan</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+          <li><div class="prow"><span class="av">P2</span><div class="pi"><div class="nm">Staf PPIC 2</div><div class="rl">SCM &amp; Material Planner</div><div class="tg">Jadwal material &amp; koreksi pekerjaan</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="grid-column:span 2">
+      <div class="hd"><span class="no">5</span><div><div class="t">Purchasing · Cek Material</div><div class="s">5 personel · 1,5 hari · satu-satunya divisi dengan 3 tingkat: Inventory Controller gudang material di bawah Purchasing</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">DM</span><div class="pi"><div class="nm">Dimas Saputra</div><div class="rl">Purchasing Manager · Cek Material &amp; PO</div><div class="tg">Cek stok &amp; alokasi material per WO · PO material ke supplier · negosiasi harga supplier</div></div><span class="st aktif"><i></i>aktif</span></div>
+        <ul>
+          <li><div class="prow"><span class="av">IC</span><div class="pi"><div class="nm">Inventory Controller</div><div class="rl">Inventory Controller Gudang Material</div><div class="tg">Cek stok &amp; rekonsiliasi harian</div></div><span class="st aktif"><i></i>aktif</span></div>
+            <ul><li><div class="prow"><span class="av">GM</span><div class="pi"><div class="nm">Staf Gudang Material</div><div class="rl">Checker Gudang</div><div class="tg">Hitung fisik material · siapkan alokasi ke produksi</div></div><span class="st lapangan"><i></i>lapangan</span></div></li></ul>
+          </li>
+          <li><div class="prow"><span class="av">FH</span><div class="pi"><div class="nm">Fitri Handayani</div><div class="rl">Staf Pembelian</div><div class="tg">Quote plat &amp; aksesoris · follow-up konfirmasi supplier</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+          <li><div class="prow"><span class="av">AW</span><div class="pi"><div class="nm">Andi Wijaya</div><div class="rl">Admin PO &amp; Kontrak</div><div class="tg">Arsip PO supplier · update jadwal kedatangan</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span><b>ATLAS</b> · hierarki organisasi per divisi · divisi 1-5 (jalur fokus checkpoint) · hal. 2/3</span>
+    <span>Semua nama selain Annisa &amp; Bu Liana masih placeholder</span>
+  </div>
+</div>
+
+<!-- ============ HALAMAN 3 : DIVISI 6-9 ============ -->
+<div class="page">
+  <div class="pgtitle">Bagan Divisi 6-9 · Jalur Material &amp; Setelah Checkpoint</div>
+  <div class="pgsub">Divisi 6 hanya dilalui saat material kurang. Divisi 7 = titik checkpoint. Divisi 8-9 berjalan setelah produksi menerima data.</div>
+
+  <div class="grid g4">
+    <div class="card amber">
+      <div class="hd"><span class="no">6</span><div><div class="t">Ekspedisi · Material In Transit</div><div class="s">2 personel · 4 hari · hanya jalur material kurang</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">KE</span><div class="pi"><div class="nm">Koordinator Ekspedisi</div><div class="rl">Koordinator Material In Transit</div><div class="tg">Pantau kedatangan material · QC material masuk bersama gudang</div></div><span class="st lapangan"><i></i>lapangan</span></div>
+        <ul><li><div class="prow"><span class="av">CQ</span><div class="pi"><div class="nm">Checker QC Masuk</div><div class="rl">QC Material Diterima</div><div class="tg">Cek surat jalan supplier vs fisik</div></div><span class="st lapangan"><i></i>lapangan</span></div></li></ul>
+      </div>
+    </div>
+
+    <div class="card green">
+      <div class="hd"><span class="no">7</span><div><div class="t">Serah Data · Produksi Terima Data</div><div class="s">1 personel · 0,3 hari · ✅ fokus checkpoint selesai di sini</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">AS</span><div class="pi"><div class="nm">Admin Serah Data</div><div class="rl">Admin WO → Produksi · garis komando di bawah PPIC (Bu Liana)</div><div class="tg">Pastikan checklist final lengkap (gambar/material/deadline/detail) · serah WO ke Kepala Produksi</div></div><span class="st aktif"><i></i>aktif</span></div>
+      </div>
+    </div>
+
+    <div class="card grey">
+      <div class="hd"><span class="no">8</span><div><div class="t">Produksi &amp; QC</div><div class="s">4 personel · 14 hari · di luar fokus checkpoint</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">KP</span><div class="pi"><div class="nm">Kepala Produksi</div><div class="rl">Kepala Produksi &amp; QC</div><div class="tg">Eksekusi WO · kendali mutu produksi</div></div><span class="st lapangan"><i></i>lapangan</span></div>
+        <ul>
+          <li><div class="prow"><span class="av">O1</span><div class="pi"><div class="nm">Operator 1</div><div class="rl">Operator Produksi</div><div class="tg">Potong &amp; rakit rangka</div></div><span class="st lapangan"><i></i>lapangan</span></div></li>
+          <li><div class="prow"><span class="av">O2</span><div class="pi"><div class="nm">Operator 2</div><div class="rl">Operator Finishing</div><div class="tg">Coating &amp; finishing</div></div><span class="st lapangan"><i></i>lapangan</span></div></li>
+          <li><div class="prow"><span class="av">IQ</span><div class="pi"><div class="nm">Inspektor QC</div><div class="rl">QC Produksi &amp; FG</div><div class="tg">QC proses &amp; barang jadi (FG)</div></div><span class="st lapangan"><i></i>lapangan</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card grey">
+      <div class="hd"><span class="no">9</span><div><div class="t">Gudang FG &amp; Kirim</div><div class="s">3 personel · 3 hari · di luar fokus checkpoint</div></div></div>
+      <div class="tree">
+        <div class="prow mgr"><span class="av">RK</span><div class="pi"><div class="nm">Raka Pratama</div><div class="rl">Kepala Gudang FG &amp; Kirim</div><div class="tg">Jadwal armada &amp; surat jalan/DO · BAST &amp; serah terima customer</div></div><span class="st aktif"><i></i>aktif</span></div>
+        <ul>
+          <li><div class="prow"><span class="av">US</span><div class="pi"><div class="nm">Ujang Setiawan</div><div class="rl">Driver</div><div class="tg">Pengiriman order ke customer</div></div><span class="st lapangan"><i></i>lapangan</span></div></li>
+          <li><div class="prow"><span class="av">LM</span><div class="pi"><div class="nm">Lina Marlina</div><div class="rl">Admin Gudang FG</div><div class="tg">Surat jalan, BAST &amp; invoice ke FAT</div></div><span class="st aktif"><i></i>aktif</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cnote" style="margin-top:16px">
+    <b>Cara membaca dokumen ini:</b> nomor divisi mengikuti stasiun di flowchart alur bisnis, jadi PDF ini dan PDF flowchart bisa dibaca berdampingan.
+    Baris berwarna di tiap kartu adalah kepala divisi; garis di bawahnya adalah garis komando (siapa melapor ke siapa).
+    <span class="g">Fokus checkpoint</span> selesai saat divisi 7 menyerahkan data lengkap ke Kepala Produksi.
+    Struktur ini adalah usulan kerangka dari prototipe; nama, jumlah personel, dan pembagian tugas final menunggu struktur organisasi resmi dari manajemen.
+  </div>
+
+  <div class="foot">
+    <span><b>ATLAS</b> · hierarki organisasi per divisi · divisi 6-9 (material, checkpoint, pasca-checkpoint) · hal. 3/3</span>
+    <span>Sumber: flowchart alur bisnis + peta live prototipe · 2 Agustus 2026</span>
+  </div>
+</div>
+
+</body>
+</html>
