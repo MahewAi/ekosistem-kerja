@@ -287,3 +287,16 @@ Kepala Gudang, Gerbang QC, Teknisi, Finance, Account Payable, FAT,
 Accounting, Audit Internal). Legenda jadi 3 tanda; rekap total di
 halaman 1. PDF ini sekarang berfungsi ganda: bagan + checklist isian
 struktur organisasi.
+
+## 3 Agu 2026 - Format kotak seragam: jabatan -> nama -> keterangan
+
+Keluhan Matthew: kotak campur aduk (atasan pakai nama orang, bawahan pakai
+nama kerjaan) bikin bingung. Rombak total: SETIAP kotak sekarang berformat
+sama, baris 1 jabatan (huruf kecil kapital), baris 2 nama orang atau chip
+"perlu nama", baris 3 keterangan kerjaan. Atasan = kotak biru teratas,
+bawahan menggantung di garis. Divisi tanpa kepala tertulis (Project,
+After Sales) diberi kotak "Kepala" bertag "posisi usulan" supaya rantai
+atasan-bawahan tetap terbaca, menunggu koreksi Matthew. Total 23 posisi
+perlu nama (21 dari dokumen + 2 kepala usulan). Avatar "?" kelabu untuk
+kotak tanpa orang. Konten dipadatkan supaya 3 halaman tetap muat
+(cardBottom max 729 vs footer 749, diukur via getBoundingClientRect).

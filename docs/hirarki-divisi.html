@@ -10,161 +10,165 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:#fff}
   body{font-family:'Geist',system-ui,sans-serif;color:#1a1c22;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .page{width:1123px;height:794px;position:relative;padding:42px 50px 40px;page-break-after:always;overflow:hidden;background:#fff}
+  .page{width:1123px;height:794px;position:relative;padding:40px 50px 40px;page-break-after:always;overflow:hidden;background:#fff}
   .page:last-child{page-break-after:auto}
 
-  h1{font-size:22px;font-weight:700;letter-spacing:-.02em}
-  .sub{font-size:10.5px;color:#5b5e66;margin-top:5px;max-width:600px;line-height:1.5}
+  h1{font-size:21px;font-weight:700;letter-spacing:-.02em}
+  .sub{font-size:10px;color:#5b5e66;margin-top:4px;max-width:590px;line-height:1.5}
   .sub b{color:#1a1c22;font-weight:600}
-  .legend{position:absolute;top:46px;right:50px;display:flex;flex-direction:column;gap:6px;font-size:9px;color:#5b5e66;align-items:flex-end}
+  .legend{position:absolute;top:42px;right:50px;display:flex;flex-direction:column;gap:5px;font-size:8.8px;color:#5b5e66;align-items:flex-end}
   .legend .row{display:flex;gap:6px;align-items:center}
-  .legend .tag,.legend .gap{position:static}
 
-  .foot{position:absolute;left:50px;right:50px;bottom:26px;display:flex;justify-content:space-between;font-size:8.5px;color:#8a8d94;border-top:1px solid #ececea;padding-top:9px}
+  .foot{position:absolute;left:50px;right:50px;bottom:24px;display:flex;justify-content:space-between;font-size:8.5px;color:#8a8d94;border-top:1px solid #ececea;padding-top:8px}
   .foot b{color:#5b5e66;font-weight:600}
 
   .pgtitle{font-size:15px;font-weight:700;letter-spacing:-.015em}
-  .pgsub{font-size:9.5px;color:#5b5e66;margin-top:4px}
+  .pgsub{font-size:9.3px;color:#5b5e66;margin-top:4px}
 
-  .grid{display:grid;gap:15px;margin-top:20px}
+  .grid{display:grid;gap:12px;margin-top:13px}
   .g3{grid-template-columns:repeat(3,1fr)}
   .g2{grid-template-columns:repeat(2,1fr)}
-  .card{border:1px solid #e2e2e0;border-radius:12px;padding:13px 14px;background:#fff}
-  .card .hd{display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid #ececea;margin-bottom:10px}
+  .card{border:1px solid #e2e2e0;border-radius:12px;padding:10px 12px;background:#fff}
+  .card .hd{display:flex;align-items:center;gap:8px;padding-bottom:7px;border-bottom:1px solid #ececea;margin-bottom:7px}
   .card .hd .t{font-size:11.5px;font-weight:600;letter-spacing:-.01em}
-  .card .hd .s{font-size:9px;color:#8a8d94;margin-top:1.5px;line-height:1.4}
+  .card .hd .s{font-size:8.8px;color:#8a8d94;margin-top:1.5px;line-height:1.4}
   .ic{display:inline-flex;width:19px;height:19px;border-radius:6px;background:#5058C4;color:#fff;font-size:9.5px;font-weight:700;align-items:center;justify-content:center;flex:0 0 auto}
 
-  .tree ul{margin-left:15px;padding-left:16px;border-left:1.5px solid #adb0b8;list-style:none}
+  .tree ul{margin-left:14px;padding-left:15px;border-left:1.5px solid #adb0b8;list-style:none}
   .tree li{position:relative;list-style:none}
-  .tree li::before{content:'';position:absolute;left:-16px;top:15px;width:12px;height:1.5px;background:#adb0b8}
-  .prow{display:flex;align-items:flex-start;gap:8px;border:1px solid #e6e6e3;border-radius:8px;background:#fff;padding:6px 9px;margin:5px 0}
+  .tree li::before{content:'';position:absolute;left:-15px;top:17px;width:11px;height:1.5px;background:#adb0b8}
+  .prow{display:flex;align-items:flex-start;gap:8px;border:1px solid #e6e6e3;border-radius:8px;background:#fff;padding:4px 8px;margin:3px 0}
   .prow.mgr{border-color:#5058C4;background:#F5F6FD}
-  .av{flex:0 0 auto;width:21px;height:21px;border-radius:50%;background:#EDEEFA;color:#3f47a8;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .av{flex:0 0 auto;width:21px;height:21px;border-radius:50%;background:#EDEEFA;color:#3f47a8;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:3px}
   .prow.mgr .av{background:#5058C4;color:#fff}
+  .av.b{background:#F1F1EF;color:#9a9da3}
   .pi{min-width:0;flex:1}
-  .pi .nm{font-size:9.8px;font-weight:600;line-height:1.25}
-  .pi .rl{font-size:9px;color:#5b5e66;margin-top:1.5px;line-height:1.4}
+  .pi .jb{font-size:7.4px;font-weight:600;letter-spacing:.07em;color:#8a8d94;text-transform:uppercase;line-height:1.25}
+  .pi .nm{font-size:9.7px;font-weight:600;line-height:1.25;margin-top:1px}
+  .pi .tg{font-size:8.4px;color:#6b6e75;margin-top:1px;line-height:1.3}
 
-  .tag{display:inline-block;font-size:8px;font-weight:600;color:#8a8d94;border:1px dashed #b0b3ba;border-radius:99px;padding:1px 5px;margin-left:6px;vertical-align:1px;white-space:nowrap}
-  .need{display:inline-block;font-size:8px;font-weight:700;color:#3f47a8;background:#EDEEFA;border:1px solid #5058C4;border-radius:99px;padding:1px 6px;margin-left:6px;vertical-align:1px;white-space:nowrap}
-  .gap{display:inline-block;font-size:8px;font-weight:700;color:#8a5a0e;background:#FCF7EE;border:1px solid #B87C14;border-radius:99px;padding:1px 5px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+  .need{display:inline-block;font-size:8px;font-weight:700;color:#3f47a8;background:#EDEEFA;border:1px solid #5058C4;border-radius:99px;padding:1px 6px;vertical-align:1px;white-space:nowrap}
+  .gap{display:inline-block;font-size:8px;font-weight:700;color:#8a5a0e;background:#FCF7EE;border:1px solid #B87C14;border-radius:99px;padding:1px 6px;vertical-align:1px;white-space:nowrap}
+  .tag{display:inline-block;font-size:8px;font-weight:600;color:#8a8d94;border:1px dashed #b0b3ba;border-radius:99px;padding:1px 5px;margin-left:5px;vertical-align:1px;white-space:nowrap}
   .prow.kosong{border:1.4px dashed #B87C14;background:#FCF7EE}
   .prow.kosong .av{background:#F3E3C4;color:#8a5a0e}
 
-  .kanal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
-  .kanal .kc{border:1px solid #ececea;border-radius:9px;padding:8px 9px;background:#FBFBFA}
-  .kanal .kc .kt{font-size:8px;font-weight:700;letter-spacing:.1em;color:#5058C4;margin-bottom:6px}
+  .kanal{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:7px}
+  .kanal .kc{border:1px solid #ececea;border-radius:9px;padding:7px 8px;background:#FBFBFA}
+  .kanal .kc .kt{font-size:7.8px;font-weight:700;letter-spacing:.1em;color:#5058C4;margin-bottom:4px}
   .kanal .kc .prow{margin:4px 0;background:#fff}
 
-  .cnote{border:1px dashed #dcdce0;border-radius:12px;padding:12px 15px;font-size:9.2px;color:#5b5e66;line-height:1.6;background:#FAFAF8}
+  .cnote{border:1px dashed #dcdce0;border-radius:10px;padding:7px 10px;font-size:8.6px;color:#5b5e66;line-height:1.5;background:#FAFAF8}
   .cnote b{color:#1a1c22;font-weight:600}
 
-  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-  .seg .sc{border:1px solid #e6e6e3;border-radius:9px;padding:9px 10px}
-  .seg .sc .st{font-size:8px;font-weight:700;letter-spacing:.1em;color:#5058C4;margin-bottom:4px}
-  .seg .sc .sb{font-size:9.2px;line-height:1.5;color:#3a3d44}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:7px}
+  .seg .sc{border:1px solid #e6e6e3;border-radius:9px;padding:8px 9px}
+  .seg .sc .st{font-size:7.8px;font-weight:700;letter-spacing:.1em;color:#5058C4;margin-bottom:4px}
+  .seg .sc .sb{font-size:8.8px;line-height:1.5;color:#3a3d44}
   .seg .sc .sb b{font-weight:600;color:#1a1c22}
 </style>
 </head>
 <body>
 
-<!-- ============ HALAMAN 1 : PIMPINAN + KONTROL DOKUMEN + SALES ============ -->
+<!-- ============ HALAMAN 1 ============ -->
 <div class="page">
   <h1>Hierarki Organisasi per Divisi</h1>
-  <div class="sub">Selaras Lawang Sewu · diserap apa adanya dari dokumen business process (Peta 7 lembar + Back Office Detail, 1 Agustus 2026); susunan direkonstruksi dari matriks kewenangan dan label peran. <b>Tidak ada nama tambahan di luar dokumen.</b> Total <b>21 posisi "perlu nama"</b> + 1 posisi kosong menunggu dilengkapi.</div>
+  <div class="sub">Selaras Lawang Sewu · diserap dari dokumen business process (Peta 7 lembar + Back Office Detail, 1 Agustus 2026). Format tiap kotak: <b>jabatan → nama orang → keterangan kerjaan</b>. Kotak biru = atasan; kotak di bawah garis = bawahannya.</div>
   <div class="legend">
-    <span class="row"><span class="need">perlu nama</span>jabatan/unit tertulis di dokumen tapi orangnya belum disebut: tinggal diisi nama</span>
+    <span class="row"><span class="need">perlu nama</span>jabatan ada di dokumen, orangnya belum disebut: tinggal diisi</span>
     <span class="row"><span class="gap">PIC belum ada</span>dokumen sendiri menandai posisinya kosong ("Siapa?")</span>
-    <span class="row"><span class="tag">tidak dijelaskan</span>ketidakjelasan lain dari dokumen (kepanjangan atau posisi garis)</span>
+    <span class="row"><span class="tag">posisi usulan</span>kotak/garis tambahan agar rantai atasan-bawahan jelas, bukan dari dokumen</span>
   </div>
 
   <div class="grid g3">
     <div class="card">
       <div class="hd"><span class="ic">P</span><div><div class="t">Pimpinan</div><div class="s">pemberi afirmasi HPP · pemegang 4 fokus perhatian</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">AL</span><div class="pi"><div class="nm">Manajemen / All Leaders</div><div class="rl">afirmasi HPP, keputusan lintas divisi</div></div></div>
+        <div class="prow mgr"><span class="av">AL</span><div class="pi"><div class="jb">Forum Pimpinan</div><div class="nm">Manajemen / All Leaders</div><div class="tg">afirmasi HPP, keputusan lintas divisi</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">SM</span><div class="pi"><div class="nm">Kepala SCM + Manufaktur<span class="need">perlu nama</span></div></div></div></li>
-          <li><div class="prow"><span class="av">KA</span><div class="pi"><div class="nm">Kepala Accounting<span class="need">perlu nama</span></div></div></div></li>
-          <li><div class="prow"><span class="av">KO</span><div class="pi"><div class="nm">Kepala Operasional<span class="need">perlu nama</span></div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Kepala SCM + Manufaktur</div><div class="nm"><span class="need">perlu nama</span></div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Accounting</div><div class="nm"><span class="need">perlu nama</span></div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Operasional</div><div class="nm"><span class="need">perlu nama</span></div></div></div></li>
         </ul>
       </div>
-      <div class="cnote" style="margin-top:9px;padding:8px 11px">Ketiganya digambar <b>setara</b> (garis putus-putus di dokumen); hierarki di antara mereka tidak dijelaskan.</div>
+      <div class="cnote" style="margin-top:8px">Ketiga kepala digambar <b>setara</b> (garis putus-putus di dokumen); hierarki di antara mereka tidak dijelaskan.</div>
     </div>
 
     <div class="card">
-      <div class="hd"><span class="ic">A</span><div><div class="t">ABA · Admin Business Analyst</div><div class="s">back office sales, kontrol dokumen · segmen C-A (sisi A-C pada segitiga kontrol): cek order + monitoring sampai lunas</div></div></div>
+      <div class="hd"><span class="ic">A</span><div><div class="t">ABA · Admin Business Analyst</div><div class="s">kontrol dokumen · segmen C-A (sisi A-C segitiga kontrol)</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">AB</span><div class="pi"><div class="nm">All ABA<span class="need">perlu nama kepala</span></div><div class="rl">cek kelengkapan order, monitoring sampai terkirim &amp; terbayar lunas</div></div></div>
+        <div class="prow mgr"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Tim ABA</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">cek kelengkapan order · monitoring sampai terkirim &amp; terbayar lunas</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">EV</span><div class="pi"><div class="nm">Evelyn</div><div class="rl">kanal Tender</div></div></div></li>
-          <li><div class="prow"><span class="av">SR</span><div class="pi"><div class="nm">Sarah</div><div class="rl">kanal Developer</div></div></div></li>
-          <li><div class="prow"><span class="av">ND</span><div class="pi"><div class="nm">Nadia</div><div class="rl">kanal B2B</div></div></div></li>
-          <li><div class="prow"><span class="av">NC</span><div class="pi"><div class="nm">Nita / Citra</div><div class="rl">kanal Modern Outlet</div></div></div></li>
+          <li><div class="prow"><span class="av">EV</span><div class="pi"><div class="jb">ABA Kanal Tender</div><div class="nm">Evelyn</div><div class="tg">cek order + monitoring kanal Tender</div></div></div></li>
+          <li><div class="prow"><span class="av">SR</span><div class="pi"><div class="jb">ABA Kanal Developer</div><div class="nm">Sarah</div><div class="tg">cek order + monitoring kanal Developer</div></div></div></li>
+          <li><div class="prow"><span class="av">ND</span><div class="pi"><div class="jb">ABA Kanal B2B</div><div class="nm">Nadia</div><div class="tg">cek order + monitoring kanal B2B · merangkap front-line After Sales</div></div></div></li>
+          <li><div class="prow"><span class="av">NC</span><div class="pi"><div class="jb">ABA Kanal Modern Outlet</div><div class="nm">Nita / Citra</div><div class="tg">cek order + monitoring kanal Modern Outlet</div></div></div></li>
         </ul>
       </div>
     </div>
 
     <div class="card">
-      <div class="hd"><span class="ic">S</span><div><div class="t">SSA · Sales Support Administration</div><div class="s">back office sales · segmen A-B: klarifikasi sebelum SO + distribusi tindak lanjut PO</div></div></div>
+      <div class="hd"><span class="ic">S</span><div><div class="t">SSA · Sales Support Administration</div><div class="s">segmen A-B: klarifikasi sebelum SO + distribusi tindak lanjut PO</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">AN</span><div class="pi"><div class="nm">Annisa</div><div class="rl">kepala tim SSA</div></div></div>
+        <div class="prow mgr"><span class="av">AN</span><div class="pi"><div class="jb">Kepala Tim SSA</div><div class="nm">Annisa</div><div class="tg">klarifikasi data sebelum SO · koordinasi balik ke Sales jika kendala</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">SI</span><div class="pi"><div class="nm">Sinta</div><div class="rl">pendamping kanal Tender</div></div></div></li>
-          <li><div class="prow"><span class="av">ES</span><div class="pi"><div class="nm">Esti</div><div class="rl">pendamping kanal Modern Outlet</div></div></div></li>
+          <li><div class="prow"><span class="av">SI</span><div class="pi"><div class="jb">Pendamping Kanal Tender</div><div class="nm">Sinta</div></div></div></li>
+          <li><div class="prow"><span class="av">ES</span><div class="pi"><div class="jb">Pendamping Kanal Modern Outlet</div><div class="nm">Esti</div></div></div></li>
         </ul>
       </div>
-      <div class="cnote" style="margin-top:9px;padding:8px 11px">Tindak lanjut PO oleh SSA (paralel): Finance (invoice) · PPIC (jadwal) · Gudang (kirim) · N1/N2 (approval gambar) · ABA/Sales (perubahan) · Project (progress).</div>
+      <div class="cnote" style="margin-top:8px">Tindak lanjut PO oleh SSA (paralel): Finance (invoice) · PPIC (jadwal) · Gudang (kirim) · N1/N2 (approval gambar) · ABA/Sales (perubahan) · Project (progress).</div>
     </div>
   </div>
 
-  <div class="card" style="margin-top:15px">
-    <div class="hd"><span class="ic">SL</span><div><div class="t">Divisi Sales · 4 kanal penjualan</div><div class="s">Sales Leader / Sales Person: closing 6 tahap, pemegang garansi produk atas nama SLS<span class="need">perlu nama Sales Leader</span></div></div></div>
+  <div class="card" style="margin-top:14px">
+    <div class="hd"><span class="ic">SL</span><div><div class="t">Divisi Sales · 4 kanal penjualan</div><div class="s">closing 6 tahap · pemegang garansi produk atas nama SLS</div></div></div>
+    <div class="tree">
+      <div class="prow mgr" style="margin-bottom:2px"><span class="av b">?</span><div class="pi"><div class="jb">Sales Leader</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">memimpin Sales Person 4 kanal</div></div></div>
+    </div>
     <div class="kanal">
       <div class="kc"><div class="kt">TENDER</div>
-        <div class="prow"><span class="av">LB</span><div class="pi"><div class="nm">Libertus</div><div class="rl">penawaran, anggaran, PO</div></div></div>
-        <div class="prow"><span class="av">KD</span><div class="pi"><div class="nm">Kidam</div><div class="rl">survey + kick off meeting</div></div></div>
+        <div class="prow"><span class="av">LB</span><div class="pi"><div class="jb">Penawaran, Anggaran, PO</div><div class="nm">Libertus</div></div></div>
+        <div class="prow"><span class="av">KD</span><div class="pi"><div class="jb">Survey + Kick Off Meeting</div><div class="nm">Kidam</div></div></div>
       </div>
       <div class="kc"><div class="kt">DEVELOPER</div>
-        <div class="prow"><span class="av">NV</span><div class="pi"><div class="nm">Novrianto</div><div class="rl">penawaran</div></div></div>
-        <div class="prow"><span class="av">AG</span><div class="pi"><div class="nm">Agus</div><div class="rl">survey + kesepakatan</div></div></div>
-        <div class="prow"><span class="av">BB</span><div class="pi"><div class="nm">Bobby</div><div class="rl">koordinasi lapangan</div></div></div>
+        <div class="prow"><span class="av">NV</span><div class="pi"><div class="jb">Penawaran</div><div class="nm">Novrianto</div></div></div>
+        <div class="prow"><span class="av">AG</span><div class="pi"><div class="jb">Survey + Kesepakatan</div><div class="nm">Agus</div></div></div>
+        <div class="prow"><span class="av">BB</span><div class="pi"><div class="jb">Koordinasi Lapangan</div><div class="nm">Bobby</div></div></div>
       </div>
       <div class="kc"><div class="kt">B2B</div>
-        <div class="prow"><span class="av">NO</span><div class="pi"><div class="nm">Novita</div><div class="rl">penawaran + koordinasi lapangan</div></div></div>
-        <div class="prow"><span class="av">AG</span><div class="pi"><div class="nm">Agus</div><div class="rl">survey + kesepakatan</div></div></div>
+        <div class="prow"><span class="av">NO</span><div class="pi"><div class="jb">Penawaran + Koord. Lapangan</div><div class="nm">Novita</div></div></div>
+        <div class="prow"><span class="av">AG</span><div class="pi"><div class="jb">Survey + Kesepakatan</div><div class="nm">Agus</div></div></div>
       </div>
       <div class="kc"><div class="kt">MODERN OUTLET · CUSTOM</div>
-        <div class="prow"><span class="av">NM</span><div class="pi"><div class="nm">Neyla / Mulyadi</div><div class="rl">penawaran</div></div></div>
-        <div class="prow kosong"><span class="av">?</span><div class="pi"><div class="nm">Survey &amp; kesepakatan<span class="gap">PIC belum ada</span></div><div class="rl">dokumen menulis "Siapa?"</div></div></div>
+        <div class="prow"><span class="av">NM</span><div class="pi"><div class="jb">Penawaran</div><div class="nm">Neyla / Mulyadi</div></div></div>
+        <div class="prow kosong"><span class="av">?</span><div class="pi"><div class="jb">Survey &amp; Kesepakatan</div><div class="nm"><span class="gap">PIC belum ada</span></div><div class="tg">dokumen menulis "Siapa?"</div></div></div>
       </div>
     </div>
   </div>
 
   <div class="foot">
     <span><b>Selaras Lawang Sewu</b> · hierarki organisasi per divisi · hal. 1/3</span>
-    <span>Sumber: Peta Business Process + Back Office Detail · disusun 2 Agustus 2026</span>
+    <span>Sumber: Peta Business Process + Back Office Detail · disusun 3 Agustus 2026</span>
   </div>
 </div>
 
-<!-- ============ HALAMAN 2 : BARANG & PRODUKSI ============ -->
+<!-- ============ HALAMAN 2 ============ -->
 <div class="page">
   <div class="pgtitle">Divisi Barang &amp; Produksi</div>
-  <div class="pgsub">Segmen B-C (kontrol uang ke barang) sampai barang jadi keluar gudang.</div>
+  <div class="pgsub">Segmen B-C (kontrol uang ke barang) sampai barang jadi keluar gudang. Format kotak: jabatan → nama → keterangan.</div>
 
   <div class="grid g2">
     <div class="card">
       <div class="hd"><span class="ic">PP</span><div><div class="t">PPIC, Inventory &amp; SCM</div><div class="s">kontrol barang · koordinasi produksi 4 kanal</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">BL</span><div class="pi"><div class="nm">Bu Liana</div><div class="rl">kepala tim Production Planning, Inventory Controller &amp; SCM</div></div></div>
+        <div class="prow mgr"><span class="av">BL</span><div class="pi"><div class="jb">Kepala Tim PPIC, IC &amp; SCM</div><div class="nm">Bu Liana</div><div class="tg">Production Planning, Inventory Controller &amp; SCM · koordinasi produksi 4 kanal</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">PP</span><div class="pi"><div class="nm">PPIC<span class="need">perlu daftar nama</span></div><div class="rl">4 planning (Demand, Material, Purchase, Supply) · WO · jadwal produksi &amp; material</div></div></div></li>
-          <li><div class="prow"><span class="av">IC</span><div class="pi"><div class="nm">Inventory Controller<span class="need">perlu nama</span></div><div class="rl">jalur waste / setengah jadi / barang jadi ke FAT · penerima konfirmasi biaya JC2</div></div></div></li>
-          <li><div class="prow"><span class="av">SC</span><div class="pi"><div class="nm">SCM<span class="need">perlu daftar nama</span></div><div class="rl">menjaga data sistem = fisik</div></div></div></li>
-          <li><div class="prow"><span class="av">RK</span><div class="pi"><div class="nm">Riki<span class="tag">belum dipastikan sama dengan Riki produksi</span></div><div class="rl">koordinasi barang kanal Developer / B2B / Modern Outlet · kanal Tender dipegang Kidam</div></div></div></li>
-          <li><div class="prow"><span class="av">PU</span><div class="pi"><div class="nm">Purchasing<span class="need">perlu nama</span><span class="tag">posisi garis tidak dijelaskan</span></div><div class="rl">pengadaan ke supplier/vendor, dikawal Budget Planning FAT</div></div></div></li>
-          <li><div class="prow"><span class="av">PM</span><div class="pi"><div class="nm">Product Management<span class="need">perlu daftar nama</span></div><div class="rl">wajib dilibatkan dalam prioritas belanja material (catatan All Leaders)</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Staf PPIC</div><div class="nm"><span class="need">perlu daftar nama</span></div><div class="tg">4 planning (Demand, Material, Purchase, Supply) · WO · jadwal produksi &amp; material</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Inventory Controller</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">jalur waste / setengah jadi / barang jadi ke FAT · penerima konfirmasi biaya JC2</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Staf SCM</div><div class="nm"><span class="need">perlu daftar nama</span></div><div class="tg">menjaga data sistem = fisik</div></div></div></li>
+          <li><div class="prow"><span class="av">RK</span><div class="pi"><div class="jb">Koordinasi Barang Developer / B2B / Modern Outlet</div><div class="nm">Riki<span class="tag">belum dipastikan sama dengan Riki produksi</span></div><div class="tg">kanal Tender dipegang Kidam</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Purchasing</div><div class="nm"><span class="need">perlu nama</span><span class="tag">posisi garis tidak dijelaskan</span></div><div class="tg">pengadaan ke supplier/vendor, dikawal Budget Planning FAT</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Product Management</div><div class="nm"><span class="need">perlu daftar nama</span></div><div class="tg">wajib dilibatkan dalam prioritas belanja material (catatan All Leaders)</div></div></div></li>
         </ul>
       </div>
     </div>
@@ -172,25 +176,25 @@
     <div class="card">
       <div class="hd"><span class="ic">PR</span><div><div class="t">Produksi</div><div class="s">otoritas Gudang Proses, Sisa Produksi, Barang Jadi</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">KP</span><div class="pi"><div class="nm">Kepala Produksi<span class="need">perlu nama</span></div></div></div>
+        <div class="prow mgr"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Produksi</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">memimpin produksi + otoritas 3 gudang</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">RK</span><div class="pi"><div class="nm">Riki</div><div class="rl">gambar detail produksi, semua kanal</div></div></div></li>
-          <li><div class="prow"><span class="av">SV</span><div class="pi"><div class="nm">Supervisor Produksi<span class="need">perlu nama</span></div><div class="rl">proses produksi semua kanal · kepanjangan tim tidak dirinci</div></div></div></li>
-          <li><div class="prow"><span class="av">EF</span><div class="pi"><div class="nm">Enrico / Fuad</div><div class="rl">persiapan material</div></div></div></li>
-          <li><div class="prow"><span class="av">UJ</span><div class="pi"><div class="nm">Ujang</div><div class="rl">produksi sesuai jadwal · cek BOM · serah terima ke gudang</div></div></div></li>
-          <li><div class="prow"><span class="av">OP</span><div class="pi"><div class="nm">Operator Produksi<span class="need">perlu daftar nama</span></div><div class="rl">pengguna gambar produksi N2</div></div></div></li>
+          <li><div class="prow"><span class="av">RK</span><div class="pi"><div class="jb">Gambar Detail Produksi</div><div class="nm">Riki</div><div class="tg">semua kanal</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Supervisor Produksi</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">proses produksi semua kanal · kepanjangan tim tidak dirinci</div></div></div></li>
+          <li><div class="prow"><span class="av">EF</span><div class="pi"><div class="jb">Persiapan Material</div><div class="nm">Enrico / Fuad</div></div></div></li>
+          <li><div class="prow"><span class="av">UJ</span><div class="pi"><div class="jb">Pelaksana Produksi</div><div class="nm">Ujang</div><div class="tg">produksi sesuai jadwal · cek BOM · serah terima ke gudang</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Operator Produksi</div><div class="nm"><span class="need">perlu daftar nama</span></div><div class="tg">pengguna gambar produksi N2</div></div></div></li>
         </ul>
       </div>
-      <div class="cnote" style="margin-top:9px;padding:8px 11px">Drawing <b>N1</b> (gambar awal) dan <b>N2</b> (gambar produksi): pemegangnya tidak disebut di dokumen.</div>
+      <div class="cnote" style="margin-top:8px">Drawing <b>N1</b> (gambar awal) dan <b>N2</b> (gambar produksi): pemegangnya tidak disebut di dokumen.</div>
     </div>
 
     <div class="card">
       <div class="hd"><span class="ic">G</span><div><div class="t">Gudang &amp; Pengiriman</div><div class="s">setiap pindah gudang = serah terima tercatat · data sistem harus sama dengan fisik</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">KG</span><div class="pi"><div class="nm">Kepala Gudang<span class="need">perlu nama</span></div><div class="rl">otoritas 4 dari 5 gudang: Material, Proses, Barang Jadi, Retur</div></div></div>
+        <div class="prow mgr"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Gudang</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">otoritas 4 dari 5 gudang: Material, Proses, Barang Jadi, Retur</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">5G</span><div class="pi"><div class="nm">5 Gudang · otoritas per gudang (atas / bawah)</div><div class="rl">A Material (PPIC + Account Payable / Kepala Gudang) · B Barang Jadi (Kepala Produksi / Kepala Gudang) · C Sisa Produksi (Kepala Produksi / PPIC) · D Retur (Sales-Marketing / Kepala Gudang) · E Proses, transit (Kepala Gudang / Kepala Produksi)</div></div></div></li>
-          <li><div class="prow"><span class="av">ES</span><div class="pi"><div class="nm">Enrico / Siska</div><div class="rl">alokasi kendaraan pengiriman, semua kanal</div></div></div></li>
+          <li><div class="prow"><span class="av">5G</span><div class="pi"><div class="jb">5 Gudang · Otoritas (atas / bawah)</div><div class="tg" style="margin-top:2px">A Material (PPIC + Account Payable / Kepala Gudang) · B Barang Jadi (Kepala Produksi / Kepala Gudang) · C Sisa Produksi (Kepala Produksi / PPIC) · D Retur (Sales-Marketing / Kepala Gudang) · E Proses, transit (Kepala Gudang / Kepala Produksi)</div></div></div></li>
+          <li><div class="prow"><span class="av">ES</span><div class="pi"><div class="jb">Alokasi Kendaraan Pengiriman</div><div class="nm">Enrico / Siska</div><div class="tg">semua kanal</div></div></div></li>
         </ul>
       </div>
     </div>
@@ -198,9 +202,9 @@
     <div class="card">
       <div class="hd"><span class="ic">Q</span><div><div class="t">Quality</div><div class="s">standardisasi kualitas lewat gerbang QC Pass</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">HD</span><div class="pi"><div class="nm">Hardy</div><div class="rl">QA/QC end-to-end semua kanal · evaluasi keahlian tim teknis</div></div></div>
+        <div class="prow mgr"><span class="av">HD</span><div class="pi"><div class="jb">QA/QC End-to-End</div><div class="nm">Hardy</div><div class="tg">semua kanal · evaluasi keahlian tim teknis</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">QC</span><div class="pi"><div class="nm">Gerbang QC<span class="need">perlu daftar nama</span></div><div class="rl">QC1 barang masuk · QC3 hasil produksi · QC4 saat muat · QC pengiriman</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Petugas Gerbang QC</div><div class="nm"><span class="need">perlu daftar nama</span></div><div class="tg">QC1 barang masuk · QC3 hasil produksi · QC4 saat muat · QC pengiriman</div></div></div></li>
         </ul>
       </div>
     </div>
@@ -208,57 +212,64 @@
 
   <div class="foot">
     <span><b>Selaras Lawang Sewu</b> · hierarki organisasi per divisi · hal. 2/3</span>
-    <span>Sumber: Peta Business Process + Back Office Detail · disusun 2 Agustus 2026</span>
+    <span>Sumber: Peta Business Process + Back Office Detail · disusun 3 Agustus 2026</span>
   </div>
 </div>
 
-<!-- ============ HALAMAN 3 : LAPANGAN, UANG, PURNA JUAL ============ -->
+<!-- ============ HALAMAN 3 ============ -->
 <div class="page">
   <div class="pgtitle">Divisi Lapangan, Uang &amp; Purna Jual</div>
-  <div class="pgsub">Beberapa nama memegang peran di lebih dari satu divisi (Agus, Kidam, Nadia, Novita, Libertus, Mulyadi, Ujang, Riki, Hardy); dokumen memang menulis demikian.</div>
+  <div class="pgsub">Beberapa orang memegang jabatan di lebih dari satu divisi (Agus, Kidam, Nadia, Novita, Libertus, Mulyadi, Ujang, Riki, Hardy); dokumen memang menulis demikian.</div>
 
   <div class="grid g3">
     <div class="card">
-      <div class="hd"><span class="ic">PJ</span><div><div class="t">Project / Pemasangan</div><div class="s">dokumen tidak menulis kepala divisi; empat peran setara</div></div></div>
+      <div class="hd"><span class="ic">PJ</span><div><div class="t">Project / Pemasangan</div></div></div>
       <div class="tree">
-        <div class="prow"><span class="av">KD</span><div class="pi"><div class="nm">Kidam</div><div class="rl">koordinasi teknisi implementasi + BAST lapangan · koordinasi barang kanal Tender</div></div></div>
-        <div class="prow"><span class="av">KP</span><div class="pi"><div class="nm">KP<span class="tag">kepanjangan tidak dijelaskan</span></div><div class="rl">koordinasi lapangan + pemasangan sendiri kanal Tender</div></div></div>
-        <div class="prow"><span class="av">TK</span><div class="pi"><div class="nm">Teknisi<span class="need">perlu daftar nama</span></div><div class="rl">Teknisi Project · Teknisi ASS · Teknisi Lepas</div></div></div>
-        <div class="prow"><span class="av">BO</span><div class="pi"><div class="nm">Pemasangan by others</div><div class="rl">tanggung jawab Sales Person · dukungan supervisi: Agus</div></div></div>
+        <div class="prow mgr"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Divisi Project</div><div class="nm"><span class="need">perlu nama</span><span class="tag">posisi usulan</span></div><div class="tg">dokumen menulis 4 peran di bawah ini setara, tanpa kepala</div></div></div>
+        <ul>
+          <li><div class="prow"><span class="av">KD</span><div class="pi"><div class="jb">Koordinasi Teknisi + BAST Lapangan</div><div class="nm">Kidam</div><div class="tg">juga koordinasi barang kanal Tender</div></div></div></li>
+          <li><div class="prow"><span class="av">KP</span><div class="pi"><div class="jb">Koordinasi Lapangan Tender</div><div class="nm">KP<span class="tag">kepanjangan tidak dijelaskan</span></div><div class="tg">termasuk pemasangan sendiri kanal Tender</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Teknisi</div><div class="nm"><span class="need">perlu daftar nama</span></div><div class="tg">Teknisi Project · Teknisi ASS · Teknisi Lepas</div></div></div></li>
+          <li><div class="prow"><span class="av">BO</span><div class="pi"><div class="jb">Pemasangan by Others</div><div class="nm">Sales Person terkait</div><div class="tg">dukungan supervisi: Agus</div></div></div></li>
+        </ul>
       </div>
     </div>
 
     <div class="card">
       <div class="hd"><span class="ic">F</span><div><div class="t">Finance / Accounting</div></div></div>
       <div class="tree">
-        <div class="prow mgr"><span class="av">FN</span><div class="pi"><div class="nm">Finance<span class="need">perlu nama kepala</span></div><div class="rl">invoice · AR · tax · rebate · kontrol bad debts</div></div></div>
+        <div class="prow mgr"><span class="av b">?</span><div class="pi"><div class="jb">Kepala Finance</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">invoice · AR · tax · rebate · kontrol bad debts</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">YN</span><div class="pi"><div class="nm">Yenni</div><div class="rl">koordinasi uang, semua kanal</div></div></div></li>
-          <li><div class="prow"><span class="av">AP</span><div class="pi"><div class="nm">Account Payable<span class="need">perlu nama</span></div><div class="rl">anggaran pembayaran supplier · otoritas Gudang Material bersama PPIC</div></div></div></li>
-          <li><div class="prow"><span class="av">FT</span><div class="pi"><div class="nm">FAT<span class="need">perlu nama</span><span class="tag">kepanjangan belum dikonfirmasi</span></div><div class="rl">budget planning + jalur invoice</div></div></div></li>
-          <li><div class="prow"><span class="av">AC</span><div class="pi"><div class="nm">Accounting<span class="need">perlu nama</span></div><div class="rl">kartu stok spare parts bersama Agus</div></div></div></li>
+          <li><div class="prow"><span class="av">YN</span><div class="pi"><div class="jb">Koordinasi Uang Semua Kanal</div><div class="nm">Yenni</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Account Payable</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">anggaran pembayaran supplier · otoritas Gudang Material bersama PPIC</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">FAT</div><div class="nm"><span class="need">perlu nama</span><span class="tag">kepanjangan belum dikonfirmasi</span></div><div class="tg">budget planning + jalur invoice</div></div></div></li>
+          <li><div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Accounting</div><div class="nm"><span class="need">perlu nama</span></div><div class="tg">kartu stok spare parts bersama Agus</div></div></div></li>
         </ul>
-        <div class="prow"><span class="av">AI</span><div class="pi"><div class="nm">Audit Internal<span class="need">perlu nama</span><span class="tag">posisi garis tidak dijelaskan</span></div><div class="rl">tercantum di matriks kewenangan, setara Finance</div></div></div>
+        <div class="prow"><span class="av b">?</span><div class="pi"><div class="jb">Audit Internal</div><div class="nm"><span class="need">perlu nama</span><span class="tag">posisi garis tidak dijelaskan</span></div><div class="tg">tercantum di matriks kewenangan, setara Finance</div></div></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="hd"><span class="ic">AS</span><div><div class="t">After Sales Services</div><div class="s">tiket keluhan · komitmen layanan maksimal 24 jam</div></div></div>
+      <div class="hd"><span class="ic">AS</span><div><div class="t">After Sales Services</div><div class="s">tiket keluhan · komitmen 24 jam · garis supervisi dokumen: Nadia-Dilla-Novita · Agus-Nato · Agus-Maudy-teknisi</div></div></div>
       <div class="tree">
-        <div class="prow"><span class="av">ND</span><div class="pi"><div class="nm">Nadia</div><div class="rl">front-line: inkuiri, eksplorasi, pusat data laporan</div></div></div>
-        <div class="prow"><span class="av">DL</span><div class="pi"><div class="nm">Dilla</div><div class="rl">afirmasi · solusi taktis · cek deviasi</div></div></div>
-        <div class="prow mgr"><span class="av">AG</span><div class="pi"><div class="nm">Agus &amp; Tim</div><div class="rl">konfirmasi teknis/jadwal · koordinasi teknisi · kartu stok spare parts</div></div></div>
+        <div class="prow mgr"><span class="av b">?</span><div class="pi"><div class="jb">Kepala After Sales</div><div class="nm"><span class="need">perlu nama</span><span class="tag">posisi usulan</span></div><div class="tg">dokumen hanya menulis pembagian peran, tanpa kepala</div></div></div>
         <ul>
-          <li><div class="prow"><span class="av">NM</span><div class="pi"><div class="nm">Nato, Maudy</div><div class="rl">penghubung koordinasi (Maudy: Agus ke kelompok teknisi; Nato: Agus, Nadia, RABT-MIU) · rincian tugas belum dijelaskan</div></div></div></li>
-          <li><div class="prow"><span class="av">FS</span><div class="pi"><div class="nm">Fischa<span class="tag">kepanjangan tidak dijelaskan</span></div><div class="rl">PIC unit RABT-MIU · jalur koordinasi: Nato ke Fischa ke PPIC/Gudang</div></div></div></li>
-          <li><div class="prow"><span class="av">PD</span><div class="pi"><div class="nm">PIC Program Fokus Data</div><div class="rl">Sales Script: Novita, Dilla, Susi, Agus · Database Pelanggan Garansi: Novita, Nadia, Juan, Libertus, Mulyadi · Daftar Garansi &amp; Harga Spare-Parts: Novita, Agus, Titok, Kidam, Liana, Andy Pang, Juan</div></div></div></li>
+          <li><div class="prow"><span class="av">ND</span><div class="pi"><div class="jb">Front-line Tiket</div><div class="nm">Nadia</div><div class="tg">inkuiri · eksplorasi · pusat data laporan</div></div></div></li>
+          <li><div class="prow"><span class="av">DL</span><div class="pi"><div class="jb">Afirmasi &amp; Solusi Taktis</div><div class="nm">Dilla</div><div class="tg">afirmasi sebelum bertindak · cek deviasi</div></div></div></li>
+          <li><div class="prow"><span class="av">AG</span><div class="pi"><div class="jb">Koordinasi Teknis &amp; Jadwal</div><div class="nm">Agus &amp; Tim</div><div class="tg">kesiapan teknisi · kartu stok spare parts</div></div>
+            </div>
+            <ul>
+              <li><div class="prow"><span class="av">NM</span><div class="pi"><div class="jb">Penghubung Koordinasi</div><div class="nm">Nato, Maudy</div><div class="tg">Maudy: Agus ke teknisi · Nato: Agus, Nadia, RABT-MIU · rincian belum dijelaskan</div></div></div></li>
+              <li><div class="prow"><span class="av">FS</span><div class="pi"><div class="jb">PIC Unit RABT-MIU</div><div class="nm">Fischa<span class="tag">kepanjangan tidak dijelaskan</span></div><div class="tg">jalur koordinasi: Nato ke Fischa ke PPIC/Gudang</div></div></div></li>
+            </ul>
+          </li>
+          <li><div class="prow"><span class="av">PD</span><div class="pi"><div class="jb">PIC Program Fokus Data</div><div class="tg" style="margin-top:2px">Sales Script: Novita, Dilla, Susi, Agus · Database Pelanggan Garansi: Novita, Nadia, Juan, Libertus, Mulyadi · Daftar Garansi &amp; Harga Spare-Parts: Novita, Agus, Titok, Kidam, Liana, Andy Pang, Juan</div></div></div></li>
         </ul>
       </div>
-      <div class="cnote" style="margin-top:9px;padding:7px 11px">Urutan baris = alur tiket · garis supervisi internal: <b>Nadia-Dilla-Novita</b> · <b>Agus-Nato</b> · <b>Agus-Maudy-teknisi</b>.</div>
     </div>
   </div>
 
-  <div class="grid g2" style="margin-top:15px">
+  <div class="grid g2" style="margin-top:14px">
     <div class="card">
       <div class="hd"><span class="ic">EX</span><div><div class="t">Tim Expert Teknis</div><div class="s">lintas divisi · pasangan tim gabungan: Titok + Ujang · Athoko + Hardy · Kidam + Agus</div></div></div>
       <div class="seg" style="grid-template-columns:repeat(2,1fr)">
@@ -279,7 +290,7 @@
 
   <div class="foot">
     <span><b>Selaras Lawang Sewu</b> · hierarki organisasi per divisi · hal. 3/3</span>
-    <span>Sumber: Peta Business Process + Back Office Detail · disusun 2 Agustus 2026</span>
+    <span>Sumber: Peta Business Process + Back Office Detail · disusun 3 Agustus 2026</span>
   </div>
 </div>
 
