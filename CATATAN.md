@@ -275,3 +275,15 @@ docs/hirarki-divisi.html/.pdf dirombak total:
 Catatan: TEAMS di index.html (peta live) masih memakai struktur lama
 9 stasiun; penyelarasan prototipe ke struktur Selaras asli = pekerjaan
 lanjutan bila Matthew minta.
+
+## 3 Agu 2026 - Tanda "perlu nama" di hierarki divisi
+
+Permintaan Matthew: tandai baris seperti Account Payable yang berupa
+jabatan tanpa nama orang, disapukan ke SEMUA sektor. Chip biru "perlu
+nama" / "perlu daftar nama" / "perlu nama kepala" ditambahkan di 21
+posisi (3 kepala pimpinan, kepala ABA, Sales Leader, PPIC, IC, SCM,
+Purchasing, Product Management, Kepala+Supervisor+Operator Produksi,
+Kepala Gudang, Gerbang QC, Teknisi, Finance, Account Payable, FAT,
+Accounting, Audit Internal). Legenda jadi 3 tanda; rekap total di
+halaman 1. PDF ini sekarang berfungsi ganda: bagan + checklist isian
+struktur organisasi.
