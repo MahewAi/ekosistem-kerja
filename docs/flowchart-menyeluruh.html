@@ -9,352 +9,561 @@
   @page{size:A3 landscape;margin:0}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:#fff}
-  body{font-family:'Geist',system-ui,sans-serif;color:#1a1c22;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .page{width:1587px;height:1123px;position:relative;background:#fff;overflow:hidden}
+  body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:1587px;height:1123px;position:relative;background:#fff;overflow:hidden;page-break-after:always}
+  .page:last-child{page-break-after:auto}
 
-  h1{position:absolute;left:40px;top:36px;font-size:25px;font-weight:700;letter-spacing:-.02em}
-  .sub{position:absolute;left:40px;top:69px;font-size:11px;color:#5b5e66}
-  .sub b{color:#1a1c22;font-weight:600}
+  h1{position:absolute;left:40px;top:36px;font-size:27px;font-weight:700;letter-spacing:-.025em}
+  .sub{position:absolute;left:40px;top:72px;font-size:11.5px;color:#5b5e66}
+  .sub b{color:#191b21;font-weight:600}
+  .legend{position:absolute;right:40px;top:42px;display:flex;gap:20px;font-size:10px;color:#5b5e66;align-items:center}
+  .legend .sw{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:7px;vertical-align:3px}
 
-  .legend{position:absolute;right:40px;top:40px;display:flex;gap:18px;font-size:9.5px;color:#5b5e66;align-items:center}
-  .legend .sw{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  /* ---------- rel fase ---------- */
+  .rail{position:absolute;left:40px;width:122px}
+  .rail .pn{display:flex;width:27px;height:27px;border-radius:8px;background:#191b21;color:#fff;
+    font-size:13px;font-weight:700;align-items:center;justify-content:center}
+  .rail .pt{margin-top:9px;font-size:10.5px;font-weight:700;line-height:1.3;letter-spacing:.01em;color:#191b21}
+  .rail .pd{margin-top:4px;font-size:9px;color:#9a9da3;line-height:1.35}
+  .rail.g .pn{background:#1E7A3C}
 
-  svg.wires{position:absolute;left:0;top:0;width:1587px;height:1123px;z-index:0}
+  .tick{position:absolute;left:53px;width:1px;border-left:1px dashed #d6d7da}
 
-  .card{position:absolute;z-index:1;border:1.5px solid #5058C4;border-radius:11px;background:#fff;padding:10px 12px 9px}
-  .card.amber{border-color:#B87C14;background:#FDFAF4}
-  .card.green{border-color:#1E7A3C;background:#F4FAF5}
-  .card.end{border-color:#1E7A3C;background:#EDF6EF;border-width:2px}
+  /* ---------- kartu ---------- */
+  .card{position:absolute;border:1px solid #d9dae0;border-radius:12px;background:#fff;padding:12px 14px}
+  .card .t{font-size:13.5px;font-weight:600;letter-spacing:-.012em;line-height:1.2}
+  .card .m{font-size:9.4px;color:#8a8d94;margin-top:3px}
+  .card ul{list-style:none;margin-top:9px}
+  .card li{font-size:9.8px;color:#3d4048;line-height:1.55;padding-left:12px;position:relative;margin-top:2px}
+  .card li::before{content:'';position:absolute;left:1px;top:7px;width:4px;height:4px;border-radius:50%;background:#b9bbc2}
 
-  .ch{display:flex;align-items:flex-start;gap:8px;padding-bottom:7px;border-bottom:1px solid #ececea;margin-bottom:7px}
-  .no{flex:0 0 auto;width:19px;height:19px;border-radius:5px;background:#5058C4;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
-  .amber .no{background:#B87C14}
-  .green .no,.end .no{background:#1E7A3C}
-  .nm{font-size:12.5px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
-  .meta{font-size:8.8px;color:#8a8d94;margin-top:2px}
+  .card.amber{border-color:#e0c48f;background:#FEFBF5}
+  .card.amber li::before{background:#d8a441}
+  .card.ck{border:1.6px solid #1E7A3C;background:#F5FAF6}
+  .card.ck li::before{background:#4e9c68}
+  .card.done{border:1.6px solid #1E7A3C;background:#EFF7F1}
+  .card.done li::before{background:#4e9c68}
 
-  ul{list-style:none}
-  li{font-size:8.9px;color:#33363d;line-height:1.5;padding-left:11px;position:relative}
-  li::before{content:'';position:absolute;left:0;top:6.5px;width:4px;height:4px;border-radius:50%;border:1px solid #5058C4}
-  .amber li::before{border-color:#B87C14}
-  .green li::before{border-color:#1E7A3C}
-  li.hi{color:#8a5a0e;font-weight:500}
-  li.hi::before{border-color:#B87C14;background:#B87C14}
+  .ckbar{margin-top:10px;padding-top:8px;border-top:1px solid #cfe6d5;font-size:9.6px;font-weight:700;color:#1E7A3C}
 
-  .fail{font-size:8.4px;color:#8a5a0e;margin-top:5px;padding-top:4px;border-top:1px dashed #e6d9bf}
-  .tight li{line-height:1.42}
+  /* Sales: 3 kanal */
+  .kanal{margin-top:9px}
+  .kanal .k{display:flex;gap:8px;align-items:baseline;font-size:9.6px;line-height:1.5;margin-top:2px}
+  .kanal .kn{flex:0 0 62px;font-size:8.6px;font-weight:700;letter-spacing:.07em;color:#4b52b8}
+  .kanal .kp{color:#3d4048}
+  .shared{margin-top:7px;padding-top:6px;border-top:1px solid #ececef;font-size:9.3px;color:#5b5e66;line-height:1.45}
 
-  /* pita Sales */
-  .band{position:absolute;z-index:1;border:1.5px solid #5058C4;border-radius:11px;background:#fff;padding:10px 12px}
-  .bandhd{display:flex;align-items:center;gap:8px;padding-bottom:7px;border-bottom:1px solid #ececea;margin-bottom:8px}
-  .lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .lane{border:1px solid #e2e2e0;border-radius:8px;padding:7px 9px 6px;background:#FBFBFD}
-  .lt{font-size:8.4px;font-weight:700;letter-spacing:.12em;color:#5058C4;margin-bottom:1px}
-  .lp{font-size:8.6px;color:#8a8d94;margin-bottom:5px}
+  .flag{margin-top:9px;padding-top:7px;border-top:1px solid #efe4cd;font-size:9.2px;color:#8a5a0e}
 
-  /* label jalur */
-  .wlab{position:absolute;z-index:2;font-size:9px;font-weight:600;background:#fff;padding:0 6px}
-  .wlab.i{color:#3f47a8}
-  .wlab.a{color:#8a5a0e}
+  svg.wires{position:absolute;left:0;top:0;width:1587px;height:1123px;pointer-events:none}
+  .wlab{position:absolute;font-size:9.6px;font-weight:600;color:#4b52b8;background:#fff;padding:0 7px}
 
-  .cktext{font-size:9.4px;font-weight:700;color:#1E7A3C;margin-top:6px;padding-top:6px;border-top:1px solid #cfe6d5}
-
-  .foot{position:absolute;left:40px;right:40px;top:1082px;display:flex;justify-content:space-between;font-size:9px;color:#8a8d94;border-top:1px solid #ececea;padding-top:9px}
+  .foot{position:absolute;left:40px;right:40px;top:1074px;display:flex;justify-content:space-between;
+    font-size:9.2px;color:#9a9da3;border-top:1px solid #ececef;padding-top:10px}
   .foot b{color:#5b5e66;font-weight:600}
+
+  /* ---------- halaman 2: rincian ---------- */
+  .h2{position:absolute;left:40px;top:36px;font-size:23px;font-weight:700;letter-spacing:-.022em}
+  .sub2{position:absolute;left:40px;top:69px;font-size:11px;color:#5b5e66}
+  .cols{position:absolute;left:40px;top:112px;width:1507px;column-count:3;column-gap:44px}
+  .blk{break-inside:avoid;padding-bottom:15px;margin-bottom:15px;border-bottom:1px solid #ececef}
+  .blk:last-child{border-bottom:0}
+  .blk .bh{display:flex;align-items:baseline;gap:8px}
+  .blk .bn{font-family:'Geist Mono',monospace;font-size:10px;color:#9a9da3;flex:0 0 auto}
+  .blk .bt{font-size:12.5px;font-weight:600;letter-spacing:-.01em}
+  .blk .bp{font-size:9.4px;color:#8a8d94;margin:3px 0 0 26px}
+  .blk ul{list-style:none;margin:7px 0 0 26px}
+  .blk li{font-size:9.7px;color:#3d4048;line-height:1.6;padding-left:12px;position:relative}
+  .blk li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:#c4c6cc}
 </style>
 </head>
 <body>
-<div class="page">
 
+<!-- ================= HALAMAN 1 · PETA ALUR ================= -->
+<div class="page">
   <h1>Alur Bisnis Menyeluruh</h1>
-  <div class="sub">PT Selaras Lawang Sewu · dari <b>order masuk</b> sampai <b>purna jual</b> · 16 tahap, poin kerjaan per sektor</div>
+  <div class="sub">PT Selaras Lawang Sewu · <b>order masuk sampai purna jual</b> · 16 tahap dalam 5 fase · rincian kerjaan tiap sektor ada di halaman 2</div>
   <div class="legend">
-    <span><span class="sw" style="background:#5058C4"></span>alur utama</span>
-    <span><span class="sw" style="background:#B87C14"></span>jalur material kurang</span>
+    <span><span class="sw" style="background:#4b52b8"></span>alur utama</span>
+    <span><span class="sw" style="background:#d8a441"></span>jalur material kurang</span>
     <span><span class="sw" style="background:#1E7A3C"></span>checkpoint &amp; selesai</span>
   </div>
 
   <svg class="wires" viewBox="0 0 1587 1123">
     <defs>
-      <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
-        <path d="M0,0 L7,3.2 L0,6.4 z" fill="#5058C4"/>
+      <marker id="ai" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#4b52b8"/>
       </marker>
-      <marker id="aa" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
-        <path d="M0,0 L7,3.2 L0,6.4 z" fill="#B87C14"/>
+      <marker id="aa" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#d8a441"/>
       </marker>
-      <marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
-        <path d="M0,0 L7,3.2 L0,6.4 z" fill="#1E7A3C"/>
+      <marker id="ag" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#1E7A3C"/>
       </marker>
     </defs>
-    <g fill="none" stroke="#5058C4" stroke-width="1.8">
-      <!-- Sales turun ke ABA -->
-      <path d="M216 254 V 272" marker-end="url(#ai)"/>
-      <!-- baris 1 -->
-      <path d="M392 361 H 421" marker-end="url(#ai)"/>
-      <path d="M777 361 H 806" marker-end="url(#ai)"/>
-      <path d="M1162 361 H 1191" marker-end="url(#ai)"/>
-      <!-- cabang material: cukup -->
-      <path d="M1371 446 V 460 H 601 V 486" marker-end="url(#ai)"/>
-      <!-- baris 2 -->
-      <path d="M777 575 H 806" marker-end="url(#ai)"/>
-      <path d="M1162 575 H 1191" marker-end="url(#ai)"/>
-      <!-- wrap baris 2 ke 3 -->
-      <path d="M1371 660 V 675 H 216 V 686" marker-end="url(#ai)"/>
-      <!-- baris 3 -->
-      <path d="M392 775 H 421" marker-end="url(#ai)"/>
-      <path d="M777 775 H 806" marker-end="url(#ai)"/>
-      <path d="M1162 775 H 1191" marker-end="url(#ai)"/>
-      <!-- wrap baris 3 ke 4 -->
-      <path d="M1371 860 V 875 H 216 V 886" marker-end="url(#ai)"/>
-      <!-- baris 4 -->
-      <path d="M392 975 H 421" marker-end="url(#ai)"/>
-      <path d="M777 975 H 806" marker-end="url(#ai)"/>
+
+    <!-- fase 1 · 4 kartu di 176/526/876/1226, lebar 320, sumbu y 187 -->
+    <g fill="none" stroke="#4b52b8" stroke-width="1.7">
+      <path d="M496 187 H 548" marker-end="url(#ai)"/>
+      <path d="M846 187 H 898" marker-end="url(#ai)"/>
+      <path d="M1196 187 H 1248" marker-end="url(#ai)"/>
     </g>
-    <g fill="none" stroke="#B87C14" stroke-width="1.8">
-      <!-- cabang material: kurang -->
-      <path d="M1371 446 V 476 H 216 V 486" marker-end="url(#aa)"/>
-      <!-- transit ke checkpoint -->
-      <path d="M392 575 H 421" marker-end="url(#aa)"/>
+    <!-- fase 2 · 3 kartu di 176/643/1110, lebar 437, sumbu y 381 -->
+    <g fill="none" stroke="#d8a441" stroke-width="1.7">
+      <path d="M613 381 H 665" marker-end="url(#aa)"/>
+      <path d="M1080 381 H 1132" marker-end="url(#aa)"/>
     </g>
-    <g fill="none" stroke="#1E7A3C" stroke-width="1.8">
-      <path d="M1162 975 H 1191" marker-end="url(#ag)"/>
+    <!-- lintasan pintas bila material cukup -->
+    <g fill="none" stroke="#4b52b8" stroke-width="1.7">
+      <path d="M394 452 V 472 H 1328 V 456" marker-end="url(#ai)"/>
+    </g>
+    <!-- fase 3 · sumbu y 575 -->
+    <g fill="none" stroke="#4b52b8" stroke-width="1.7">
+      <path d="M613 575 H 665" marker-end="url(#ai)"/>
+      <path d="M1080 575 H 1132" marker-end="url(#ai)"/>
+      <!-- fase 4 · sumbu y 769 -->
+      <path d="M613 769 H 665" marker-end="url(#ai)"/>
+      <path d="M1080 769 H 1132" marker-end="url(#ai)"/>
+      <!-- fase 5 · 4 kartu, sumbu y 963 -->
+      <path d="M496 963 H 548" marker-end="url(#ai)"/>
+      <path d="M846 963 H 898" marker-end="url(#ai)"/>
+    </g>
+    <g fill="none" stroke="#1E7A3C" stroke-width="1.7">
+      <path d="M1196 963 H 1248" marker-end="url(#ag)"/>
     </g>
   </svg>
 
-  <div class="wlab i" style="left:660px;top:452px">material cukup</div>
-  <div class="wlab a" style="left:250px;top:468px">material kurang</div>
+  <!-- ---------- FASE 1 ---------- -->
+  <div class="rail" style="top:116px"><span class="pn">1</span><div class="pt">Order &amp;<br>Verifikasi</div><div class="pd">2 hari kerja</div></div>
+  <div class="tick" style="top:206px;height:96px"></div>
 
-  <!-- ============ PITA SALES ============ -->
-  <div class="band" style="left:40px;top:112px;width:1507px;height:142px">
-    <div class="bandhd">
-      <span class="no">1</span>
-      <div>
-        <div class="nm">Order Masuk · Divisi Sales</div>
-        <div class="meta">3 kanal penjualan · normal 0,3 hari · seluruh kanal bermuara ke verifikasi ABA</div>
-      </div>
+  <div class="card" style="left:176px;top:116px;width:320px;height:142px">
+    <div class="t">Order Masuk · Sales</div>
+    <div class="m">3 kanal penjualan · normal 0,3 hari</div>
+    <div class="kanal">
+      <div class="k"><span class="kn">DEVELOPER</span><span class="kp">Novrianto, Agus, Bobby</span></div>
+      <div class="k"><span class="kn">B2B</span><span class="kp">Novita, Agus</span></div>
+      <div class="k"><span class="kn">RETAIL</span><span class="kp">Neyla, Mulyadi</span></div>
     </div>
-    <div class="lanes">
-      <div class="lane">
-        <div class="lt">DEVELOPER</div>
-        <div class="lp">Novrianto (penawaran) · Agus (survey) · Bobby (koordinasi lapangan)</div>
-        <ul>
-          <li>Spesifikasi &amp; penawaran ke developer</li>
-          <li>Survey lapangan dan kesepakatan harga</li>
-          <li>Terima PO customer, catat data &amp; alamat kirim</li>
-        </ul>
-      </div>
-      <div class="lane">
-        <div class="lt">B2B</div>
-        <div class="lp">Novita (penawaran &amp; koordinasi lapangan) · Agus (survey)</div>
-        <ul>
-          <li>Spesifikasi &amp; penawaran ke mitra B2B</li>
-          <li>Survey lapangan dan kesepakatan harga</li>
-          <li>Terima PO customer, catat data &amp; alamat kirim</li>
-        </ul>
-      </div>
-      <div class="lane">
-        <div class="lt">RETAIL</div>
-        <div class="lp">Neyla / Mulyadi (penawaran)</div>
-        <ul>
-          <li>Spesifikasi &amp; penawaran retail / custom</li>
-          <li>Survey lapangan dan kesepakatan harga</li>
-          <li>Terima PO customer, catat data &amp; alamat kirim</li>
-        </ul>
-      </div>
-    </div>
+    <div class="shared">Penawaran, survey lapangan, kesepakatan harga, terima PO customer</div>
   </div>
 
-  <!-- ============ BARIS 1 ============ -->
-  <div class="card" style="left:40px;top:276px;width:352px;height:170px">
-    <div class="ch"><span class="no">2</span><div><div class="nm">ABA · Verifikasi Order</div><div class="meta">PIC: ABA per kanal · normal 0,5 hari</div></div></div>
-    <ul class="tight">
-      <li>Cek PO sama dengan penawaran</li>
-      <li>Cek harga dan termin pembayaran</li>
-      <li>Cek riwayat customer</li>
-      <li>Tentukan standar atau custom</li>
-      <li>Cek kebutuhan survey / gambar</li>
-      <li>Cek ketersediaan barang &amp; deadline kirim</li>
-      <li>Request SSA untuk proses lanjutan</li>
-    </ul>
-    <div class="fail">Cek gagal, order dikembalikan ke Sales untuk revisi</div>
-  </div>
-
-  <div class="card" style="left:425px;top:276px;width:352px;height:170px">
-    <div class="ch"><span class="no">3</span><div><div class="nm">SSA · Proses SO</div><div class="meta">PIC: Annisa &amp; tim · normal 1 hari</div></div></div>
+  <div class="card" style="left:526px;top:116px;width:320px;height:142px">
+    <div class="t">ABA · Verifikasi Order</div>
+    <div class="m">ABA per kanal · normal 0,5 hari</div>
     <ul>
-      <li>Klarifikasi ulang seluruh data sebelum SO</li>
-      <li>Terbitkan Sales Order</li>
+      <li>Jalankan 7 cek wajib atas tiap order</li>
+      <li>Tentukan pekerjaan standar atau custom</li>
+      <li>Cek gagal dikembalikan ke Sales</li>
+    </ul>
+  </div>
+
+  <div class="card" style="left:876px;top:116px;width:320px;height:142px">
+    <div class="t">SSA · Proses SO</div>
+    <div class="m">Annisa &amp; tim · normal 1 hari</div>
+    <ul>
+      <li>Klarifikasi data lalu terbitkan SO</li>
       <li>Kawal approval gambar N1 dan N2</li>
-      <li>Info penerbitan invoice ke Finance</li>
-      <li>Teruskan ke PPIC, Gudang, dan Project</li>
-      <li>Koordinasi balik ke Sales bila ada kendala</li>
+      <li>Teruskan ke PPIC, Gudang, dan Finance</li>
     </ul>
   </div>
 
-  <div class="card" style="left:810px;top:276px;width:352px;height:170px">
-    <div class="ch"><span class="no">4</span><div><div class="nm">PPIC · Proses WO</div><div class="meta">PIC: Bu Liana &amp; tim · normal 1 hari</div></div></div>
+  <div class="card" style="left:1226px;top:116px;width:320px;height:142px">
+    <div class="t">PPIC · Proses WO</div>
+    <div class="m">Bu Liana &amp; tim · normal 1 hari</div>
     <ul>
-      <li>Klarifikasi ulang data sebelum WO</li>
-      <li>Terbitkan Work Order</li>
-      <li>Susun jadwal produksi</li>
-      <li>Susun jadwal kebutuhan material</li>
-      <li>Kendali produksi dan koreksi pekerjaan</li>
-      <li>Koordinasi gudang material dan barang jadi</li>
+      <li>Klarifikasi data lalu terbitkan WO</li>
+      <li>Susun jadwal produksi dan material</li>
+      <li>Kendali produksi, koordinasi gudang</li>
     </ul>
   </div>
 
-  <div class="card" style="left:1195px;top:276px;width:352px;height:170px">
-    <div class="ch"><span class="no">5</span><div><div class="nm">Purchasing · Cek Material</div><div class="meta">PIC: Purchasing · normal 1,5 hari</div></div></div>
+  <!-- ---------- FASE 2 ---------- -->
+  <div class="rail" style="top:310px"><span class="pn">2</span><div class="pt">Material &amp;<br>Kesiapan</div><div class="pd">2 sampai 6 hari</div></div>
+  <div class="tick" style="top:400px;height:96px"></div>
+
+  <div class="card" style="left:176px;top:310px;width:437px;height:142px">
+    <div class="t">Purchasing · Cek Material</div>
+    <div class="m">Purchasing · normal 1,5 hari</div>
     <ul>
-      <li>Cek stok dan lokasi material</li>
-      <li>Alokasi material per Work Order</li>
-      <li>Terbitkan PO ke supplier bila kurang</li>
-      <li>Negosiasi harga dan konfirmasi jadwal</li>
-      <li>Anggaran dikawal Budget Planning FAT</li>
+      <li>Cek stok dan alokasikan material per Work Order</li>
+      <li>Terbitkan PO ke supplier bila material kurang</li>
+      <li>Negosiasi harga, konfirmasi jadwal kedatangan</li>
     </ul>
   </div>
 
-  <!-- ============ BARIS 2 ============ -->
-  <div class="card amber" style="left:40px;top:490px;width:352px;height:170px">
-    <div class="ch"><span class="no">6</span><div><div class="nm">Material In Transit</div><div class="meta">PIC: Ekspedisi / Inventory Controller · normal 4 hari</div></div></div>
+  <div class="card amber" style="left:643px;top:310px;width:437px;height:142px">
+    <div class="t">Material In Transit</div>
+    <div class="m">Ekspedisi / Inventory Controller · normal 4 hari</div>
     <ul>
       <li>Pantau kedatangan material dari supplier</li>
-      <li>Terima dan cocokkan surat jalan supplier</li>
       <li>Quality check material masuk</li>
       <li>Serah terima tercatat ke Gudang Material</li>
-      <li>Catat selisih dan klaim ke supplier</li>
     </ul>
+    <div class="flag">Dilewati bila material sudah cukup di gudang</div>
   </div>
 
-  <div class="card green" style="left:425px;top:490px;width:352px;height:170px">
-    <div class="ch"><span class="no">7</span><div><div class="nm">Produksi Terima Data</div><div class="meta">PPIC ke Produksi · normal 0,3 hari</div></div></div>
+  <div class="card ck" style="left:1110px;top:310px;width:437px;height:142px">
+    <div class="t">Produksi Terima Data</div>
+    <div class="m">PPIC ke Produksi · normal 0,3 hari</div>
     <ul>
-      <li>Gambar produksi N2 final</li>
-      <li>Material siap dan teralokasi</li>
-      <li>Deadline terkonfirmasi</li>
-      <li>Detail pekerjaan lengkap</li>
-      <li>Serahkan SPK ke Kepala Produksi</li>
+      <li>Gambar N2 final dan material siap teralokasi</li>
+      <li>Deadline serta detail pekerjaan terkonfirmasi</li>
     </ul>
-    <div class="cktext">✅ CHECKPOINT · PRODUKSI SIAP MULAI</div>
+    <div class="ckbar">✅ CHECKPOINT · PRODUKSI SIAP MULAI</div>
   </div>
 
-  <div class="card" style="left:810px;top:490px;width:352px;height:170px">
-    <div class="ch"><span class="no">8</span><div><div class="nm">Produksi</div><div class="meta">PIC: Kepala Produksi &amp; supervisor · normal 14 hari</div></div></div>
+  <!-- ---------- FASE 3 ---------- -->
+  <div class="rail" style="top:504px"><span class="pn">3</span><div class="pt">Produksi &amp;<br>Mutu</div><div class="pd">14 hari kerja</div></div>
+  <div class="tick" style="top:594px;height:96px"></div>
+
+  <div class="card" style="left:176px;top:504px;width:437px;height:142px">
+    <div class="t">Produksi</div>
+    <div class="m">Kepala Produksi &amp; supervisor · normal 14 hari</div>
     <ul>
-      <li>Persiapan dan penyiapan material</li>
-      <li>Potong, rakit, dan bentuk rangka</li>
-      <li>Coating dan finishing</li>
-      <li>Kendali mutu selama proses berjalan</li>
+      <li>Siapkan material, potong, rakit, bentuk rangka</li>
+      <li>Coating dan finishing sesuai spesifikasi</li>
       <li>Catat waste dan barang setengah jadi</li>
     </ul>
   </div>
 
-  <div class="card" style="left:1195px;top:490px;width:352px;height:170px">
-    <div class="ch"><span class="no">9</span><div><div class="nm">QC Hasil Produksi</div><div class="meta">PIC: Hardy (QA/QC)</div></div></div>
+  <div class="card" style="left:643px;top:504px;width:437px;height:142px">
+    <div class="t">QC Hasil Produksi</div>
+    <div class="m">Hardy · quality assurance</div>
     <ul>
-      <li>Cek hasil produksi terhadap gambar N2</li>
-      <li>Cek dimensi, kelengkapan, dan finishing</li>
+      <li>Cek hasil terhadap gambar produksi N2</li>
       <li>Barang tidak lolos masuk antrean perbaikan</li>
       <li>Terbitkan status QC Pass</li>
-      <li>Sisa produksi dicatat ke gudang sisa</li>
     </ul>
   </div>
 
-  <!-- ============ BARIS 3 ============ -->
-  <div class="card" style="left:40px;top:690px;width:352px;height:170px">
-    <div class="ch"><span class="no">10</span><div><div class="nm">Gudang Barang Jadi</div><div class="meta">PIC: Kepala Gudang</div></div></div>
+  <div class="card" style="left:1110px;top:504px;width:437px;height:142px">
+    <div class="t">Gudang Barang Jadi</div>
+    <div class="m">Kepala Gudang</div>
     <ul>
-      <li>Terima barang jadi dari produksi</li>
-      <li>Serah terima tercatat antar bagian</li>
+      <li>Terima barang jadi, serah terima tercatat</li>
       <li>Pisahkan stok umum dan stok proyek</li>
       <li>Pastikan data sistem sama dengan fisik</li>
-      <li>Kelola retur dan sisa proyek</li>
     </ul>
   </div>
 
-  <div class="card" style="left:425px;top:690px;width:352px;height:170px">
-    <div class="ch"><span class="no">11</span><div><div class="nm">Packing &amp; QC Muat</div><div class="meta">PIC: Gudang · QC saat muat</div></div></div>
+  <!-- ---------- FASE 4 ---------- -->
+  <div class="rail" style="top:698px"><span class="pn">4</span><div class="pt">Kirim &amp;<br>Pasang</div><div class="pd">3 hari kerja</div></div>
+  <div class="tick" style="top:788px;height:96px"></div>
+
+  <div class="card" style="left:176px;top:698px;width:437px;height:142px">
+    <div class="t">Packing &amp; QC Muat</div>
+    <div class="m">Gudang · quality check saat pemuatan</div>
     <ul>
       <li>Packing sesuai tujuan pengiriman</li>
       <li>Cek kelengkapan barang terhadap SO</li>
-      <li>Quality check saat pemuatan</li>
       <li>Alokasi kendaraan dan jadwal armada</li>
-      <li>Siapkan dokumen jalan</li>
     </ul>
   </div>
 
-  <div class="card" style="left:810px;top:690px;width:352px;height:170px">
-    <div class="ch"><span class="no">12</span><div><div class="nm">Pengiriman</div><div class="meta">PIC: Kepala Gudang &amp; driver · normal 3 hari</div></div></div>
+  <div class="card" style="left:643px;top:698px;width:437px;height:142px">
+    <div class="t">Pengiriman</div>
+    <div class="m">Kepala Gudang &amp; driver · normal 3 hari</div>
     <ul>
-      <li>Terbitkan Surat Jalan / Delivery Order</li>
-      <li>Kirim barang ke lokasi customer</li>
-      <li>Konfirmasi penerimaan di lokasi</li>
-      <li>Dokumen kembali ditandatangani penerima</li>
-      <li>Laporkan kendala pengiriman ke SSA</li>
+      <li>Terbitkan Surat Jalan atau Delivery Order</li>
+      <li>Kirim barang, konfirmasi penerimaan di lokasi</li>
+      <li>Dokumen kembali tertandatangani penerima</li>
     </ul>
   </div>
 
-  <div class="card" style="left:1195px;top:690px;width:352px;height:170px">
-    <div class="ch"><span class="no">13</span><div><div class="nm">Pemasangan</div><div class="meta">PIC: Kidam (Project) · teknisi</div></div></div>
+  <div class="card" style="left:1110px;top:698px;width:437px;height:142px">
+    <div class="t">Pemasangan</div>
+    <div class="m">Kidam (Project) &amp; teknisi</div>
     <ul>
-      <li>Cek kesiapan lokasi sebelum turun</li>
-      <li>Koordinasi teknisi dan jadwal pemasangan</li>
+      <li>Cek kesiapan lokasi sebelum teknisi turun</li>
       <li>Pemasangan sendiri atau oleh pihak lain</li>
       <li>Laporan lapangan berikut foto bukti</li>
-      <li>Dukungan supervisi mitra oleh Agus</li>
     </ul>
   </div>
 
-  <!-- ============ BARIS 4 ============ -->
-  <div class="card" style="left:40px;top:890px;width:352px;height:170px">
-    <div class="ch"><span class="no">14</span><div><div class="nm">BAST</div><div class="meta">PIC: Project &amp; SSA</div></div></div>
+  <!-- ---------- FASE 5 ---------- -->
+  <div class="rail g" style="top:892px"><span class="pn">5</span><div class="pt">Tutup &amp;<br>Purna Jual</div><div class="pd">sampai lunas</div></div>
+
+  <div class="card" style="left:176px;top:892px;width:320px;height:142px">
+    <div class="t">BAST</div>
+    <div class="m">Project &amp; SSA</div>
     <ul>
       <li>Serah terima pekerjaan ke customer</li>
       <li>Tanda tangan perwakilan customer</li>
-      <li>Finalisasi seluruh dokumen proyek</li>
-      <li>Catat deviasi bila ada temuan</li>
-      <li>Kirim berkas lengkap ke Finance</li>
+      <li>Berkas lengkap diteruskan ke Finance</li>
     </ul>
   </div>
 
-  <div class="card" style="left:425px;top:890px;width:352px;height:170px">
-    <div class="ch"><span class="no">15</span><div><div class="nm">Invoice &amp; Pelunasan</div><div class="meta">PIC: Finance / FAT · Yenni</div></div></div>
+  <div class="card" style="left:526px;top:892px;width:320px;height:142px">
+    <div class="t">Invoice &amp; Pelunasan</div>
+    <div class="m">Finance / FAT · Yenni</div>
     <ul>
       <li>Terbitkan invoice sesuai termin</li>
-      <li>Kirim tagihan berikut dokumen pendukung</li>
-      <li>Reminder dan surat konfirmasi pembayaran</li>
+      <li>Tagih, ingatkan, konfirmasi pembayaran</li>
       <li>Rekonsiliasi stok dan biaya proyek</li>
-      <li>Tandai status lunas</li>
     </ul>
   </div>
 
-  <div class="card" style="left:810px;top:890px;width:352px;height:170px">
-    <div class="ch"><span class="no">16</span><div><div class="nm">After Sales Services</div><div class="meta">PIC: Nadia · Dilla · Agus &amp; tim</div></div></div>
+  <div class="card" style="left:876px;top:892px;width:320px;height:142px">
+    <div class="t">After Sales Services</div>
+    <div class="m">Nadia, Dilla, Agus &amp; tim</div>
     <ul>
-      <li>Terima inkuiri dan keluhan customer</li>
-      <li>Afirmasi masalah dan solusi sementara</li>
-      <li>Konfirmasi teknis dan jadwal kunjungan</li>
-      <li>Laporan lapangan bertanda tangan customer</li>
-      <li>Tutup tiket dan perbarui data garansi</li>
+      <li>Terima keluhan, afirmasi masalah</li>
+      <li>Jadwalkan kunjungan teknisi</li>
+      <li>Tutup tiket, perbarui data garansi</li>
     </ul>
   </div>
 
-  <div class="card end" style="left:1195px;top:890px;width:352px;height:170px">
-    <div class="ch"><span class="no">✓</span><div><div class="nm">Selesai · Customer</div><div class="meta">order tuntas dari sisi barang, dokumen, dan uang</div></div></div>
+  <div class="card done" style="left:1226px;top:892px;width:320px;height:142px">
+    <div class="t">Selesai</div>
+    <div class="m">order tuntas: barang, dokumen, uang</div>
     <ul>
       <li>Barang terpasang dan diterima customer</li>
-      <li>Dokumen final lengkap dan tertandatangani</li>
-      <li>Pembayaran lunas</li>
-      <li>Garansi aktif dan terdata</li>
-      <li>Riwayat order tersimpan untuk order berikutnya</li>
+      <li>Dokumen final lengkap</li>
+      <li>Pembayaran lunas, garansi aktif</li>
     </ul>
+  </div>
+
+  <div class="wlab" style="left:770px;top:464px">material cukup, lewati transit</div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · peta alur bisnis · halaman 1 dari 2</span>
+    <span>Sumber: Peta Business Process + Business Process Back Office · 4 Agustus 2026</span>
+  </div>
+</div>
+
+<!-- ================= HALAMAN 2 · RINCIAN KERJAAN ================= -->
+<div class="page">
+  <div class="h2">Rincian Kerjaan per Sektor</div>
+  <div class="sub2">Poin kerjaan lengkap tiap tahap, urut mengikuti peta alur di halaman 1</div>
+
+  <div class="cols">
+
+    <div class="blk">
+      <div class="bh"><span class="bn">01</span><span class="bt">Sales · Developer</span></div>
+      <div class="bp">Novrianto (penawaran) · Agus (survey) · Bobby (koordinasi lapangan)</div>
+      <ul>
+        <li>Susun spesifikasi dan penawaran untuk developer</li>
+        <li>Survey lapangan bersama calon customer</li>
+        <li>Kesepakatan harga dan termin pembayaran</li>
+        <li>Terima PO, catat data customer dan alamat kirim</li>
+        <li>Koordinasi lapangan selama proyek berjalan</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">01</span><span class="bt">Sales · B2B</span></div>
+      <div class="bp">Novita (penawaran &amp; koordinasi lapangan) · Agus (survey)</div>
+      <ul>
+        <li>Susun spesifikasi dan penawaran untuk mitra B2B</li>
+        <li>Survey lapangan dan kesepakatan harga</li>
+        <li>Terima PO, catat data customer dan alamat kirim</li>
+        <li>Koordinasi kebutuhan lapangan mitra</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">01</span><span class="bt">Sales · Retail</span></div>
+      <div class="bp">Neyla / Mulyadi (penawaran) · PIC survey belum ditetapkan</div>
+      <ul>
+        <li>Susun spesifikasi dan penawaran retail atau custom</li>
+        <li>Survey lapangan dan kesepakatan harga</li>
+        <li>Terima PO, catat data customer dan alamat kirim</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">02</span><span class="bt">ABA · Verifikasi Order</span></div>
+      <div class="bp">ABA per kanal · normal 0,5 hari</div>
+      <ul>
+        <li>Cek PO sama dengan penawaran</li>
+        <li>Cek harga dan termin pembayaran</li>
+        <li>Cek riwayat customer</li>
+        <li>Tentukan pekerjaan standar atau custom</li>
+        <li>Cek kebutuhan survey dan gambar</li>
+        <li>Cek ketersediaan barang dan deadline kirim</li>
+        <li>Request SSA untuk proses lanjutan</li>
+        <li>Monitoring order sampai terkirim dan terbayar lunas</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">03</span><span class="bt">SSA · Proses SO</span></div>
+      <div class="bp">Annisa &amp; tim · normal 1 hari</div>
+      <ul>
+        <li>Klarifikasi ulang seluruh data sebelum SO terbit</li>
+        <li>Terbitkan Sales Order</li>
+        <li>Kawal approval gambar N1 dan N2</li>
+        <li>Info penerbitan invoice ke Finance</li>
+        <li>Teruskan tindak lanjut ke PPIC, Gudang, dan Project</li>
+        <li>Koordinasi balik ke Sales bila ada kendala</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">04</span><span class="bt">PPIC · Proses WO</span></div>
+      <div class="bp">Bu Liana &amp; tim · normal 1 hari</div>
+      <ul>
+        <li>Klarifikasi ulang data sebelum WO terbit</li>
+        <li>Terbitkan Work Order</li>
+        <li>Susun jadwal produksi</li>
+        <li>Susun jadwal kebutuhan material</li>
+        <li>Kendali produksi dan koreksi pekerjaan</li>
+        <li>Koordinasi gudang material dan barang jadi</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">05</span><span class="bt">Purchasing · Cek Material</span></div>
+      <div class="bp">Purchasing · normal 1,5 hari</div>
+      <ul>
+        <li>Cek stok dan lokasi material</li>
+        <li>Alokasi material per Work Order</li>
+        <li>Terbitkan PO ke supplier bila material kurang</li>
+        <li>Negosiasi harga dan konfirmasi jadwal kedatangan</li>
+        <li>Anggaran dikawal Budget Planning FAT</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">06</span><span class="bt">Material In Transit</span></div>
+      <div class="bp">Ekspedisi / Inventory Controller · normal 4 hari</div>
+      <ul>
+        <li>Pantau kedatangan material dari supplier</li>
+        <li>Terima dan cocokkan surat jalan supplier</li>
+        <li>Quality check material masuk</li>
+        <li>Serah terima tercatat ke Gudang Material</li>
+        <li>Catat selisih dan ajukan klaim ke supplier</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">07</span><span class="bt">Produksi Terima Data</span></div>
+      <div class="bp">PPIC ke Produksi · normal 0,3 hari · checkpoint</div>
+      <ul>
+        <li>Gambar produksi N2 final</li>
+        <li>Material siap dan teralokasi</li>
+        <li>Deadline terkonfirmasi</li>
+        <li>Detail pekerjaan lengkap</li>
+        <li>Serahkan SPK ke Kepala Produksi</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">08</span><span class="bt">Produksi</span></div>
+      <div class="bp">Kepala Produksi &amp; supervisor · normal 14 hari</div>
+      <ul>
+        <li>Persiapan dan penyiapan material</li>
+        <li>Potong, rakit, dan bentuk rangka</li>
+        <li>Coating dan finishing</li>
+        <li>Kendali mutu selama proses berjalan</li>
+        <li>Catat waste dan barang setengah jadi</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">09</span><span class="bt">QC Hasil Produksi</span></div>
+      <div class="bp">Hardy · quality assurance</div>
+      <ul>
+        <li>Cek hasil produksi terhadap gambar N2</li>
+        <li>Cek dimensi, kelengkapan, dan finishing</li>
+        <li>Barang tidak lolos masuk antrean perbaikan</li>
+        <li>Terbitkan status QC Pass</li>
+        <li>Sisa produksi dicatat ke gudang sisa</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">10</span><span class="bt">Gudang Barang Jadi</span></div>
+      <div class="bp">Kepala Gudang</div>
+      <ul>
+        <li>Terima barang jadi dari produksi</li>
+        <li>Serah terima tercatat antar bagian</li>
+        <li>Pisahkan stok umum dan stok proyek</li>
+        <li>Pastikan data sistem sama dengan fisik</li>
+        <li>Kelola retur dan sisa proyek</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">11</span><span class="bt">Packing &amp; QC Muat</span></div>
+      <div class="bp">Gudang · quality check saat pemuatan</div>
+      <ul>
+        <li>Packing sesuai tujuan pengiriman</li>
+        <li>Cek kelengkapan barang terhadap SO</li>
+        <li>Quality check saat pemuatan</li>
+        <li>Alokasi kendaraan dan jadwal armada</li>
+        <li>Siapkan dokumen jalan</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">12</span><span class="bt">Pengiriman</span></div>
+      <div class="bp">Kepala Gudang &amp; driver · normal 3 hari</div>
+      <ul>
+        <li>Terbitkan Surat Jalan atau Delivery Order</li>
+        <li>Kirim barang ke lokasi customer</li>
+        <li>Konfirmasi penerimaan di lokasi</li>
+        <li>Dokumen kembali ditandatangani penerima</li>
+        <li>Laporkan kendala pengiriman ke SSA</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">13</span><span class="bt">Pemasangan</span></div>
+      <div class="bp">Kidam (Project) &amp; teknisi</div>
+      <ul>
+        <li>Cek kesiapan lokasi sebelum teknisi turun</li>
+        <li>Koordinasi teknisi dan jadwal pemasangan</li>
+        <li>Pemasangan sendiri atau oleh pihak lain</li>
+        <li>Laporan lapangan berikut foto bukti</li>
+        <li>Dukungan supervisi mitra oleh Agus</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">14</span><span class="bt">BAST</span></div>
+      <div class="bp">Project &amp; SSA</div>
+      <ul>
+        <li>Serah terima pekerjaan ke customer</li>
+        <li>Tanda tangan perwakilan customer</li>
+        <li>Finalisasi seluruh dokumen proyek</li>
+        <li>Catat deviasi bila ada temuan</li>
+        <li>Kirim berkas lengkap ke Finance</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">15</span><span class="bt">Invoice &amp; Pelunasan</span></div>
+      <div class="bp">Finance / FAT · Yenni</div>
+      <ul>
+        <li>Terbitkan invoice sesuai termin</li>
+        <li>Kirim tagihan berikut dokumen pendukung</li>
+        <li>Reminder dan surat konfirmasi pembayaran</li>
+        <li>Rekonsiliasi stok dan biaya proyek</li>
+        <li>Tandai status lunas</li>
+      </ul>
+    </div>
+
+    <div class="blk">
+      <div class="bh"><span class="bn">16</span><span class="bt">After Sales Services</span></div>
+      <div class="bp">Nadia · Dilla · Agus &amp; tim</div>
+      <ul>
+        <li>Terima inkuiri dan keluhan customer</li>
+        <li>Afirmasi masalah dan solusi sementara</li>
+        <li>Konfirmasi teknis dan jadwal kunjungan</li>
+        <li>Laporan lapangan bertanda tangan customer</li>
+        <li>Tutup tiket dan perbarui data garansi</li>
+      </ul>
+    </div>
+
   </div>
 
   <div class="foot">
-    <span><b>PT Selaras Lawang Sewu</b> · alur bisnis menyeluruh, order masuk sampai purna jual</span>
-    <span>Sumber: Peta Business Process + Business Process Back Office · disusun 4 Agustus 2026</span>
+    <span><b>PT Selaras Lawang Sewu</b> · rincian kerjaan per sektor · halaman 2 dari 2</span>
+    <span>Sumber: Peta Business Process + Business Process Back Office · 4 Agustus 2026</span>
   </div>
-
 </div>
+
 </body>
 </html>
