@@ -6,7 +6,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  @page{size:A3 landscape;margin:0}
+  @page{size:A4 landscape;margin:0}
+  /* Kanvas dirancang seukuran A3 lalu diperkecil tepat 1/akar2 supaya muat A4 tanpa memotong apa pun */
+  .sheet{width:1123px;height:794px;overflow:hidden;position:relative;page-break-after:always}
+  .sheet:last-child{page-break-after:auto}
+  .page{transform:scale(.70718);transform-origin:top left}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:#fff}
   body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -61,7 +65,7 @@
 </style>
 </head>
 <body>
-<div class="page">
+<div class="sheet"><div class="page">
 
   <h1>Alur Bisnis</h1>
   <div class="sub">PT Selaras Lawang Sewu · <b>order masuk sampai barang diterima customer</b> · 9 tahap, poin kerjaan tiap sektor</div>
@@ -228,6 +232,6 @@
 
   <div class="foot"><b>PT Selaras Lawang Sewu</b> · peta alur bisnis</div>
 
-</div>
+</div></div>
 </body>
 </html>

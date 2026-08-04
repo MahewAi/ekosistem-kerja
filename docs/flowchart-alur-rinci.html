@@ -6,12 +6,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  @page{size:A3 landscape;margin:0}
+  @page{size:A4 landscape;margin:0}
+  /* Kanvas dirancang seukuran A3 lalu diperkecil tepat 1/akar2 supaya muat A4 tanpa memotong apa pun */
+  .sheet{width:1123px;height:794px;overflow:hidden;position:relative;page-break-after:always}
+  .sheet:last-child{page-break-after:auto}
+  .page{transform:scale(.70718);transform-origin:top left}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:#fff}
   body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .page{width:1587px;height:1123px;position:relative;background:#fff;overflow:hidden;page-break-after:always}
-  .page:last-child{page-break-after:auto}
+  .page{width:1587px;height:1123px;position:relative;background:#fff;overflow:hidden}
 
   h1{position:absolute;left:40px;top:36px;font-size:27px;font-weight:700;letter-spacing:-.025em}
   .sub{position:absolute;left:40px;top:72px;font-size:11.5px;color:#5b5e66}
@@ -80,7 +83,7 @@
 <body>
 
 <!-- ================= HALAMAN 1 · PETA ALUR ================= -->
-<div class="page">
+<div class="sheet"><div class="page">
   <h1>Alur Bisnis Rinci</h1>
   <div class="sub">PT Selaras Lawang Sewu · <b>order masuk sampai purna jual</b> · 16 tahap dalam 5 fase · rincian kerjaan tiap sektor ada di halaman 2</div>
   <div class="legend">
@@ -329,10 +332,10 @@
   <div class="foot">
     <span><b>PT Selaras Lawang Sewu</b> · peta alur rinci · halaman 1 dari 2</span>
   </div>
-</div>
+</div></div>
 
 <!-- ================= HALAMAN 2 · RINCIAN KERJAAN ================= -->
-<div class="page">
+<div class="sheet"><div class="page">
   <div class="h2">Rincian Kerjaan per Sektor</div>
   <div class="sub2">Poin kerjaan lengkap tiap tahap, urut mengikuti peta alur di halaman 1</div>
 
@@ -561,7 +564,7 @@
   <div class="foot">
     <span><b>PT Selaras Lawang Sewu</b> · rincian kerjaan per sektor · halaman 2 dari 2</span>
   </div>
-</div>
+</div></div>
 
 </body>
 </html>
