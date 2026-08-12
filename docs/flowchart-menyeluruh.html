@@ -15,46 +15,51 @@
   body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .page{width:1587px;height:1123px;position:relative;background:#fff;overflow:hidden}
 
-  h1{position:absolute;left:40px;top:34px;font-size:26px;font-weight:700;letter-spacing:-.025em}
-  .sub{position:absolute;left:40px;top:69px;font-size:11px;color:#5b5e66}
+  h1{position:absolute;left:40px;top:32px;font-size:25px;font-weight:700;letter-spacing:-.025em}
+  .sub{position:absolute;left:40px;top:66px;font-size:10.5px;color:#5b5e66}
   .sub b{color:#191b21;font-weight:600}
-  .legend{position:absolute;right:40px;top:40px;display:flex;gap:18px;font-size:10px;color:#5b5e66;align-items:center}
-  .legend .sw{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:7px;vertical-align:3px}
+  .legend{position:absolute;right:40px;top:38px;display:flex;gap:18px;font-size:9.6px;color:#5b5e66;align-items:center}
+  .legend .sw{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
 
   svg.wires{position:absolute;left:0;top:0;width:1587px;height:1123px;pointer-events:none}
 
-  .card{position:absolute;border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:11px 13px}
-  .card.amber{border-color:#B87C14}
+  .card{position:absolute;border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:10px 12px}
   .card.green{border-color:#1E7A3C;background:#F5FAF6}
 
   .hd{display:flex;align-items:flex-start;gap:8px}
   .no{flex:0 0 auto;width:22px;height:22px;border-radius:7px;background:#5058C4;color:#fff;
     font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
-  .amber .no{background:#B87C14}
   .green .no{background:#1E7A3C}
-  .t{font-size:13px;font-weight:600;letter-spacing:-.012em;line-height:1.2}
-  .m{font-size:9.2px;color:#8a8d94;margin-top:2px}
+  .t{font-size:12.5px;font-weight:600;letter-spacing:-.012em;line-height:1.2}
+  .m{font-size:8.8px;color:#8a8d94;margin-top:2px}
 
-  .lbl{font-size:8.2px;font-weight:700;letter-spacing:.13em;color:#9a9da3;margin:9px 0 5px}
+  .lbl{font-size:8px;font-weight:700;letter-spacing:.13em;color:#9a9da3;margin:8px 0 4px}
   ul{list-style:none}
-  li{font-size:9.6px;color:#33363d;line-height:1.5;padding-left:13px;position:relative;margin-top:1px}
-  li::before{content:'';position:absolute;left:0;top:5px;width:6px;height:6px;border-radius:50%;
+  li{font-size:9.4px;color:#33363d;line-height:1.45;padding-left:12px;position:relative;margin-top:1px}
+  li::before{content:'';position:absolute;left:0;top:4.8px;width:5.5px;height:5.5px;border-radius:50%;
     border:1.2px solid #5058C4;background:#fff}
-  .amber li::before{border-color:#B87C14}
   .green li::before{border-color:#1E7A3C}
+  .back{margin-top:7px;padding-top:6px;border-top:1px dashed #e3d6bb;font-size:8.8px;color:#8a5a0e;line-height:1.4}
 
-  .back{margin-top:8px;padding-top:7px;border-top:1px dashed #e3d6bb;font-size:9px;color:#8a5a0e;line-height:1.4}
+  /* ---------- jalur paralel ---------- */
+  .lane{position:absolute;display:flex;gap:14px;border:1.6px solid #5058C4;border-radius:12px;
+    background:#fff;padding:10px 13px}
+  .lane .who{flex:0 0 158px;display:flex;align-items:flex-start;gap:8px;
+    border-right:1px solid #ececef;padding-right:12px}
+  .lane .body{flex:1;min-width:0}
+  .lane ul{columns:2;column-gap:22px}
+  .lane li{break-inside:avoid}
+  .lane .amber{margin-top:6px;padding-top:6px;border-top:1px dashed #e3d6bb;font-size:8.8px;color:#8a5a0e;line-height:1.4}
 
   .cust{position:absolute;border:2px solid #1E7A3C;border-radius:60px;background:#F1F8F3;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-  .cust .ct{font-size:17px;font-weight:700;letter-spacing:.04em;color:#1E7A3C}
-  .cust .cm{font-size:9.6px;color:#3f7a52;margin-top:5px;line-height:1.4}
+  .cust .ct{font-size:16px;font-weight:700;letter-spacing:.04em;color:#1E7A3C}
+  .cust .cm{font-size:9.2px;color:#3f7a52;margin-top:4px;line-height:1.4}
 
-  .forklab{position:absolute;font-size:11.5px;font-weight:700;letter-spacing:.05em;color:#3f47a8}
-  .joinlab{position:absolute;font-size:9.6px;font-weight:600;color:#8a8d94}
-  .wlab{position:absolute;font-size:9.6px;font-weight:700;letter-spacing:.04em;background:#fff;padding:0 6px}
-  .wlab.a{color:#8a5a0e}
-  .wlab.i{color:#3f47a8}
+  .forklab{position:absolute;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#3f47a8;
+    writing-mode:vertical-rl;text-orientation:mixed}
+  .grouplab{position:absolute;font-size:9.4px;font-weight:600;color:#8a8d94;
+    writing-mode:vertical-rl;text-orientation:mixed}
 
   .foot{position:absolute;left:40px;right:40px;top:1046px;font-size:9.2px;color:#9a9da3;
     border-top:1px solid #ececef;padding-top:9px;display:flex;justify-content:space-between}
@@ -65,7 +70,7 @@
 <div class="sheet"><div class="page">
 
   <h1>Alur Bisnis</h1>
-  <div class="sub">PT Selaras Lawang Sewu · <b>order masuk sampai barang diterima customer</b> · setelah SSA, enam sektor bekerja serentak</div>
+  <div class="sub">PT Selaras Lawang Sewu · <b>order masuk sampai barang diterima customer</b> · dari SSA langsung bercabang, enam sektor bekerja serentak</div>
   <div class="legend">
     <span><span class="sw" style="background:#5058C4"></span>alur utama</span>
     <span><span class="sw" style="background:#B87C14"></span>jalur material kurang</span>
@@ -76,178 +81,158 @@
     <defs>
       <marker id="ai" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
         <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#5058C4"/></marker>
-      <marker id="aa" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
-        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#B87C14"/></marker>
       <marker id="ag" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
         <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#1E7A3C"/></marker>
     </defs>
 
     <g fill="none" stroke="#5058C4" stroke-width="2">
-      <!-- baris atas 1 ke 3 -->
-      <path d="M513 196 H 553" marker-end="url(#ai)"/>
-      <path d="M1030 196 H 1070" marker-end="url(#ai)"/>
-      <!-- SSA masuk ke palang percabangan -->
-      <path d="M1310 289 V 316" marker-end="url(#ai)"/>
-      <!-- enam cabang keluar serentak -->
-      <path d="M158 330 V 356" marker-end="url(#ai)"/>
-      <path d="M412 330 V 356" marker-end="url(#ai)"/>
-      <path d="M666 330 V 356" marker-end="url(#ai)"/>
-      <path d="M920 330 V 356" marker-end="url(#ai)"/>
-      <path d="M1174 330 V 356" marker-end="url(#ai)"/>
-      <path d="M1428 330 V 356" marker-end="url(#ai)"/>
-      <!-- tiga jalur barang bertemu di palang gabung kiri -->
-      <path d="M158 586 V 744"/>
-      <path d="M666 586 V 744"/>
-      <path d="M412 586 V 602 H 545 V 744"/>
-      <path d="M220 754 V 790" marker-end="url(#ai)"/>
-      <!-- tiga jalur pendamping bertemu di palang gabung kanan -->
-      <path d="M920 586 V 744"/>
-      <path d="M1174 586 V 744"/>
-      <path d="M1428 586 V 744"/>
-      <path d="M1378 754 V 790" marker-end="url(#ai)"/>
-      <!-- rantai bawah -->
-      <path d="M400 865 H 426" marker-end="url(#ai)"/>
-      <path d="M790 865 H 816" marker-end="url(#ai)"/>
+      <!-- kolom kiri: 1 turun ke 2 turun ke 3 -->
+      <path d="M185 375 V 409" marker-end="url(#ai)"/>
+      <path d="M185 590 V 624" marker-end="url(#ai)"/>
+      <!-- SSA keluar ke tulang percabangan -->
+      <path d="M330 717 H 368"/>
+      <!-- tulang percabangan tegak, enam cabang berangkat bersamaan -->
+      <path d="M370 172 V 918" stroke-width="5"/>
+      <path d="M370 172 H 424" marker-end="url(#ai)"/>
+      <path d="M370 321 H 424" marker-end="url(#ai)"/>
+      <path d="M370 470 H 424" marker-end="url(#ai)"/>
+      <path d="M370 619 H 424" marker-end="url(#ai)"/>
+      <path d="M370 768 H 424" marker-end="url(#ai)"/>
+      <path d="M370 917 H 424" marker-end="url(#ai)"/>
+      <!-- tiga jalur barang bergabung -->
+      <path d="M1130 172 H 1168"/>
+      <path d="M1130 321 H 1168"/>
+      <path d="M1130 470 H 1168"/>
+      <path d="M1170 172 V 470" stroke-width="5"/>
+      <path d="M1170 285 H 1226" marker-end="url(#ai)"/>
+      <!-- tiga jalur pendamping bergabung -->
+      <path d="M1130 619 H 1168"/>
+      <path d="M1130 768 H 1168"/>
+      <path d="M1130 917 H 1168"/>
+      <path d="M1170 619 V 917" stroke-width="5"/>
+      <!-- kolom kanan menurun -->
+      <path d="M1388 370 V 400" marker-end="url(#ai)"/>
+      <path d="M1388 570 V 600" marker-end="url(#ai)"/>
     </g>
-
-    <g fill="none" stroke="#B87C14" stroke-width="2">
-      <!-- Purchasing ke Material In Transit lalu ke palang gabung -->
-      <path d="M412 586 V 620" marker-end="url(#aa)"/>
-      <path d="M412 720 V 744"/>
-    </g>
-
     <g fill="none" stroke="#1E7A3C" stroke-width="2">
-      <path d="M1180 865 H 1206" marker-end="url(#ag)"/>
+      <path d="M1388 770 V 800" marker-end="url(#ag)"/>
+      <path d="M1170 885 H 1226" marker-end="url(#ag)"/>
     </g>
-
-    <!-- palang percabangan dan penggabungan -->
-    <rect x="140" y="320" width="1306" height="10" rx="5" fill="#5058C4"/>
-    <rect x="140" y="744" width="526" height="10" rx="5" fill="#5058C4"/>
-    <rect x="902" y="744" width="544" height="10" rx="5" fill="#5058C4"/>
   </svg>
 
-  <!-- ================= BARIS 1 ================= -->
-  <div class="card" style="left:40px;top:104px;width:473px;height:185px">
+  <!-- ================= KOLOM KIRI · TAHAP 1 SAMPAI 3 ================= -->
+  <div class="card" style="left:40px;top:200px;width:290px;height:175px">
     <div class="hd"><span class="no">1</span><div><div class="t">Order Masuk</div><div class="m">Sales · normal 0,3 hari</div></div></div>
-    <div class="lbl">KANAL PENJUALAN</div>
-    <ul><li>Developer &nbsp;·&nbsp; B2B &nbsp;·&nbsp; Retail</li></ul>
-    <div class="lbl">KERJAAN</div>
+    <div class="lbl">KANAL: DEVELOPER · B2B · RETAIL</div>
     <ul>
-      <li>Spesifikasi &amp; penawaran, survey lapangan</li>
+      <li>Spesifikasi, penawaran, survey lapangan</li>
       <li>Kesepakatan harga dan termin bayar</li>
       <li>Terima PO customer, catat data kirim</li>
     </ul>
   </div>
 
-  <div class="card" style="left:557px;top:104px;width:473px;height:185px">
+  <div class="card" style="left:40px;top:415px;width:290px;height:175px">
     <div class="hd"><span class="no">2</span><div><div class="t">ABA · Verifikasi</div><div class="m">ABA per kanal · normal 0,5 hari</div></div></div>
     <div class="lbl">7 CEK WAJIB</div>
     <ul>
-      <li>PO sama dengan penawaran &nbsp;·&nbsp; Harga &amp; termin bayar</li>
-      <li>Riwayat pelanggan &nbsp;·&nbsp; Standar atau custom</li>
-      <li>Kebutuhan survey / gambar &nbsp;·&nbsp; Ketersediaan barang</li>
-      <li>Deadline kirim</li>
+      <li>PO sama dengan penawaran, harga, termin</li>
+      <li>Riwayat pelanggan, standar atau custom</li>
+      <li>Survey / gambar, ketersediaan, deadline</li>
     </ul>
-    <div class="back">Cek gagal, order dikembalikan ke Sales untuk revisi</div>
+    <div class="back">Cek gagal, kembali ke Sales untuk revisi</div>
   </div>
 
-  <div class="card" style="left:1074px;top:104px;width:473px;height:185px">
+  <div class="card" style="left:40px;top:630px;width:290px;height:175px">
     <div class="hd"><span class="no">3</span><div><div class="t">SSA · Proses SO</div><div class="m">Tim SSA · normal 1 hari</div></div></div>
     <div class="lbl">KERJAAN</div>
     <ul>
       <li>Klarifikasi ulang seluruh data</li>
       <li>Terbitkan SO dan registrasi N1</li>
-      <li>Konfirmasi data siap dikirim ke sektor lain</li>
-    </ul>
-    <div class="back" style="border-top-color:#c8cbe8;color:#3f47a8">Setelah konfirmasi, data dikirim SERENTAK ke enam sektor di bawah</div>
-  </div>
-
-  <div class="forklab" style="left:40px;top:296px">PERCABANGAN SERENTAK · ENAM SEKTOR BEKERJA BERSAMAAN, BUKAN BERGANTIAN</div>
-
-  <!-- ================= BARIS 2 · ENAM SEKTOR PARALEL ================= -->
-  <div class="card" style="left:40px;top:356px;width:237px;height:230px">
-    <div class="hd"><span class="no">4</span><div><div class="t">PPIC</div><div class="m">jadwal &amp; WO</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Terbitkan Work Order</li>
-      <li>Susun jadwal produksi</li>
-      <li>Susun jadwal material</li>
-      <li>Registrasi gambar N2</li>
-      <li>Kendali produksi &amp; gudang</li>
+      <li>Konfirmasi data siap dikirim</li>
     </ul>
   </div>
 
-  <div class="card" style="left:294px;top:356px;width:237px;height:230px">
-    <div class="hd"><span class="no">4</span><div><div class="t">Purchasing</div><div class="m">material</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Cek stok dan lokasi material</li>
-      <li>Alokasi material per WO</li>
-      <li>PO ke supplier bila kurang</li>
-      <li>Konfirmasi vendor &amp; jadwal</li>
-    </ul>
-    <div class="back">Material cukup langsung lanjut, kurang lewat Material In Transit</div>
+  <div class="forklab" style="left:344px;top:230px;height:420px">SEMUA BERANGKAT BERSAMAAN DARI SSA</div>
+  <div class="grouplab" style="left:1186px;top:190px;height:250px">gerbang produksi</div>
+  <div class="grouplab" style="left:1186px;top:640px;height:250px">jalan sampai order tuntas</div>
+
+  <!-- ================= ENAM JALUR PARALEL ================= -->
+  <div class="lane" style="left:430px;top:110px;width:700px;height:125px">
+    <div class="who"><span class="no">4</span><div><div class="t">PPIC</div><div class="m">jadwal &amp; WO</div></div></div>
+    <div class="body">
+      <ul>
+        <li>Terbitkan Work Order</li>
+        <li>Susun jadwal produksi</li>
+        <li>Susun jadwal material</li>
+        <li>Registrasi gambar N2</li>
+        <li>Kendali produksi</li>
+        <li>Koordinasi gudang</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="card" style="left:548px;top:356px;width:237px;height:230px">
-    <div class="hd"><span class="no">4</span><div><div class="t">N1 / N2</div><div class="m">gambar kerja</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Susun gambar kerja N1 dan N2</li>
-      <li>Proses approval gambar</li>
-      <li>Tambah kode gambar bila ada pekerjaan tambah kurang</li>
-      <li>Serahkan gambar final ke produksi</li>
-    </ul>
+  <div class="lane" style="left:430px;top:259px;width:700px;height:125px">
+    <div class="who"><span class="no">4</span><div><div class="t">Purchasing</div><div class="m">material</div></div></div>
+    <div class="body">
+      <ul>
+        <li>Cek stok dan lokasi material</li>
+        <li>Alokasi material per Work Order</li>
+        <li>PO ke supplier bila kurang</li>
+        <li>Konfirmasi vendor dan jadwal</li>
+      </ul>
+      <div class="amber">Material kurang lewat Material In Transit dulu, normal 4 hari: pantau kedatangan, QC material diterima, serah terima tercatat ke gudang</div>
+    </div>
   </div>
 
-  <div class="card" style="left:802px;top:356px;width:237px;height:230px">
-    <div class="hd"><span class="no">4</span><div><div class="t">Keuangan</div><div class="m">tagihan</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Siapkan invoice sesuai termin</li>
-      <li>Pantau status tagihan dari DP sampai pelunasan</li>
-      <li>Rekonsiliasi biaya proyek</li>
-    </ul>
+  <div class="lane" style="left:430px;top:408px;width:700px;height:125px">
+    <div class="who"><span class="no">4</span><div><div class="t">N1 / N2</div><div class="m">gambar kerja</div></div></div>
+    <div class="body">
+      <ul>
+        <li>Susun gambar kerja N1 dan N2</li>
+        <li>Proses approval gambar</li>
+        <li>Tambah kode gambar bila ada pekerjaan tambah kurang</li>
+        <li>Serahkan gambar final ke produksi</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="card" style="left:1056px;top:356px;width:237px;height:230px">
-    <div class="hd"><span class="no">4</span><div><div class="t">Project</div><div class="m">pemasangan</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Rencana implementasi proyek</li>
-      <li>Jadwal pemasangan dan teknisi</li>
-      <li>Cek kesiapan lokasi</li>
-      <li>BAST di lapangan</li>
-    </ul>
+  <div class="lane" style="left:430px;top:557px;width:700px;height:125px">
+    <div class="who"><span class="no">4</span><div><div class="t">Keuangan</div><div class="m">tagihan</div></div></div>
+    <div class="body">
+      <ul>
+        <li>Siapkan invoice sesuai termin</li>
+        <li>Pantau status tagihan dari uang muka sampai pelunasan</li>
+        <li>Rekonsiliasi biaya proyek</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="card" style="left:1310px;top:356px;width:237px;height:230px">
-    <div class="hd"><span class="no">4</span><div><div class="t">ASS</div><div class="m">purna jual</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Siapkan data garansi produk</li>
-      <li>Catat riwayat pelanggan</li>
-      <li>Siaga menerima keluhan setelah serah terima</li>
-    </ul>
+  <div class="lane" style="left:430px;top:706px;width:700px;height:125px">
+    <div class="who"><span class="no">4</span><div><div class="t">Project</div><div class="m">pemasangan</div></div></div>
+    <div class="body">
+      <ul>
+        <li>Rencana implementasi proyek</li>
+        <li>Jadwal pemasangan dan teknisi</li>
+        <li>Cek kesiapan lokasi</li>
+        <li>BAST di lapangan</li>
+      </ul>
+    </div>
   </div>
 
-  <!-- ================= MATERIAL IN TRANSIT ================= -->
-  <div class="card amber" style="left:294px;top:620px;width:237px;height:100px">
-    <div class="hd"><span class="no">5</span><div><div class="t">Material In Transit</div><div class="m">normal 4 hari</div></div></div>
-    <ul style="margin-top:7px">
-      <li>Pantau kedatangan, QC material diterima</li>
-      <li>Serah terima tercatat ke gudang</li>
-    </ul>
+  <div class="lane" style="left:430px;top:855px;width:700px;height:125px">
+    <div class="who"><span class="no">4</span><div><div class="t">ASS</div><div class="m">purna jual</div></div></div>
+    <div class="body">
+      <ul>
+        <li>Siapkan data garansi produk</li>
+        <li>Catat riwayat pelanggan</li>
+        <li>Siaga menerima keluhan setelah serah terima</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="wlab a" style="left:432px;top:596px">bila kurang</div>
-  <div class="wlab i" style="left:560px;top:596px">bila cukup</div>
-  <div class="joinlab" style="left:40px;top:762px">tiga jalur barang bertemu sebelum produksi mulai</div>
-  <div class="joinlab" style="left:902px;top:762px">tiga jalur pendamping berjalan sampai order tuntas</div>
-
-  <!-- ================= BARIS BAWAH ================= -->
-  <div class="card green" style="left:40px;top:790px;width:360px;height:150px">
-    <div class="hd"><span class="no">6</span><div><div class="t">Produksi Terima Data</div><div class="m">PPIC ke Produksi · normal 0,3 hari</div></div></div>
+  <!-- ================= KOLOM KANAN · HILIR ================= -->
+  <div class="card green" style="left:1230px;top:200px;width:317px;height:170px">
+    <div class="hd"><span class="no">5</span><div><div class="t">Produksi Terima Data</div><div class="m">normal 0,3 hari</div></div></div>
     <div class="lbl">CHECKLIST FINAL</div>
     <ul>
       <li>Gambar final dan material siap</li>
@@ -256,18 +241,18 @@
     </ul>
   </div>
 
-  <div class="card" style="left:430px;top:790px;width:360px;height:150px">
-    <div class="hd"><span class="no">7</span><div><div class="t">Produksi &amp; QC</div><div class="m">Produksi · normal 14 hari</div></div></div>
+  <div class="card" style="left:1230px;top:400px;width:317px;height:170px">
+    <div class="hd"><span class="no">6</span><div><div class="t">Produksi &amp; QC</div><div class="m">normal 14 hari</div></div></div>
     <div class="lbl">KERJAAN</div>
     <ul>
       <li>Jalankan SPK produksi</li>
       <li>Checklist QC hasil produksi</li>
-      <li>Catat waste &amp; barang setengah jadi</li>
+      <li>Catat waste dan barang setengah jadi</li>
     </ul>
   </div>
 
-  <div class="card" style="left:820px;top:790px;width:360px;height:150px">
-    <div class="hd"><span class="no">8</span><div><div class="t">Gudang FG &amp; Kirim</div><div class="m">Gudang · normal 3 hari</div></div></div>
+  <div class="card" style="left:1230px;top:600px;width:317px;height:170px">
+    <div class="hd"><span class="no">7</span><div><div class="t">Gudang FG &amp; Kirim</div><div class="m">normal 3 hari</div></div></div>
     <div class="lbl">KERJAAN</div>
     <ul>
       <li>QC barang jadi sebelum muat</li>
@@ -276,14 +261,14 @@
     </ul>
   </div>
 
-  <div class="cust" style="left:1210px;top:790px;width:337px;height:150px">
+  <div class="cust" style="left:1230px;top:800px;width:317px;height:170px">
     <div class="ct">CUSTOMER</div>
     <div class="cm">barang diterima<br>dokumen final · terbayar lunas</div>
   </div>
 
   <div class="foot">
     <span><b>PT Selaras Lawang Sewu</b> · peta alur bisnis</span>
-    <span>Tahap 4 berjalan serentak, bukan berurutan</span>
+    <span>Enam jalur tahap 4 berjalan serentak, bukan berurutan</span>
   </div>
 
 </div></div>
