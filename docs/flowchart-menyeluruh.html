@@ -10,54 +10,71 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:#fff}
   body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .page{width:1123px;height:794px;position:relative;background:#fff;overflow:hidden}
+  .page{width:1123px;height:794px;position:relative;background:#fff;overflow:hidden;page-break-after:always}
+  .page:last-child{page-break-after:auto}
 
-  h1{position:absolute;left:40px;top:30px;font-size:23px;font-weight:700;letter-spacing:-.024em}
-  .sub{position:absolute;left:40px;top:62px;font-size:10.5px;color:#5b5e66}
+  h1{position:absolute;left:40px;top:32px;font-size:23px;font-weight:700;letter-spacing:-.024em}
+  .sub{position:absolute;left:40px;top:64px;font-size:10.5px;color:#5b5e66}
   .sub b{color:#191b21;font-weight:600}
+  .pgn{position:absolute;right:40px;top:36px;font-size:9.6px;font-weight:600;color:#a8aab0;letter-spacing:.06em}
 
   svg.wires{position:absolute;left:0;top:0;width:1123px;height:794px;pointer-events:none}
 
-  .card{position:absolute;border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:11px 14px}
-  .hd{display:flex;align-items:flex-start;gap:9px}
-  .no{flex:0 0 auto;width:23px;height:23px;border-radius:7px;background:#5058C4;color:#fff;
-    font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
-  .t{font-size:13.5px;font-weight:600;letter-spacing:-.012em;line-height:1.2}
-  .m{font-size:9.4px;color:#8a8d94;margin-top:3px}
+  .card{position:absolute;border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:12px 15px}
+  .card.rule{border:1.5px dashed #B87C14;background:#FDFAF3}
+  .card.green{border-color:#1E7A3C;background:#F5FAF6}
 
-  .lbl{font-size:8.2px;font-weight:700;letter-spacing:.13em;color:#9a9da3;margin:10px 0 5px}
+  .hd{display:flex;align-items:flex-start;gap:10px}
+  .no{flex:0 0 auto;width:24px;height:24px;border-radius:7px;background:#5058C4;color:#fff;
+    font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .green .no{background:#1E7A3C}
+  .t{font-size:14px;font-weight:600;letter-spacing:-.012em;line-height:1.2}
+  .m{font-size:9.6px;color:#8a8d94;margin-top:3px}
+
+  .lbl{font-size:8.4px;font-weight:700;letter-spacing:.13em;color:#9a9da3;margin:11px 0 6px}
   ul{list-style:none}
-  li{font-size:9.8px;color:#33363d;line-height:1.5;padding-left:13px;position:relative;margin-top:1px}
-  li::before{content:'';position:absolute;left:0;top:5.2px;width:6px;height:6px;border-radius:50%;
+  li{font-size:10.2px;color:#33363d;line-height:1.55;padding-left:14px;position:relative;margin-top:2px}
+  li::before{content:'';position:absolute;left:0;top:5.6px;width:6px;height:6px;border-radius:50%;
     border:1.2px solid #5058C4;background:#fff}
-  .back{margin-top:8px;padding-top:7px;border-top:1px dashed #e3d6bb;font-size:9px;color:#8a5a0e;line-height:1.4}
+  .rule li::before{border-color:#c99a3a}
+  .green li::before{border-color:#1E7A3C}
+  li b{font-weight:600;color:#191b21}
+  .rule .rt{font-size:9.4px;font-weight:700;color:#8a5a0e;letter-spacing:.03em;margin-bottom:5px}
 
-  /* ---------- jalur paralel tahap 4 ---------- */
-  .lane{position:absolute;display:flex;align-items:center;gap:14px;
-    border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:0 16px}
-  .lane .who{flex:0 0 auto;display:flex;align-items:center;gap:9px}
-  .lane .t{font-size:14px}
-  .lane .m{margin-top:2px}
-  .lane .hold{flex:1;border-left:1px solid #ececef;padding-left:16px;margin-left:2px;
-    font-size:9.6px;color:#b0b3ba;letter-spacing:.02em}
+  /* jalur paralel satu baris */
+  .lane{position:absolute;display:flex;align-items:center;gap:16px;
+    border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:0 18px}
+  .lane .who{flex:0 0 168px;display:flex;align-items:center;gap:10px}
+  .lane .t{font-size:13.5px}
+  .lane .job{flex:1;font-size:10.2px;color:#4a4d54;line-height:1.45;
+    border-left:1px solid #ececef;padding-left:18px}
 
   .forklab{position:absolute;font-size:10px;font-weight:700;letter-spacing:.05em;color:#3f47a8;
     writing-mode:vertical-rl;text-orientation:mixed}
 
-  .next{position:absolute;border:1.5px dashed #d2d4da;border-radius:12px;background:#FBFBFC;
-    padding:11px 15px;font-size:9.6px;color:#8a8d94;line-height:1.5}
-  .next b{color:#5b5e66;font-weight:600}
+  /* halaman 2 dan 3 */
+  .seg{position:absolute;border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:13px 16px}
+  .seg .st{font-size:13.5px;font-weight:600;letter-spacing:-.012em}
+  .seg .sm{font-size:9.4px;color:#8a8d94;margin-top:3px}
 
-  .foot{position:absolute;left:40px;right:40px;top:736px;font-size:9px;color:#a8aab0;
+  .dest{position:absolute;border:1.6px solid #5058C4;border-radius:11px;background:#fff;padding:10px 12px}
+  .dest .dn{font-size:12px;font-weight:700;letter-spacing:-.01em}
+  .dest .dx{font-size:9.4px;color:#4a4d54;line-height:1.45;margin-top:6px}
+
+  .fanlab{position:absolute;font-size:10px;font-weight:700;letter-spacing:.05em;color:#3f47a8}
+
+  .foot{position:absolute;left:40px;right:40px;top:742px;font-size:9px;color:#a8aab0;
     border-top:1px solid #ececef;padding-top:9px;display:flex;justify-content:space-between}
   .foot b{color:#5b5e66;font-weight:600}
 </style>
 </head>
 <body>
-<div class="page">
 
+<!-- ==================== HALAMAN 1 · PETA ALUR ==================== -->
+<div class="page">
   <h1>Alur Bisnis · Tahap 1 sampai 4</h1>
-  <div class="sub">PT Selaras Lawang Sewu · <b>dari SSA langsung bercabang, enam sektor bekerja serentak</b> · rincian kerjaan tahap 4 dan tahap berikutnya menyusul</div>
+  <div class="sub">PT Selaras Lawang Sewu · <b>dari SSA langsung bercabang, tujuh sektor bekerja serentak</b></div>
+  <div class="pgn">HALAMAN 1 DARI 3</div>
 
   <svg class="wires" viewBox="0 0 1123 794">
     <defs>
@@ -65,93 +82,257 @@
         <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#5058C4"/></marker>
     </defs>
     <g fill="none" stroke="#5058C4" stroke-width="2">
-      <!-- kolom kiri menurun -->
-      <path d="M205 290 V 311" marker-end="url(#ai)"/>
-      <path d="M205 495 V 516" marker-end="url(#ai)"/>
-      <!-- SSA keluar ke tulang percabangan -->
-      <path d="M370 610 H 418"/>
-      <!-- tulang percabangan tegak -->
-      <path d="M420 152 V 647" stroke-width="5"/>
-      <!-- enam cabang berangkat bersamaan -->
-      <path d="M420 152 H 464" marker-end="url(#ai)"/>
-      <path d="M420 251 H 464" marker-end="url(#ai)"/>
-      <path d="M420 350 H 464" marker-end="url(#ai)"/>
-      <path d="M420 449 H 464" marker-end="url(#ai)"/>
-      <path d="M420 548 H 464" marker-end="url(#ai)"/>
-      <path d="M420 647 H 464" marker-end="url(#ai)"/>
+      <path d="M205 300 V 322" marker-end="url(#ai)"/>
+      <path d="M205 462 V 484" marker-end="url(#ai)"/>
+      <path d="M370 570 H 418"/>
+      <path d="M420 172 V 668" stroke-width="5"/>
+      <path d="M420 172 H 464" marker-end="url(#ai)"/>
+      <path d="M420 255 H 464" marker-end="url(#ai)"/>
+      <path d="M420 338 H 464" marker-end="url(#ai)"/>
+      <path d="M420 420 H 464" marker-end="url(#ai)"/>
+      <path d="M420 503 H 464" marker-end="url(#ai)"/>
+      <path d="M420 586 H 464" marker-end="url(#ai)"/>
+      <path d="M420 668 H 464" marker-end="url(#ai)"/>
     </g>
   </svg>
 
-  <!-- ================= KOLOM KIRI · TAHAP 1 SAMPAI 3 ================= -->
-  <div class="card" style="left:40px;top:110px;width:330px;height:180px">
+  <div class="card" style="left:40px;top:140px;width:330px;height:160px">
     <div class="hd"><span class="no">1</span><div><div class="t">Order Masuk</div><div class="m">Sales · normal 0,3 hari</div></div></div>
-    <div class="lbl">KANAL: DEVELOPER · B2B · RETAIL</div>
+    <div class="lbl">DEVELOPER · B2B · RETAIL</div>
     <ul>
-      <li>Spesifikasi, penawaran, survey lapangan</li>
-      <li>Kesepakatan harga dan termin bayar</li>
+      <li>Penawaran dan PO sesuai kesepakatan</li>
       <li>Terima PO customer, catat data kirim</li>
     </ul>
   </div>
 
-  <div class="card" style="left:40px;top:315px;width:330px;height:180px">
-    <div class="hd"><span class="no">2</span><div><div class="t">ABA · Verifikasi</div><div class="m">ABA per kanal · normal 0,5 hari</div></div></div>
-    <div class="lbl">7 CEK WAJIB</div>
-    <ul>
-      <li>PO sama dengan penawaran, harga, termin</li>
-      <li>Riwayat pelanggan, standar atau custom</li>
-      <li>Survey / gambar, ketersediaan, deadline</li>
-    </ul>
-    <div class="back">Cek gagal, kembali ke Sales untuk revisi</div>
-  </div>
-
-  <div class="card" style="left:40px;top:520px;width:330px;height:180px">
-    <div class="hd"><span class="no">3</span><div><div class="t">SSA · Proses SO</div><div class="m">Tim SSA · normal 1 hari</div></div></div>
-    <div class="lbl">KERJAAN</div>
-    <ul>
-      <li>Klarifikasi ulang seluruh data</li>
-      <li>Terbitkan SO dan registrasi N1</li>
-      <li>Konfirmasi data siap dikirim ke enam sektor</li>
+  <div class="card" style="left:40px;top:322px;width:330px;height:140px">
+    <div class="hd"><span class="no">2</span><div><div class="t">ABA · Verifikasi</div><div class="m">ABA per segmen · normal 0,5 hari</div></div></div>
+    <ul style="margin-top:9px">
+      <li>Cross check pesanan sebelum ke SSA</li>
+      <li>Hanya dokumen final yang diteruskan</li>
     </ul>
   </div>
 
-  <div class="forklab" style="left:392px;top:210px;height:330px">SEMUA BERANGKAT BERSAMAAN DARI SSA</div>
-
-  <!-- ================= TAHAP 4 · ENAM JALUR PARALEL ================= -->
-  <div class="lane" style="left:470px;top:110px;width:613px;height:84px">
-    <div class="who"><span class="no">4</span><div><div class="t">PPIC</div><div class="m">jadwal &amp; work order</div></div></div>
-    <div class="hold">rincian kerjaan menyusul</div>
+  <div class="card" style="left:40px;top:484px;width:330px;height:172px">
+    <div class="hd"><span class="no">3</span><div><div class="t">SSA · Proses SO</div><div class="m">Sales Support Administration · normal 1 hari</div></div></div>
+    <ul style="margin-top:9px">
+      <li>Cross check penawaran, PO, dan cara pemenuhan</li>
+      <li>Cek timeline terhadap PDD</li>
+      <li>Terbitkan SO</li>
+    </ul>
   </div>
 
-  <div class="lane" style="left:470px;top:209px;width:613px;height:84px">
-    <div class="who"><span class="no">4</span><div><div class="t">Purchasing</div><div class="m">material</div></div></div>
-    <div class="hold">rincian kerjaan menyusul</div>
-  </div>
+  <div class="forklab" style="left:392px;top:250px;height:330px">SEMUA BERANGKAT BERSAMAAN DARI SSA</div>
 
-  <div class="lane" style="left:470px;top:308px;width:613px;height:84px">
-    <div class="who"><span class="no">4</span><div><div class="t">N1 / N2</div><div class="m">gambar kerja</div></div></div>
-    <div class="hold">rincian kerjaan menyusul</div>
+  <div class="lane" style="left:470px;top:140px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">PPIC</div></div>
+    <div class="job">Proses WO dan RAB internal, lalu teruskan ke N2</div>
   </div>
-
-  <div class="lane" style="left:470px;top:407px;width:613px;height:84px">
-    <div class="who"><span class="no">4</span><div><div class="t">Keuangan</div><div class="m">tagihan</div></div></div>
-    <div class="hold">rincian kerjaan menyusul</div>
+  <div class="lane" style="left:470px;top:223px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">Purchasing</div></div>
+    <div class="job">Cek stok dan atur jadwal kedatangan material</div>
   </div>
-
-  <div class="lane" style="left:470px;top:506px;width:613px;height:84px">
-    <div class="who"><span class="no">4</span><div><div class="t">Project</div><div class="m">pemasangan</div></div></div>
-    <div class="hold">rincian kerjaan menyusul</div>
+  <div class="lane" style="left:470px;top:306px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">N1 / N2</div></div>
+    <div class="job">N1 memproses request gambar, N2 memvalidasi jadwal</div>
   </div>
-
-  <div class="lane" style="left:470px;top:605px;width:613px;height:84px">
-    <div class="who"><span class="no">4</span><div><div class="t">ASS</div><div class="m">purna jual</div></div></div>
-    <div class="hold">rincian kerjaan menyusul</div>
+  <div class="lane" style="left:470px;top:388px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">Keuangan</div></div>
+    <div class="job">Siapkan proses invoicing dan kelengkapan syaratnya</div>
+  </div>
+  <div class="lane" style="left:470px;top:471px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">Project</div></div>
+    <div class="job">Pasang baru atau survey lokasi</div>
+  </div>
+  <div class="lane" style="left:470px;top:554px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">ASS</div></div>
+    <div class="job">Survey tertentu atau catatan garansi</div>
+  </div>
+  <div class="lane" style="left:470px;top:636px;width:613px;height:64px">
+    <div class="who"><span class="no">4</span><div class="t">Gudang</div></div>
+    <div class="job">Koordinasi pengiriman dari stok atau jadwal produksi</div>
   </div>
 
   <div class="foot">
     <span><b>PT Selaras Lawang Sewu</b> · peta alur bisnis, tahap 1 sampai 4</span>
-    <span>Enam jalur tahap 4 berjalan serentak, bukan berurutan</span>
+    <span>Rincian ABA di halaman 2, rincian SSA di halaman 3</span>
+  </div>
+</div>
+
+<!-- ==================== HALAMAN 2 · FRONT OFFICE ==================== -->
+<div class="page">
+  <h1>Tahap 2 · ABA</h1>
+  <div class="sub">Departemen Penjualan, front office · <b>Sales Person dan Admin Business Analyst</b></div>
+  <div class="pgn">HALAMAN 2 DARI 3</div>
+
+  <div class="seg" style="left:40px;top:112px;width:1043px;height:128px">
+    <div class="st">Project Controller</div>
+    <div class="sm">kepala manajemen proyek, dibantu asisten · membawahi ABA area 01, 02, dan 03</div>
+    <ul style="margin-top:9px">
+      <li>Konfirmasi pesanan sebelum diproses ke SSA</li>
+      <li>Ringkas dokumen kontrak jadi form checklist, dipakai tiap PIC sebagai acuan monitoring dan evaluasi</li>
+      <li>Negosiasi addendum dan surat menyurat khusus. Surat bisa terbit dari Tim Project, Tim Keuangan, atau Tim Penjualan</li>
+    </ul>
   </div>
 
+  <div class="seg" style="left:40px;top:262px;width:512px;height:172px">
+    <div class="st">ABA Retail · Modern Outlet</div>
+    <div class="sm">jalur toko</div>
+    <ul style="margin-top:9px">
+      <li>Tabel monitoring outlet toko</li>
+      <li>Pantau PDD, cara kirim, dan cara tagih bila ada kondisi khusus</li>
+      <li>Proses jalan sesudah semua cross checking disetujui</li>
+    </ul>
+  </div>
+
+  <div class="seg" style="left:571px;top:262px;width:512px;height:172px">
+    <div class="st">ABA B2B, ASS, Applicator</div>
+    <div class="sm">jalur mitra usaha</div>
+    <ul style="margin-top:9px">
+      <li>Tabel kendali informasi untuk membaca pola pembelian</li>
+      <li>Analisa persediaan berdasarkan pola tersebut</li>
+      <li>Cross check ketentuan pesanan, monitoring, dan request persediaan</li>
+    </ul>
+  </div>
+
+  <div class="seg" style="left:40px;top:456px;width:512px;height:172px">
+    <div class="st">ABA Developer, Applicator / Sub Kon</div>
+    <div class="sm">jalur proyek pengembang</div>
+    <ul style="margin-top:9px">
+      <li>Tabel checklist pekerjaan per developer</li>
+      <li>Rencanakan persediaan untuk pemenuhan pekerjaan</li>
+      <li>Cross check ketentuan pesanan lalu monitoring dan kontrol</li>
+    </ul>
+  </div>
+
+  <div class="seg" style="left:571px;top:456px;width:512px;height:172px">
+    <div class="st">Pesanan Lainnya</div>
+    <div class="sm">di luar empat bisnis model di atas</div>
+    <ul style="margin-top:9px">
+      <li>Pelajari dan analisa pesanan sebelum diproses</li>
+      <li>Teruskan ke SSA hanya bila seluruh detail sudah benar</li>
+      <li>Monitoring dan kontrol berdasarkan update dari SSA</li>
+    </ul>
+  </div>
+
+  <div class="card rule" style="left:40px;top:650px;width:1043px;height:76px">
+    <div class="rt">ATURAN PENYERAHAN KE SSA</div>
+    <ul>
+      <li>Hanya <b>dokumen final</b> yang boleh masuk ke SSA. Dokumen yang masih dalam proses koreksi tidak disubmit.</li>
+      <li>Perubahan spek, penyesuaian gambar, atau pekerjaan tambah kurang dikerjakan Sales dan Business Analyst bersama N1 atau Estimator. Sesudah disetujui, dokumennya baru diproses lewat SSA.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · rincian tahap 2, ABA</span>
+    <span>Sumber: Manajemen Proses ABA ke SSA, 10 Agustus 2026</span>
+  </div>
 </div>
+
+<!-- ==================== HALAMAN 3 · BACK OFFICE ==================== -->
+<div class="page">
+  <h1>Tahap 3 · SSA</h1>
+  <div class="sub">Departemen Penjualan dan Operasional, back office · <b>Sales Support Administration</b></div>
+  <div class="pgn">HALAMAN 3 DARI 3</div>
+
+  <svg class="wires" viewBox="0 0 1123 794">
+    <defs>
+      <marker id="ai2" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#5058C4"/></marker>
+    </defs>
+    <g fill="none" stroke="#5058C4" stroke-width="2">
+      <path d="M281 218 H 313" marker-end="url(#ai2)"/>
+      <path d="M550 218 H 582" marker-end="url(#ai2)"/>
+      <path d="M819 218 H 851" marker-end="url(#ai2)"/>
+      <path d="M965 326 V 356"/>
+    </g>
+    <rect x="40" y="366" width="1043" height="10" rx="5" fill="#5058C4"/>
+    <g fill="none" stroke="#5058C4" stroke-width="2">
+      <path d="M112 376 V 400" marker-end="url(#ai2)"/>
+      <path d="M262 376 V 400" marker-end="url(#ai2)"/>
+      <path d="M412 376 V 400" marker-end="url(#ai2)"/>
+      <path d="M561 376 V 400" marker-end="url(#ai2)"/>
+      <path d="M711 376 V 400" marker-end="url(#ai2)"/>
+      <path d="M861 376 V 400" marker-end="url(#ai2)"/>
+      <path d="M1011 376 V 400" marker-end="url(#ai2)"/>
+    </g>
+  </svg>
+
+  <div class="card" style="left:40px;top:112px;width:241px;height:214px">
+    <div class="hd"><span class="no">1</span><div><div class="t">Cross check<br>penawaran &amp; PO</div></div></div>
+    <ul style="margin-top:9px">
+      <li>Spesifikasi, gambar, dan BoQ</li>
+      <li>Harga dan termin pembayaran</li>
+      <li>Perhatikan checklist customer baru</li>
+      <li>Belum jelas, koordinasi dulu ke Sales atau Business Analyst</li>
+    </ul>
+  </div>
+
+  <div class="card" style="left:309px;top:112px;width:241px;height:214px">
+    <div class="hd"><span class="no">2</span><div><div class="t">Cross check<br>detail pekerjaan</div></div></div>
+    <ul style="margin-top:9px">
+      <li>Ambil dari stok tersedia</li>
+      <li>Indent, tunggu jadwal kedatangan dari Purchasing dan Gudang</li>
+      <li>Fabrikasi penuh dari awal</li>
+      <li>Dirakit atas perintah PPIC</li>
+    </ul>
+  </div>
+
+  <div class="card" style="left:578px;top:112px;width:241px;height:214px">
+    <div class="hd"><span class="no">3</span><div><div class="t">Cek timeline<br>terhadap PDD</div></div></div>
+    <ul style="margin-top:9px">
+      <li>Barang tersedia, kirim dijadwalkan sesuai rute</li>
+      <li>Barang produksi, timeline dimonitor</li>
+      <li>Berpotensi menyimpang, dikonfirmasi PPIC lalu kembali ke ABA</li>
+    </ul>
+  </div>
+
+  <div class="card green" style="left:847px;top:112px;width:236px;height:214px">
+    <div class="hd"><span class="no">4</span><div><div class="t">Terbitkan SO</div></div></div>
+    <ul style="margin-top:9px">
+      <li>SSA hanya memproses pekerjaan <b>final</b>, tanpa koreksi</li>
+      <li>SO jadi dasar kerja tujuh sektor sekaligus</li>
+    </ul>
+  </div>
+
+  <div class="fanlab" style="left:40px;top:344px">SO MENYEBAR SERENTAK</div>
+
+  <div class="dest" style="left:40px;top:400px;width:143px;height:112px">
+    <div class="dn">PPIC</div><div class="dx">Proses WO dan RAB internal, teruskan ke N2</div>
+  </div>
+  <div class="dest" style="left:190px;top:400px;width:143px;height:112px">
+    <div class="dn">Purchasing</div><div class="dx">Cek stok, atur jadwal kedatangan material</div>
+  </div>
+  <div class="dest" style="left:340px;top:400px;width:143px;height:112px">
+    <div class="dn">N1 / N2</div><div class="dx">N1 request gambar, N2 validasi jadwal</div>
+  </div>
+  <div class="dest" style="left:490px;top:400px;width:143px;height:112px">
+    <div class="dn">Keuangan</div><div class="dx">Siapkan invoicing, cek dokumen, tanggal submit, termin bayar</div>
+  </div>
+  <div class="dest" style="left:640px;top:400px;width:143px;height:112px">
+    <div class="dn">Project</div><div class="dx">Pasang baru atau survey lokasi</div>
+  </div>
+  <div class="dest" style="left:790px;top:400px;width:143px;height:112px">
+    <div class="dn">ASS</div><div class="dx">Survey tertentu atau catatan garansi</div>
+  </div>
+  <div class="dest" style="left:940px;top:400px;width:143px;height:112px">
+    <div class="dn">Gudang</div><div class="dx">Koordinasi pengiriman dari stok atau jadwal produksi</div>
+  </div>
+
+  <div class="card rule" style="left:40px;top:544px;width:1043px;height:100px">
+    <div class="rt">CATATAN PENTING DARI SSA</div>
+    <ul>
+      <li>Gudang dimonitor bersama <b>PPIC, Keuangan, dan tim implementasi proyek</b> untuk jadwal pemenuhan persediaan.</li>
+      <li>Pekerjaan pasang sendiri, koordinasi dengan tim proyek harus efektif. Pesanan tanpa pasang, serah terima barang ke siapa dipastikan sejak awal bersama Sales atau ABA.</li>
+      <li>Customer pasang sendiri (retail, perorangan, non proyek), detail ketentuan kirim wajib lengkap supaya tidak ada barang tercecer.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · rincian tahap 3, SSA</span>
+    <span>Sumber: Manajemen Proses ABA ke SSA, 10 Agustus 2026</span>
+  </div>
+</div>
+
 </body>
 </html>
