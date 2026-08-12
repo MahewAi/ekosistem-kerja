@@ -95,21 +95,20 @@
     <g fill="none" stroke="#5058C4" stroke-width="2">
       <!-- ABA ke SSA -->
       <path d="M770 235 H 806" marker-end="url(#ai)"/>
-      <!-- SSA turun ke jalur sebar -->
-      <path d="M1178 360 V 402"/>
-      <!-- bus sebar paralel -->
-      <path d="M158 402 H 1428"/>
-      <!-- enam turunan -->
-      <path d="M158 402 V 424" marker-end="url(#ai)"/>
-      <path d="M412 402 V 424" marker-end="url(#ai)"/>
-      <path d="M666 402 V 424" marker-end="url(#ai)"/>
-      <path d="M920 402 V 424" marker-end="url(#ai)"/>
-      <path d="M1174 402 V 424" marker-end="url(#ai)"/>
-      <path d="M1428 402 V 424" marker-end="url(#ai)"/>
+      <!-- SSA turun ke palang percabangan -->
+      <path d="M1178 360 V 396" marker-end="url(#ai)"/>
+      <!-- enam cabang serentak, semua berangkat dari palang yang sama -->
+      <path d="M158 414 V 436" marker-end="url(#ai)"/>
+      <path d="M412 414 V 436" marker-end="url(#ai)"/>
+      <path d="M666 414 V 436" marker-end="url(#ai)"/>
+      <path d="M920 414 V 436" marker-end="url(#ai)"/>
+      <path d="M1174 414 V 436" marker-end="url(#ai)"/>
+      <path d="M1428 414 V 436" marker-end="url(#ai)"/>
       <!-- PPIC ke Produksi dan Gudang -->
       <path d="M158 686 V 700 H 220 V 716" marker-end="url(#ai)"/>
       <path d="M158 700 H 610 V 716" marker-end="url(#ai)"/>
     </g>
+    <rect x="140" y="404" width="1306" height="10" rx="5" fill="#5058C4"/>
     <g fill="none" stroke="#1E7A3C" stroke-width="2">
       <!-- semua bermuara ke dashboard -->
       <path d="M220 866 V 894" marker-end="url(#ag)"/>
@@ -145,10 +144,10 @@
     </ul>
   </div>
 
-  <div class="par" style="left:562px;top:392px">3 · DISEBAR SERENTAK KE ENAM TUJUAN</div>
+  <div class="par" style="left:40px;top:372px">3 · PERCABANGAN SERENTAK · ENAM SEKTOR BEKERJA BERSAMAAN, BUKAN BERGANTIAN</div>
 
   <!-- ================= TAHAP 3 · SEBARAN PARALEL ================= -->
-  <div class="card" style="left:40px;top:424px;width:237px;height:262px">
+  <div class="card" style="left:40px;top:436px;width:237px;height:250px">
     <div class="hd"><span class="no">3</span><div><div class="t">PPIC</div><div class="m">2 data</div></div></div>
     <div class="lbl">DATA YANG DIBUAT</div>
     <ul>
@@ -159,12 +158,12 @@
     <ul><li>Registrasi N1, Status Produksi, Pengiriman</li></ul>
   </div>
 
-  <div class="card soft" style="left:294px;top:424px;width:237px;height:262px">
+  <div class="card soft" style="left:294px;top:436px;width:237px;height:250px">
     <div class="hd"><span class="no">3</span><div><div class="t">Purchasing</div><div class="m">menerima data</div></div></div>
     <div class="kosong">Belum ada parameter untuk sektor ini di tabel data. Perlu dipastikan data apa yang mereka pegang dan tampilkan.</div>
   </div>
 
-  <div class="card" style="left:548px;top:424px;width:237px;height:262px">
+  <div class="card" style="left:548px;top:436px;width:237px;height:250px">
     <div class="hd"><span class="no">3</span><div><div class="t">Keuangan</div><div class="m">1 data</div></div></div>
     <div class="lbl">DATA YANG DIBUAT</div>
     <ul>
@@ -172,12 +171,12 @@
     </ul>
   </div>
 
-  <div class="card soft" style="left:802px;top:424px;width:237px;height:262px">
+  <div class="card soft" style="left:802px;top:436px;width:237px;height:250px">
     <div class="hd"><span class="no">3</span><div><div class="t">ASS</div><div class="m">menerima data</div></div></div>
     <div class="kosong">Belum ada parameter untuk sektor ini di tabel data. Perlu dipastikan data apa yang mereka pegang dan tampilkan.</div>
   </div>
 
-  <div class="card" style="left:1056px;top:424px;width:237px;height:262px">
+  <div class="card" style="left:1056px;top:436px;width:237px;height:250px">
     <div class="hd"><span class="no">3</span><div><div class="t">Project</div><div class="m">1 data</div></div></div>
     <div class="lbl">DATA YANG DIBUAT</div>
     <ul>
@@ -185,7 +184,7 @@
     </ul>
   </div>
 
-  <div class="card soft" style="left:1310px;top:424px;width:237px;height:262px">
+  <div class="card soft" style="left:1310px;top:436px;width:237px;height:250px">
     <div class="hd"><span class="no">3</span><div><div class="t">N1 / N2</div><div class="m">gambar kerja</div></div></div>
     <div class="kosong">Tidak membuat parameter baru. Hanya menambah kode gambar pada Registrasi N1 dan N2.</div>
   </div>
