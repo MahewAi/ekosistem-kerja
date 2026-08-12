@@ -60,6 +60,12 @@
     border-radius:4px;background:#EDEEFA;color:#3f47a8;border:0;
     font-size:8.4px;font-weight:700;display:flex;align-items:center;justify-content:center}
 
+  .docs{position:absolute;border:1.6px solid #5058C4;border-radius:12px;background:#fff;padding:11px 15px}
+  .docs .dt{font-size:8.4px;font-weight:700;letter-spacing:.13em;color:#9a9da3;margin-bottom:9px}
+  .docs .row{display:flex;gap:12px}
+  .docs .chip{flex:1;border:1px solid #d9dae0;border-radius:8px;padding:7px 9px;text-align:center}
+  .docs .chip .cc{font-size:12.5px;font-weight:700;color:#3f47a8;letter-spacing:.02em}
+  .docs .chip .cd{font-size:8.4px;color:#9a9da3;margin-top:2px}
   .pill{position:absolute;border:1.8px solid #5058C4;border-radius:40px;background:#F6F7FD;
     display:flex;align-items:center;justify-content:center;
     font-size:12px;font-weight:700;letter-spacing:.05em;color:#3f47a8}
@@ -163,7 +169,7 @@
 <!-- ==================== HALAMAN 2 · LIMA JALUR PO ==================== -->
 <div class="page">
   <h1>Tahap 2 · Lima Jalur PO di ABA</h1>
-  <div class="sub">Departemen Penjualan, front office · <b>lima jalur sejajar, tiap PO masuk lewat salah satunya lalu diteruskan ke SSA</b></div>
+  <div class="sub">Departemen Penjualan, front office · <b>lima jenis dokumen PO masuk lewat lima jalur sejajar, lalu diteruskan ke SSA</b></div>
   <div class="pgn">HALAMAN 2 DARI 2</div>
 
   <svg class="wires" viewBox="0 0 1123 794">
@@ -172,26 +178,38 @@
         <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#5058C4"/></marker>
     </defs>
     <g fill="none" stroke="#5058C4" stroke-width="2">
-      <path d="M559 190 V 220"/>
-      <path d="M137 220 H 981"/>
-      <path d="M137 220 V 246" marker-end="url(#ai2)"/>
-      <path d="M348 220 V 246" marker-end="url(#ai2)"/>
-      <path d="M559 220 V 246" marker-end="url(#ai2)"/>
-      <path d="M770 220 V 246" marker-end="url(#ai2)"/>
-      <path d="M981 220 V 246" marker-end="url(#ai2)"/>
-      <path d="M137 516 V 546"/>
-      <path d="M348 516 V 546"/>
-      <path d="M559 516 V 546"/>
-      <path d="M770 516 V 546"/>
-      <path d="M981 516 V 546"/>
-      <path d="M137 546 H 981"/>
-      <path d="M559 546 V 574" marker-end="url(#ai2)"/>
+      <path d="M559 154 V 176" marker-end="url(#ai2)"/>
+      <path d="M559 244 V 268"/>
+      <path d="M137 268 H 981"/>
+      <path d="M137 268 V 294" marker-end="url(#ai2)"/>
+      <path d="M348 268 V 294" marker-end="url(#ai2)"/>
+      <path d="M559 268 V 294" marker-end="url(#ai2)"/>
+      <path d="M770 268 V 294" marker-end="url(#ai2)"/>
+      <path d="M981 268 V 294" marker-end="url(#ai2)"/>
+      <path d="M137 546 V 576"/>
+      <path d="M348 546 V 576"/>
+      <path d="M559 546 V 576"/>
+      <path d="M770 546 V 576"/>
+      <path d="M981 546 V 576"/>
+      <path d="M137 576 H 981"/>
+      <path d="M559 576 V 602" marker-end="url(#ai2)"/>
     </g>
   </svg>
 
-  <div class="pill" style="left:475px;top:140px;width:168px;height:50px">PELANGGAN</div>
+  <div class="pill" style="left:475px;top:108px;width:168px;height:46px">PELANGGAN</div>
 
-  <div class="jal" style="left:40px;top:246px;width:195px;height:270px">
+  <div class="docs" style="left:40px;top:176px;width:1043px;height:68px">
+    <div class="dt">LIMA JENIS DOKUMEN PO YANG DITERIMA</div>
+    <div class="row">
+      <div class="chip"><div class="cc">SPP</div></div>
+      <div class="chip"><div class="cc">SPB</div></div>
+      <div class="chip"><div class="cc">SPK</div></div>
+      <div class="chip"><div class="cc">SI</div></div>
+      <div class="chip"><div class="cc">PO Resmi</div></div>
+    </div>
+  </div>
+
+  <div class="jal" style="left:40px;top:294px;width:195px;height:252px">
     <div class="jn">ABA Proyek</div>
     <div class="jm">dikendalikan Project Controller</div>
     <ol>
@@ -202,7 +220,7 @@
     </ol>
   </div>
 
-  <div class="jal" style="left:251px;top:246px;width:195px;height:270px">
+  <div class="jal" style="left:251px;top:294px;width:195px;height:252px">
     <div class="jn">ABA Retail<br>Jalur Toko</div>
     <div class="jm">modern dan traditional outlet</div>
     <ol>
@@ -211,7 +229,7 @@
     </ol>
   </div>
 
-  <div class="jal" style="left:462px;top:246px;width:195px;height:270px">
+  <div class="jal" style="left:462px;top:294px;width:195px;height:252px">
     <div class="jn">ABA B2B, ASS,<br>Applicator</div>
     <div class="jm">jalur mitra usaha</div>
     <ol>
@@ -222,7 +240,7 @@
     </ol>
   </div>
 
-  <div class="jal" style="left:673px;top:246px;width:195px;height:270px">
+  <div class="jal" style="left:673px;top:294px;width:195px;height:252px">
     <div class="jn">ABA Developer<br>Applicator / Subkon</div>
     <div class="jm">jalur proyek pengembang</div>
     <ol>
@@ -233,7 +251,7 @@
     </ol>
   </div>
 
-  <div class="jal" style="left:884px;top:246px;width:195px;height:270px">
+  <div class="jal" style="left:884px;top:294px;width:195px;height:252px">
     <div class="jn">Pesanan Lainnya</div>
     <div class="jm">di luar bisnis model khusus</div>
     <ol>
@@ -243,10 +261,10 @@
     </ol>
   </div>
 
-  <div class="pill" style="left:435px;top:574px;width:248px;height:52px">KE SSA</div>
+  <div class="pill" style="left:435px;top:602px;width:248px;height:52px">KE SSA</div>
 
   <div class="foot">
-    <span><b>PT Selaras Lawang Sewu</b> · rincian tahap 2, lima jalur PO di ABA</span>
+    <span><b>PT Selaras Lawang Sewu</b> · rincian tahap 2, lima jenis PO dan lima jalur di ABA</span>
     <span>Hanya dokumen final yang diteruskan ke SSA</span>
   </div>
 </div>
