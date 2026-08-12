@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Workflow ABA ke SSA · Front Office dan Back Office</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page{size:A4 landscape;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#fff}
+  body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:1123px;height:794px;position:relative;background:#fff;overflow:hidden}
+
+  h1{position:absolute;left:36px;top:24px;font-size:21px;font-weight:700;letter-spacing:-.022em}
+  .sub{position:absolute;left:36px;top:53px;font-size:9.6px;color:#5b5e66}
+  .sub b{color:#191b21;font-weight:600}
+
+  .colhd{position:absolute;font-size:9px;font-weight:700;letter-spacing:.12em;color:#9a9da3}
+  .colhd span{display:block;font-size:11.5px;font-weight:700;letter-spacing:-.01em;color:#3f47a8;margin-top:3px}
+  .divider{position:absolute;width:1px;border-left:1px dashed #dcdde2}
+
+  svg.wires{position:absolute;left:0;top:0;width:1123px;height:794px;pointer-events:none}
+
+  .card{position:absolute;border:1.5px solid #5058C4;border-radius:10px;background:#fff;padding:8px 11px}
+  .card.amber{border-color:#B87C14}
+  .card.green{border-color:#1E7A3C;background:#F5FAF6}
+  .card.rule{border:1.5px dashed #B87C14;background:#FDFAF3}
+
+  .ct{font-size:11.5px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+  .cm{font-size:8.4px;color:#8a8d94;margin-top:2px}
+  ul{list-style:none;margin-top:6px}
+  li{font-size:8.8px;color:#33363d;line-height:1.45;padding-left:11px;position:relative;margin-top:1px}
+  li::before{content:'';position:absolute;left:0;top:4.6px;width:5px;height:5px;border-radius:50%;
+    border:1.1px solid #5058C4;background:#fff}
+  .amber li::before{border-color:#B87C14}
+  .green li::before{border-color:#1E7A3C}
+  .rule li::before{border-color:#c99a3a}
+  li b{font-weight:600;color:#191b21}
+
+  /* jalur ABA ringkas */
+  .abal{position:absolute;display:flex;gap:10px;align-items:flex-start;
+    border:1.4px solid #5058C4;border-radius:9px;background:#fff;padding:7px 10px}
+  .abal .an{flex:0 0 118px;font-size:9.6px;font-weight:700;line-height:1.25;color:#26282e}
+  .abal .ax{flex:1;font-size:8.6px;color:#5b5e66;line-height:1.45;border-left:1px solid #ececef;padding-left:10px}
+
+  .rulet{font-size:9px;font-weight:700;color:#8a5a0e;letter-spacing:.02em}
+
+  .fanlab{position:absolute;font-size:9.6px;font-weight:700;letter-spacing:.05em;color:#3f47a8}
+
+  .dest{position:absolute;border:1.5px solid #5058C4;border-radius:10px;background:#fff;padding:8px 10px}
+  .dest .dn{font-size:11px;font-weight:700;letter-spacing:-.01em}
+  .dest .dx{font-size:8.4px;color:#4a4d54;line-height:1.45;margin-top:5px}
+  .dest.gud{border-color:#1E7A3C}
+  .dest.gud .dn{color:#1E7A3C}
+
+  .foot{position:absolute;left:36px;right:36px;top:742px;font-size:8.6px;color:#a8aab0;
+    border-top:1px solid #ececef;padding-top:8px;display:flex;justify-content:space-between}
+  .foot b{color:#5b5e66;font-weight:600}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Workflow ABA ke SSA</h1>
+  <div class="sub">PT Selaras Lawang Sewu · <b>front office menyerahkan, back office memeriksa lalu menerbitkan SO</b> · SO jadi dasar kerja enam sektor sekaligus</div>
+
+  <div class="colhd" style="left:36px;top:82px">DEPARTEMEN PENJUALAN · FRONT OFFICE<span>Sales Person + Admin Business Analyst</span></div>
+  <div class="colhd" style="left:580px;top:82px">DEPARTEMEN PENJUALAN &amp; OPERASIONAL · BACK OFFICE<span>Sales Support Administration</span></div>
+  <div class="divider" style="left:558px;top:78px;height:470px"></div>
+
+  <svg class="wires" viewBox="0 0 1123 794">
+    <defs>
+      <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#5058C4"/></marker>
+      <marker id="aa" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#B87C14"/></marker>
+      <marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#1E7A3C"/></marker>
+    </defs>
+    <g fill="none" stroke="#5058C4" stroke-width="1.8">
+      <!-- front office menyerahkan dokumen final ke SSA -->
+      <path d="M536 178 H 574" marker-end="url(#ai)"/>
+      <!-- rantai pemeriksaan SSA -->
+      <path d="M820 236 V 258" marker-end="url(#ai)"/>
+      <path d="M820 380 V 402" marker-end="url(#ai)"/>
+      <path d="M820 524 V 546" marker-end="url(#ai)"/>
+      <!-- SO ke palang sebar -->
+      <path d="M820 604 V 622"/>
+      <!-- enam cabang serentak -->
+      <path d="M117 640 V 662" marker-end="url(#ai)"/>
+      <path d="M291 640 V 662" marker-end="url(#ai)"/>
+      <path d="M465 640 V 662" marker-end="url(#ai)"/>
+      <path d="M639 640 V 662" marker-end="url(#ai)"/>
+      <path d="M813 640 V 662" marker-end="url(#ai)"/>
+    </g>
+    <g fill="none" stroke="#1E7A3C" stroke-width="1.8">
+      <path d="M987 640 V 662" marker-end="url(#ag)"/>
+    </g>
+    <g fill="none" stroke="#B87C14" stroke-width="1.8">
+      <!-- surat konfirmasi pesanan kembali ke front office -->
+      <path d="M574 460 H 548 V 200 H 540" marker-end="url(#aa)"/>
+    </g>
+    <rect x="36" y="630" width="1051" height="10" rx="5" fill="#5058C4"/>
+  </svg>
+
+  <!-- ================= FRONT OFFICE ================= -->
+  <div class="card" style="left:36px;top:126px;width:500px;height:104px">
+    <div class="ct">Project Controller</div>
+    <div class="cm">kepala manajemen proyek, dibantu asisten · membawahi ABA area 01, 02, dan 03</div>
+    <ul>
+      <li>Konfirmasi pesanan sebelum diproses ke SSA</li>
+      <li>Ringkas dokumen kontrak jadi form checklist untuk acuan monitoring dan evaluasi tiap PIC</li>
+      <li>Negosiasi addendum dan surat menyurat khusus, surat bisa terbit dari Tim Project, Keuangan, atau Penjualan</li>
+    </ul>
+  </div>
+
+  <div class="abal" style="left:36px;top:244px;width:500px;height:60px">
+    <div class="an">ABA Retail<br>Modern Outlet</div>
+    <div class="ax">Tabel monitoring outlet toko, PDD, cara kirim, cara tagih bila ada kondisi khusus. Proses jalan sesudah semua cross checking disetujui.</div>
+  </div>
+
+  <div class="abal" style="left:36px;top:312px;width:500px;height:60px">
+    <div class="an">ABA B2B, ASS,<br>Applicator</div>
+    <div class="ax">Tabel kendali informasi untuk membaca pola pembelian dan menganalisa persediaan. Cross checking ketentuan pesanan, monitoring dan request persediaan.</div>
+  </div>
+
+  <div class="abal" style="left:36px;top:380px;width:500px;height:60px">
+    <div class="an">ABA Developer,<br>Applicator / Sub Kon</div>
+    <div class="ax">Tabel checklist pekerjaan per developer untuk merencanakan persediaan. Cross checking ketentuan pesanan lalu monitoring dan kontrol.</div>
+  </div>
+
+  <div class="abal" style="left:36px;top:448px;width:500px;height:60px">
+    <div class="an">Pesanan Lainnya<br>di luar bisnis model</div>
+    <div class="ax">Pelajari dan analisa pesanan sebelum diproses, teruskan ke SSA hanya bila seluruh detail sudah benar, lalu monitoring berdasarkan update dari SSA.</div>
+  </div>
+
+  <div class="card rule" style="left:36px;top:522px;width:500px;height:76px">
+    <div class="rulet">ATURAN PENYERAHAN</div>
+    <ul>
+      <li>Hanya <b>dokumen final</b> yang boleh masuk ke SSA. Dokumen yang masih dalam koreksi tidak disubmit.</li>
+      <li>Perubahan spek, penyesuaian gambar, atau pekerjaan tambah kurang dikerjakan Sales dan Business Analyst bersama N1 atau Estimator. Setelah disetujui, dokumennya baru diproses lewat SSA.</li>
+    </ul>
+  </div>
+
+  <!-- ================= BACK OFFICE ================= -->
+  <div class="card" style="left:580px;top:126px;width:480px;height:110px">
+    <div class="ct">1 · Cross check penawaran dan PO</div>
+    <div class="cm">sebelum apa pun diproses</div>
+    <ul>
+      <li>Periksa spesifikasi, gambar dan BoQ, harga, serta termin pembayaran</li>
+      <li>Ada yang tidak jelas, koordinasi dulu ke Sales Person atau Business Analyst</li>
+      <li>Perhatikan checklist customer baru</li>
+    </ul>
+  </div>
+
+  <div class="card" style="left:580px;top:258px;width:480px;height:122px">
+    <div class="ct">2 · Cross check detail pekerjaan</div>
+    <div class="cm">tentukan cara pemenuhan pesanan</div>
+    <ul>
+      <li>Bisa diambil dari stok tersedia</li>
+      <li>Pembelian indent, menunggu jadwal kedatangan dari Purchasing dan Gudang</li>
+      <li>Perlu fabrikasi penuh dari awal, barang diproduksi sendiri</li>
+      <li>Barang dirakit atas perintah PPIC, prosesnya berbeda</li>
+    </ul>
+  </div>
+
+  <div class="card amber" style="left:580px;top:402px;width:480px;height:122px">
+    <div class="ct">3 · Cek timeline terhadap PDD</div>
+    <div class="cm">jaga janji tanggal ke pelanggan</div>
+    <ul>
+      <li>Barang tersedia, pengiriman langsung dijadwalkan sesuai rute</li>
+      <li>Barang produksi, timeline dimonitor selama proses</li>
+      <li>Ada potensi menyimpang, setelah dikonfirmasi PPIC dikomunikasikan balik ke ABA atau Sales lewat <b>surat konfirmasi pesanan</b></li>
+    </ul>
+  </div>
+
+  <div class="card green" style="left:580px;top:546px;width:480px;height:58px">
+    <div class="ct">4 · Terbitkan SO</div>
+    <div class="cm">SSA hanya memproses pelaksanaan pekerjaan final, tanpa koreksi</div>
+  </div>
+
+  <div class="fanlab" style="left:36px;top:612px">SO JADI DASAR KERJA ENAM SEKTOR, BERANGKAT SERENTAK</div>
+
+  <!-- ================= ENAM TUJUAN SO ================= -->
+  <div class="dest" style="left:36px;top:662px;width:162px;height:70px">
+    <div class="dn">PPIC</div>
+    <div class="dx">Proses WO, RAB internal, dan penerusan ke N2</div>
+  </div>
+  <div class="dest" style="left:210px;top:662px;width:162px;height:70px">
+    <div class="dn">Project</div>
+    <div class="dx">Pasang baru atau survey lokasi</div>
+  </div>
+  <div class="dest" style="left:384px;top:662px;width:162px;height:70px">
+    <div class="dn">ASS</div>
+    <div class="dx">Survey tertentu atau catatan garansi</div>
+  </div>
+  <div class="dest" style="left:558px;top:662px;width:162px;height:70px">
+    <div class="dn">N1 / N2</div>
+    <div class="dx">N1 memproses request gambar, N2 memvalidasi jadwal</div>
+  </div>
+  <div class="dest" style="left:732px;top:662px;width:162px;height:70px">
+    <div class="dn">Keuangan</div>
+    <div class="dx">Siapkan invoicing, cek kelengkapan dokumen, tanggal submit, termin bayar</div>
+  </div>
+  <div class="dest gud" style="left:906px;top:662px;width:181px;height:70px">
+    <div class="dn">Gudang</div>
+    <div class="dx">Koordinasi pengiriman dari stok atau jadwal produksi, monitoring bersama PPIC, Keuangan, dan tim proyek</div>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · workflow ABA ke SSA</span>
+    <span>Sumber: Manajemen Proses ABA ke SSA, 10 Agustus 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
