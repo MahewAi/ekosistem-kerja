@@ -70,6 +70,22 @@
     display:flex;align-items:center;justify-content:center;
     font-size:12px;font-weight:700;letter-spacing:.05em;color:#3f47a8}
 
+  .ans{position:absolute;border:1.6px solid #1E7A3C;border-radius:12px;background:#F5FAF6;padding:12px 16px}
+  .ans .at{font-size:9px;font-weight:700;letter-spacing:.12em;color:#1E7A3C;margin-bottom:5px}
+  .ans .ax{font-size:11px;color:#26402f;line-height:1.5}
+  .ans .ax b{font-weight:600;color:#123f22}
+  .bandlab{position:absolute;font-size:9px;font-weight:700;letter-spacing:.12em;color:#9a9da3}
+  .bandlab b{color:#3f47a8;font-weight:700}
+  .bx{position:absolute;border:1.6px solid #5058C4;border-radius:11px;background:#fff;padding:9px 13px}
+  .bx .bt{font-size:12px;font-weight:700;letter-spacing:-.01em}
+  .bx .bd{font-size:9.6px;color:#4a4d54;line-height:1.4;margin-top:3px}
+  .bx.note{border-style:dashed;border-color:#c2c4cb;background:#FBFBFC}
+  .bx.note .bt{color:#6b6e75;font-size:9px;letter-spacing:.1em}
+  .cmp{position:absolute;display:grid;grid-template-columns:186px 1fr 1fr;border:1.6px solid #5058C4;border-radius:12px;overflow:hidden}
+  .cmp>div{padding:10px 14px;border-bottom:1px solid #ececef;font-size:10px;line-height:1.45}
+  .cmp>div:nth-child(3n+1){background:#FAFAFB;font-weight:700;color:#5b5e66;font-size:9.4px;letter-spacing:.03em}
+  .cmp>div:nth-child(-n+3){background:#F6F7FD;font-weight:700;color:#3f47a8;font-size:10.5px;border-bottom:1.6px solid #d5d7ea}
+  .cmp>div:nth-last-child(-n+3){border-bottom:0}
   .foot{position:absolute;left:40px;right:40px;top:742px;font-size:9px;color:#a8aab0;
     border-top:1px solid #ececef;padding-top:9px;display:flex;justify-content:space-between}
   .foot b{color:#5b5e66;font-weight:600}
@@ -81,7 +97,7 @@
 <div class="page">
   <h1>Alur Bisnis · Tahap 1 sampai 4</h1>
   <div class="sub">PT Selaras Lawang Sewu · <b>dari SSA langsung bercabang, tujuh sektor bekerja serentak</b></div>
-  <div class="pgn">HALAMAN 1 DARI 2</div>
+  <div class="pgn">HALAMAN 1 DARI 3</div>
 
   <svg class="wires" viewBox="0 0 1123 794">
     <defs>
@@ -170,7 +186,7 @@
 <div class="page">
   <h1>Tahap 2 · Lima Jalur PO di ABA</h1>
   <div class="sub">Departemen Penjualan, front office · <b>lima jenis dokumen PO masuk lewat lima jalur sejajar, lalu diteruskan ke SSA</b></div>
-  <div class="pgn">HALAMAN 2 DARI 2</div>
+  <div class="pgn">HALAMAN 2 DARI 3</div>
 
   <svg class="wires" viewBox="0 0 1123 794">
     <defs>
@@ -266,6 +282,87 @@
   <div class="foot">
     <span><b>PT Selaras Lawang Sewu</b> · rincian tahap 2, lima jenis PO dan lima jalur di ABA</span>
     <span>Hanya dokumen final yang diteruskan ke SSA</span>
+  </div>
+</div>
+
+<!-- ==================== HALAMAN 3 · N1 DAN N2 ==================== -->
+<div class="page">
+  <h1>Kenapa N1 dan N2 Muncul Dua Kali</h1>
+  <div class="sub">Pertanyaan: PPIC meneruskan ke N2, lalu apa bedanya dengan N1/N2 yang langsung menerima SO di tahap 4</div>
+  <div class="pgn">HALAMAN 3 DARI 3</div>
+
+  <svg class="wires" viewBox="0 0 1123 794">
+    <defs>
+      <marker id="ai3" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#5058C4"/></marker>
+    </defs>
+    <g fill="none" stroke="#5058C4" stroke-width="2">
+      <path d="M172 282 H 190"/>
+      <path d="M190 244 V 320"/>
+      <path d="M190 244 H 208" marker-end="url(#ai3)"/>
+      <path d="M190 320 H 208" marker-end="url(#ai3)"/>
+      <path d="M172 470 H 208" marker-end="url(#ai3)"/>
+      <path d="M462 470 H 498" marker-end="url(#ai3)"/>
+    </g>
+  </svg>
+
+  <div class="ans" style="left:40px;top:104px;width:1043px;height:70px">
+    <div class="at">JAWABAN SINGKAT</div>
+    <div class="ax">Bukan pekerjaan yang sama diulang. N1 dan N2 disentuh dua kali karena <b>waktunya berbeda dan yang diminta berbeda</b>. Saat SO terbit, N1 diminta menyiapkan gambar dan N2 diminta memvalidasi jadwal. Sesudah WO terbit, barulah PPIC menyerahkan ke N2 untuk gambar produksi.</div>
+  </div>
+
+  <div class="bandlab" style="left:40px;top:198px">JALUR A · <b>BEGITU SO TERBIT, LANGSUNG DARI SSA</b></div>
+
+  <div class="bx" style="left:40px;top:250px;width:132px;height:64px;display:flex;align-items:center;justify-content:center">
+    <div class="bt">SO TERBIT</div>
+  </div>
+
+  <div class="bx" style="left:208px;top:216px;width:420px;height:56px">
+    <div class="bt">N1 · proses request gambar</div>
+    <div class="bd">Menyiapkan gambar untuk disepakati sebelum produksi direncanakan</div>
+  </div>
+
+  <div class="bx" style="left:208px;top:292px;width:420px;height:56px">
+    <div class="bt">N2 · validasi jadwal</div>
+    <div class="bd">Memastikan jadwal yang dijanjikan memang sanggup dipenuhi</div>
+  </div>
+
+  <div class="bx note" style="left:664px;top:216px;width:419px;height:132px">
+    <div class="bt">YANG TERCATAT DI TAHAP INI</div>
+    <div class="bd" style="margin-top:7px">Kode <b>Registrasi N1</b> didaftarkan oleh SSA. Di titik ini N2 belum membuat kode apa pun, tugasnya baru memeriksa apakah jadwal masuk akal.</div>
+  </div>
+
+  <div class="bandlab" style="left:40px;top:398px">JALUR B · <b>SESUDAH WO TERBIT, LEWAT PPIC</b></div>
+
+  <div class="bx" style="left:40px;top:438px;width:132px;height:64px;display:flex;align-items:center;justify-content:center">
+    <div class="bt">SO TERBIT</div>
+  </div>
+
+  <div class="bx" style="left:208px;top:438px;width:254px;height:64px">
+    <div class="bt">PPIC</div>
+    <div class="bd">Proses WO dan RAB internal</div>
+  </div>
+
+  <div class="bx" style="left:498px;top:438px;width:254px;height:64px">
+    <div class="bt">N2 · gambar produksi</div>
+    <div class="bd">Gambar kerja untuk dipakai lantai produksi</div>
+  </div>
+
+  <div class="bx note" style="left:788px;top:438px;width:295px;height:64px">
+    <div class="bt">YANG TERCATAT DI TAHAP INI</div>
+    <div class="bd" style="margin-top:5px">Kode <b>Registrasi N2</b> didaftarkan oleh PPIC</div>
+  </div>
+
+  <div class="cmp" style="left:40px;top:540px;width:1043px">
+    <div>PEMBEDA</div><div>Jalur A · dari SSA</div><div>Jalur B · lewat PPIC</div>
+    <div>Kapan berjalan</div><div>Begitu SO terbit</div><div>Sesudah WO terbit</div>
+    <div>Yang diminta</div><div>N1 menyiapkan gambar, N2 memvalidasi jadwal</div><div>N2 membuat gambar produksi</div>
+    <div>Pendaftar kode gambar</div><div>Registrasi N1 oleh SSA</div><div>Registrasi N2 oleh PPIC</div>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · penjelasan jalur N1 dan N2</span>
+    <span>Kode gambar bisa bertambah di kedua registrasi bila ada pekerjaan tambah kurang</span>
   </div>
 </div>
 
