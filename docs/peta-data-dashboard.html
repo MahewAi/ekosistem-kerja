@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Peta Data Dashboard · Siapa Membuat, Siapa Boleh Mengubah</title>
+<title>Alur Data Dashboard · Siapa Membuat, Siapa Boleh Mengubah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -10,256 +10,180 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:#fff}
   body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .page{width:1123px;height:794px;position:relative;background:#fff;overflow:hidden;page-break-after:always}
-  .page:last-child{page-break-after:auto}
+  .page{width:1123px;height:794px;position:relative;background:#fff;overflow:hidden}
 
-  h1{position:absolute;left:40px;top:32px;font-size:21px;font-weight:700;letter-spacing:-.022em}
-  .sub{position:absolute;left:40px;top:62px;font-size:10px;color:#5b5e66}
+  h1{position:absolute;left:36px;top:28px;font-size:21px;font-weight:700;letter-spacing:-.022em}
+  .sub{position:absolute;left:36px;top:58px;font-size:10px;color:#5b5e66}
   .sub b{color:#191b21;font-weight:600}
-  .cnt{position:absolute;right:40px;top:36px;font-size:10px;color:#5b5e66;text-align:right;line-height:1.5}
-  .cnt b{color:#191b21;font-weight:700;font-size:12px}
+  .legend{position:absolute;right:36px;top:32px;display:flex;gap:14px;font-size:9px;color:#5b5e66;align-items:center}
 
-  /* ---------- pita alur pemilik data ---------- */
-  .strip{position:absolute;left:40px;top:92px;width:1043px;display:flex;align-items:stretch;gap:0}
-  .sec{flex:1;border:1px solid #d9dae0;border-radius:9px;padding:7px 9px;min-width:0}
-  .sec .sn{font-size:9.6px;font-weight:700;letter-spacing:.02em}
-  .sec .sc{font-size:8.4px;color:#8a8d94;margin-top:2px}
-  .sec.hi{border-color:#5058C4;background:#F6F7FD}
-  .sec.hi .sn{color:#3f47a8}
-  .arw{display:flex;align-items:center;color:#b9bbc2;font-size:12px;padding:0 7px;flex:0 0 auto}
-  .par{position:absolute;left:40px;top:160px;width:1043px;font-size:8.6px;color:#8a8d94}
-  .par b{color:#3f47a8;font-weight:600}
+  svg.wires{position:absolute;left:0;top:0;width:1123px;height:794px;pointer-events:none}
 
-  /* ---------- tabel parameter ---------- */
-  table{position:absolute;border-collapse:collapse}
-  th{font-size:8.2px;font-weight:700;letter-spacing:.11em;color:#8a8d94;text-align:left;
-    padding:0 9px 8px;border-bottom:1.4px solid #cfd0d6;vertical-align:bottom}
-  td{font-size:9.6px;color:#33363d;padding:7px 9px;border-bottom:1px solid #ededf0;vertical-align:top;line-height:1.4}
-  td.n{font-family:'Geist Mono',monospace;color:#a8aab0;font-size:8.6px}
-  td.p{font-weight:600;color:#191b21}
-  td.dim{color:#a8aab0}
+  .box{position:absolute;border:1.6px solid #5058C4;border-radius:11px;background:#fff;padding:9px 11px}
+  .box.soft{border:1.4px dashed #c2c4cb;background:#FBFBFC}
+  .box.dash{border:1.8px solid #1E7A3C;background:#F3F9F4}
 
-  .own{display:inline-block;font-size:8.6px;font-weight:700;letter-spacing:.04em;
-    border-radius:5px;padding:2px 7px;background:#EDEEFA;color:#3f47a8;white-space:nowrap}
-  .own.k{background:#F0F0EE;color:#6b6e75}
+  .bh{display:flex;align-items:baseline;gap:7px;padding-bottom:6px;border-bottom:1px solid #ececef;margin-bottom:6px}
+  .bn{font-size:12.5px;font-weight:700;letter-spacing:-.01em}
+  .bc{font-size:8.4px;color:#8a8d94;font-weight:500}
+  .soft .bn{color:#7c7f86}
+  .dash .bn{color:#1E7A3C}
 
-  .sif{display:inline-block;font-size:8.4px;font-weight:600;border-radius:99px;padding:1.5px 8px;white-space:nowrap}
-  .sif.tetap{background:#F0F1F0;color:#5f6268}
-  .sif.ubah{background:#FBF2E1;color:#8a5a0e}
-  .sif.tambah{background:#EDEEFA;color:#3f47a8}
+  .d{display:flex;align-items:baseline;gap:6px;margin-top:3.5px;flex-wrap:wrap}
+  .dn{font-size:9.8px;font-weight:600;color:#26282e}
+  .dc{font-size:7.8px;font-weight:600;border-radius:99px;padding:1px 6px;white-space:nowrap}
+  .dc.tetap{background:#F0F1F0;color:#62656b}
+  .dc.ubah{background:#FBF2E1;color:#8a5a0e}
+  .dc.tambah{background:#EDEEFA;color:#3f47a8}
+  .dc.tabel{background:#EDF6EF;color:#1E7A3C}
+  .de{font-size:8.4px;color:#9a9da3;white-space:nowrap}
+  .de b{color:#5b5e66;font-weight:600}
 
-  .tbl{display:inline-block;font-size:8.4px;font-weight:600;color:#1E7A3C;
-    background:#EDF6EF;border-radius:5px;padding:1.5px 7px}
+  /* pita sebar paralel */
+  .fan{position:absolute;border:1.6px solid #5058C4;border-radius:11px;background:#F6F7FD;padding:9px 13px}
+  .fl{font-size:9.6px;font-weight:700;color:#3f47a8;letter-spacing:.01em}
+  .fchips{display:flex;gap:7px;margin-top:7px;flex-wrap:nowrap}
+  .fc{flex:1;border:1px solid #c8cbe8;background:#fff;border-radius:7px;padding:5px 7px;text-align:center}
+  .fc .fn{font-size:9.6px;font-weight:700;color:#3f47a8}
+  .fc .fx{font-size:7.6px;color:#9a9da3;margin-top:1px;line-height:1.3}
+  .fc.off{border-color:#dcdde2;background:#FAFAFB}
+  .fc.off .fn{color:#8a8d94}
 
-  /* ---------- halaman 2 ---------- */
-  .mx{position:absolute;border-collapse:collapse}
-  .mx th{font-size:8.4px;padding:0 4px 8px;text-align:center;letter-spacing:.05em}
-  .mx th.l{text-align:left;padding-left:0}
-  .mx td{font-size:9.4px;padding:6px 4px;text-align:center;border-bottom:1px solid #ededf0}
-  .mx td.l{text-align:left;font-weight:600;font-size:9.4px;color:#191b21;padding-left:0}
-  .mk{display:inline-block;font-size:8.4px;font-weight:700;border-radius:5px;padding:2px 6px}
-  .mk.b{background:#5058C4;color:#fff}
-  .mk.u{background:#EDEEFA;color:#3f47a8}
+  .note{position:absolute;font-size:8.6px;color:#8a5a0e;background:#FDFAF3;border:1px solid #efdfbe;
+    border-radius:7px;padding:6px 10px;line-height:1.45}
+  .note b{color:#7a4f0c;font-weight:700}
 
-  .notes{position:absolute;column-count:2;column-gap:38px}
-  .nb{break-inside:avoid;margin-bottom:13px}
-  .nb .nt{font-size:10.6px;font-weight:600;letter-spacing:-.008em;margin-bottom:4px}
-  .nb .nx{font-size:9.4px;color:#4a4d54;line-height:1.55}
-  .nb .nx b{color:#191b21;font-weight:600}
-  .nb.warn .nt{color:#8a5a0e}
-
-  .foot{position:absolute;left:40px;right:40px;top:754px;font-size:9px;color:#a8aab0;
-    border-top:1px solid #ededf0;padding-top:9px;display:flex;justify-content:space-between}
+  .foot{position:absolute;left:36px;right:36px;top:760px;font-size:8.8px;color:#a8aab0;
+    border-top:1px solid #ededf0;padding-top:8px;display:flex;justify-content:space-between}
   .foot b{color:#5b5e66;font-weight:600}
 </style>
 </head>
 <body>
-
-<!-- ================= HALAMAN 1 ================= -->
 <div class="page">
-  <h1>Peta Data Dashboard</h1>
-  <div class="sub">PT Selaras Lawang Sewu · <b>siapa membuat data, siapa boleh mengubahnya</b></div>
-  <div class="cnt"><b>14</b> parameter · <b>7</b> sektor pemilik data</div>
 
-  <div class="strip">
-    <div class="sec hi"><div class="sn">ABA</div><div class="sc">6 parameter</div></div>
-    <span class="arw">›</span>
-    <div class="sec hi"><div class="sn">SSA</div><div class="sc">2 parameter</div></div>
-    <span class="arw">›</span>
-    <div class="sec"><div class="sn">PPIC</div><div class="sc">2 parameter</div></div>
-    <span class="arw">·</span>
-    <div class="sec"><div class="sn">Keuangan</div><div class="sc">1 parameter</div></div>
-    <span class="arw">·</span>
-    <div class="sec"><div class="sn">Project</div><div class="sc">1 parameter</div></div>
-    <span class="arw">·</span>
-    <div class="sec"><div class="sn">Produksi</div><div class="sc">1 parameter</div></div>
-    <span class="arw">·</span>
-    <div class="sec"><div class="sn">Gudang</div><div class="sc">1 parameter</div></div>
+  <h1>Alur Data Dashboard</h1>
+  <div class="sub">PT Selaras Lawang Sewu · <b>siapa membuat data, siapa boleh mengubahnya</b> · 14 parameter, 7 sektor pemilik data</div>
+  <div class="legend">
+    <span><span class="dc tetap">tetap</span></span>
+    <span><span class="dc ubah">bisa berubah</span></span>
+    <span><span class="dc tambah">bisa bertambah</span></span>
+    <span><span class="dc tabel">tabel langkah</span></span>
   </div>
-  <div class="par">ABA membuka order sampai Status PDD lalu menyerahkan ke SSA. Setelah SSA konfirmasi, data disebar <b>paralel</b> ke PPIC, Purchasing, Keuangan, ASS, Project, dan N1/N2.</div>
 
-  <table style="left:40px;top:186px;width:1043px">
-    <tr>
-      <th style="width:26px"></th>
-      <th style="width:152px">PARAMETER</th>
-      <th style="width:78px">DIBUAT OLEH</th>
-      <th style="width:82px">SIFAT</th>
-      <th style="width:352px">PEMICU PERUBAHAN</th>
-      <th style="width:126px">BOLEH MENGUBAH</th>
-      <th>TAMPILAN DI DASHBOARD</th>
-    </tr>
-    <tr>
-      <td class="n">01</td><td class="p">Nomor Penawaran</td><td><span class="own">ABA</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Kode bisa beda ketika ada penyesuaian</td>
-      <td><span class="own k">ABA</span></td><td>Kunci query order</td>
-    </tr>
-    <tr>
-      <td class="n">02</td><td class="p">Nomor PO / SPK</td><td><span class="own">ABA</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Kode bisa beda ketika ada penyesuaian</td>
-      <td><span class="own k">ABA</span></td><td>Kunci query order</td>
-    </tr>
-    <tr>
-      <td class="n">03</td><td class="p">Nama Pemesan</td><td><span class="own">ABA</span></td>
-      <td><span class="sif tetap">tetap</span></td>
-      <td class="dim">tidak berubah</td>
-      <td class="dim">—</td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">04</td><td class="p">Nama Proyek</td><td><span class="own">ABA</span></td>
-      <td><span class="sif tetap">tetap</span></td>
-      <td class="dim">tidak berubah</td>
-      <td class="dim">—</td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">05</td><td class="p">Total Nilai Pesanan (DPP)</td><td><span class="own">ABA</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Koreksi, biasanya proyek dengan addendum tambah kurang</td>
-      <td><span class="own k">ABA</span> <span class="own k">SSA</span></td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">06</td><td class="p">Status PDD</td><td><span class="own">ABA</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Percepatan atau perlambatan</td>
-      <td><span class="own k">SSA</span></td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">07</td><td class="p">Nomor SO</td><td><span class="own">SSA</span></td>
-      <td><span class="sif tetap">tetap</span></td>
-      <td class="dim">tidak berubah</td>
-      <td class="dim">—</td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">08</td><td class="p">Registrasi N1</td><td><span class="own">SSA</span></td>
-      <td><span class="sif tambah">bertambah</span></td>
-      <td>Kode gambar bertambah saat ada pekerjaan tambah kurang</td>
-      <td><span class="own k">SSA</span> <span class="own k">PPIC</span> <span class="own k">N1</span></td><td>Daftar kode gambar</td>
-    </tr>
-    <tr>
-      <td class="n">09</td><td class="p">Registrasi N2</td><td><span class="own">PPIC</span></td>
-      <td><span class="sif tambah">bertambah</span></td>
-      <td>Kode gambar bertambah saat ada pekerjaan tambah kurang</td>
-      <td><span class="own k">PPIC</span> <span class="own k">N1/N2</span></td><td>Daftar kode gambar</td>
-    </tr>
-    <tr>
-      <td class="n">10</td><td class="p">Nomor WO</td><td><span class="own">PPIC</span></td>
-      <td><span class="sif tetap">tetap</span></td>
-      <td class="dim">tidak berubah</td>
-      <td class="dim">—</td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">11</td><td class="p">Status Produksi</td><td><span class="own">Produksi</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Entry mengikuti pergerakan produksi</td>
-      <td><span class="own k">PPIC</span> <span class="own k">Produksi</span></td><td>Nilai tunggal</td>
-    </tr>
-    <tr>
-      <td class="n">12</td><td class="p">Status Invoice</td><td><span class="own">Keuangan</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Status tagihan bergerak: DP, BMOS, Progress, AI, dan seterusnya</td>
-      <td><span class="own k">SSA</span> <span class="own k">Keuangan</span></td><td><span class="tbl">tabel</span> langkah invoice</td>
-    </tr>
-    <tr>
-      <td class="n">13</td><td class="p">Pemasangan</td><td><span class="own">Project</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Prioritas pekerjaan berubah, jadwal mengikuti dashboard implementasi proyek</td>
-      <td><span class="own k">SSA</span> <span class="own k">Project</span></td><td><span class="tbl">tabel</span> status pekerjaan</td>
-    </tr>
-    <tr>
-      <td class="n">14</td><td class="p">Pengiriman</td><td><span class="own">Gudang</span></td>
-      <td><span class="sif ubah">berubah</span></td>
-      <td>Penyesuaian jadwal</td>
-      <td><span class="own k">PPIC</span> <span class="own k">Gudang</span></td><td><span class="tbl">tabel</span> status pengiriman</td>
-    </tr>
-  </table>
+  <svg class="wires" viewBox="0 0 1123 794">
+    <defs>
+      <marker id="ai" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#5058C4"/></marker>
+      <marker id="ag" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#1E7A3C"/></marker>
+    </defs>
+    <g fill="none" stroke="#5058C4" stroke-width="1.8">
+      <!-- ABA ke SSA -->
+      <path d="M541 168 H 577" marker-end="url(#ai)"/>
+      <!-- SSA turun ke pita sebar -->
+      <path d="M836 246 V 272" marker-end="url(#ai)"/>
+      <!-- pita sebar turun ke tiga pemilik data -->
+      <path d="M205 384 V 410" marker-end="url(#ai)"/>
+      <path d="M560 384 V 410" marker-end="url(#ai)"/>
+      <path d="M915 384 V 410" marker-end="url(#ai)"/>
+      <!-- PPIC ke Produksi dan Gudang -->
+      <path d="M205 570 V 579 H 161 V 588" marker-end="url(#ai)"/>
+      <path d="M205 579 H 425 V 588" marker-end="url(#ai)"/>
+    </g>
+    <g fill="none" stroke="#1E7A3C" stroke-width="1.8">
+      <!-- semua bermuara ke dashboard -->
+      <path d="M161 678 V 700" marker-end="url(#ag)"/>
+      <path d="M425 678 V 700" marker-end="url(#ag)"/>
+      <path d="M560 570 V 700" marker-end="url(#ag)"/>
+      <path d="M916 570 V 700" marker-end="url(#ag)"/>
+    </g>
+  </svg>
 
-  <div class="foot">
-    <span><b>PT Selaras Lawang Sewu</b> · peta data dashboard · halaman 1 dari 2</span>
-    <span>4 dari 14 parameter bersifat tetap, 10 sisanya bisa berubah</span>
+  <!-- ============ ABA ============ -->
+  <div class="box" style="left:36px;top:88px;width:505px;height:160px">
+    <div class="bh"><span class="bn">ABA</span><span class="bc">membuka order · 6 data</span></div>
+    <div class="d"><span class="dn">Nomor Penawaran</span><span class="dc ubah">berubah</span><span class="de">kode beda saat ada penyesuaian · ubah: <b>ABA</b></span></div>
+    <div class="d"><span class="dn">Nomor PO / SPK</span><span class="dc ubah">berubah</span><span class="de">kode beda saat ada penyesuaian · ubah: <b>ABA</b></span></div>
+    <div class="d"><span class="dn">Nama Pemesan</span><span class="dc tetap">tetap</span><span class="dn" style="margin-left:14px">Nama Proyek</span><span class="dc tetap">tetap</span></div>
+    <div class="d"><span class="dn">Total Nilai Pesanan (DPP)</span><span class="dc ubah">berubah</span><span class="de">addendum tambah kurang · ubah: <b>ABA, SSA</b></span></div>
+    <div class="d"><span class="dn">Status PDD</span><span class="dc ubah">berubah</span><span class="de">percepatan atau perlambatan · ubah: <b>SSA</b></span></div>
   </div>
-</div>
 
-<!-- ================= HALAMAN 2 ================= -->
-<div class="page">
-  <h1>Matriks Izin &amp; Catatan Teknis</h1>
-  <div class="sub">Kotak biru pekat = membuat data pertama kali · kotak biru muda = boleh mengubah setelahnya</div>
+  <!-- ============ SSA ============ -->
+  <div class="box" style="left:577px;top:88px;width:510px;height:160px">
+    <div class="bh"><span class="bn">SSA</span><span class="bc">konfirmasi data lalu terbitkan SO · 2 data</span></div>
+    <div class="d"><span class="dn">Nomor SO</span><span class="dc tetap">tetap</span></div>
+    <div class="d"><span class="dn">Registrasi N1</span><span class="dc tambah">bertambah</span><span class="de">kode gambar bertambah saat pekerjaan tambah kurang</span></div>
+    <div class="d"><span class="de">ubah: <b>SSA, PPIC, N1</b></span></div>
+    <div class="note" style="position:static;margin-top:9px">SSA juga berhak mengubah data sektor lain: <b>Total Nilai</b> dan <b>Status PDD</b> milik ABA, <b>Status Invoice</b> milik Keuangan, serta <b>Pemasangan</b> milik Project.</div>
+  </div>
 
-  <table class="mx" style="left:40px;top:96px;width:1043px">
-    <tr>
-      <th class="l" style="width:199px">PARAMETER</th>
-      <th style="width:94px">ABA</th><th style="width:94px">SSA</th><th style="width:94px">PPIC</th>
-      <th style="width:94px">N1</th><th style="width:94px">N2</th><th style="width:94px">PRODUKSI</th>
-      <th style="width:94px">KEUANGAN</th><th style="width:94px">PROJECT</th><th>GUDANG</th>
-    </tr>
-    <tr><td class="l">Nomor Penawaran</td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Nomor PO / SPK</td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Nama Pemesan</td><td><span class="mk b">buat</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Nama Proyek</td><td><span class="mk b">buat</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Total Nilai Pesanan</td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Status PDD</td><td><span class="mk b">buat</span></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Nomor SO</td><td></td><td><span class="mk b">buat</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Registrasi N1</td><td></td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td><span class="mk u">ubah</span></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Registrasi N2</td><td></td><td></td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td><span class="mk u">ubah</span></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Nomor WO</td><td></td><td></td><td><span class="mk b">buat</span></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Status Produksi</td><td></td><td></td><td><span class="mk u">ubah</span></td><td></td><td></td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td></td><td></td><td></td></tr>
-    <tr><td class="l">Status Invoice</td><td></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td></td><td></td></tr>
-    <tr><td class="l">Pemasangan</td><td></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td><td></td></tr>
-    <tr><td class="l">Pengiriman</td><td></td><td></td><td><span class="mk u">ubah</span></td><td></td><td></td><td></td><td></td><td></td><td><span class="mk b">buat</span> <span class="mk u">ubah</span></td></tr>
-  </table>
+  <!-- ============ PITA SEBAR PARALEL ============ -->
+  <div class="fan" style="left:36px;top:272px;width:1051px;height:112px">
+    <div class="fl">Setelah SSA konfirmasi, data disebar SERENTAK ke enam tujuan</div>
+    <div class="fchips">
+      <div class="fc"><div class="fn">PPIC</div><div class="fx">2 data</div></div>
+      <div class="fc off"><div class="fn">Purchasing</div><div class="fx">belum ada parameter</div></div>
+      <div class="fc"><div class="fn">Keuangan</div><div class="fx">1 data</div></div>
+      <div class="fc off"><div class="fn">ASS</div><div class="fx">belum ada parameter</div></div>
+      <div class="fc"><div class="fn">Project</div><div class="fx">1 data</div></div>
+      <div class="fc off"><div class="fn">N1 / N2</div><div class="fx">hanya menambah kode gambar</div></div>
+    </div>
+  </div>
 
-  <div class="notes" style="left:40px;top:560px;width:1043px">
-    <div class="nb warn">
-      <div class="nt">Nomor bisnis jangan dijadikan kunci utama</div>
-      <div class="nx">Dashboard mencari order lewat Nomor Penawaran dan Nomor PO/SPK, padahal kedua nomor itu bisa berubah. Kalau dipakai sebagai kunci, riwayat order putus begitu nomornya diganti. Pakai <b>ID internal tetap</b> sebagai kunci, nomor bisnis jadi atribut yang punya riwayat versi.</div>
-    </div>
-    <div class="nb">
-      <div class="nt">Tiga parameter berupa tabel, bukan satu kolom</div>
-      <div class="nx">Status Invoice, Pemasangan, dan Pengiriman tampil sebagai tabel langkah. Ketiganya butuh tabel tersendiri berisi baris per langkah dengan tanggal dan pelaku. Order induk cukup menyimpan ringkasan langkah terakhir.</div>
-    </div>
-    <div class="nb">
-      <div class="nt">Registrasi N1 dan N2 bersifat jamak</div>
-      <div class="nx">Satu order bisa punya banyak kode gambar karena pekerjaan tambah kurang. Ini relasi satu ke banyak, bukan satu kolom teks.</div>
-    </div>
-    <div class="nb">
-      <div class="nt">Satu addendum memicu tiga perubahan sekaligus</div>
-      <div class="nx">Total Nilai berubah, lalu Registrasi N1 dan N2 bertambah, semuanya dari peristiwa yang sama. Sebaiknya ada <b>entitas addendum</b> yang mengikat ketiganya dalam satu catatan.</div>
-    </div>
-    <div class="nb">
-      <div class="nt">SSA dan PPIC adalah pengubah lintas sektor</div>
-      <div class="nx">SSA boleh mengubah data milik ABA, Keuangan, dan Project. PPIC boleh mengubah data milik SSA, Produksi, dan Gudang. Keduanya butuh hak akses di atas hak sektornya sendiri.</div>
-    </div>
-    <div class="nb warn">
-      <div class="nt">Status PDD dibuat ABA tetapi hanya SSA yang boleh mengubah</div>
-      <div class="nx">Ini satu-satunya parameter yang pembuatnya tidak boleh mengubah miliknya sendiri. Perlu dipastikan apakah memang disengaja.</div>
+  <!-- ============ PEMILIK DATA LANJUTAN ============ -->
+  <div class="box" style="left:36px;top:410px;width:339px;height:160px">
+    <div class="bh"><span class="bn">PPIC</span><span class="bc">2 data</span></div>
+    <div class="d"><span class="dn">Registrasi N2</span><span class="dc tambah">bertambah</span></div>
+    <div class="d"><span class="de">kode gambar bertambah saat pekerjaan tambah kurang · ubah: <b>PPIC, N1/N2</b></span></div>
+    <div class="d" style="margin-top:7px"><span class="dn">Nomor WO</span><span class="dc tetap">tetap</span></div>
+    <div class="note" style="position:static;margin-top:9px">PPIC juga berhak mengubah <b>Registrasi N1</b> milik SSA, <b>Status Produksi</b>, dan <b>Pengiriman</b>.</div>
+  </div>
+
+  <div class="box" style="left:391px;top:410px;width:339px;height:160px">
+    <div class="bh"><span class="bn">Keuangan</span><span class="bc">1 data</span></div>
+    <div class="d"><span class="dn">Status Invoice</span><span class="dc tabel">tabel langkah</span></div>
+    <div class="d"><span class="de">langkah tagihan: DP, BMOS, Progress, AI, dan seterusnya</span></div>
+    <div class="d"><span class="de">ubah: <b>SSA, Keuangan</b></span></div>
+  </div>
+
+  <div class="box" style="left:746px;top:410px;width:341px;height:160px">
+    <div class="bh"><span class="bn">Project</span><span class="bc">1 data</span></div>
+    <div class="d"><span class="dn">Pemasangan</span><span class="dc tabel">tabel langkah</span></div>
+    <div class="d"><span class="de">prioritas pekerjaan berubah, jadwal ikut dashboard implementasi</span></div>
+    <div class="d"><span class="de">ubah: <b>SSA, Project</b></span></div>
+  </div>
+
+  <!-- ============ HILIR DARI WO ============ -->
+  <div class="box" style="left:36px;top:588px;width:250px;height:90px">
+    <div class="bh"><span class="bn">Produksi</span><span class="bc">1 data · setelah WO terbit</span></div>
+    <div class="d"><span class="dn">Status Produksi</span><span class="dc ubah">berubah</span></div>
+    <div class="d"><span class="de">entry mengikuti pergerakan produksi · ubah: <b>PPIC, Produksi</b></span></div>
+  </div>
+
+  <div class="box" style="left:300px;top:588px;width:250px;height:90px">
+    <div class="bh"><span class="bn">Gudang</span><span class="bc">1 data · setelah WO terbit</span></div>
+    <div class="d"><span class="dn">Pengiriman</span><span class="dc tabel">tabel langkah</span></div>
+    <div class="d"><span class="de">berubah karena penyesuaian jadwal · ubah: <b>PPIC, Gudang</b></span></div>
+  </div>
+
+  <div class="note" style="left:590px;top:588px;width:310px;height:90px">
+    <b>Kunci query dashboard:</b> Nomor Penawaran dan Nomor PO/SPK. Keduanya bisa berubah, jadi di sistem harus ada ID tetap sebagai kunci sebenarnya, dan nomor bisnis disimpan berikut riwayat versinya.
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div class="box dash" style="left:36px;top:700px;width:1051px;height:48px;padding:12px 14px">
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span class="bn">DASHBOARD</span>
+      <span class="bc">14 parameter dari 7 sektor tampil di satu layar · setiap perubahan tercatat siapa, kapan, nilai lama, nilai baru</span>
     </div>
   </div>
 
   <div class="foot">
-    <span><b>PT Selaras Lawang Sewu</b> · matriks izin &amp; catatan teknis · halaman 2 dari 2</span>
-    <span>7 pertanyaan terbuka tercatat di berkas data-dashboard.md</span>
+    <span><b>PT Selaras Lawang Sewu</b> · alur data dashboard</span>
+    <span>4 parameter bersifat tetap · 10 bisa berubah · 7 di antaranya bisa diubah lebih dari satu sektor</span>
   </div>
-</div>
 
+</div>
 </body>
 </html>
