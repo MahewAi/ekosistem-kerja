@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Workflow Sales dan SSE ke SSA · Alur per Peran, Rincian, dan Dashboard</title>
+<title>Workflow Sales dan SSE ke SSA · Order Baru, Perubahan Penawaran, dan Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -41,25 +41,33 @@
 
   .rulet{font-size:9px;font-weight:700;color:#8a5a0e;letter-spacing:.02em}
   .notet{font-size:9px;font-weight:700;color:#3f47a8;letter-spacing:.02em}
+  .para{font-size:8.8px;color:#33363d;line-height:1.55;margin-top:7px}
+  .para b{font-weight:600;color:#191b21}
 
-  /* ---------- halaman 1 · kartu peran besar ---------- */
-  .rolecard{position:absolute;border:2px solid #5058C4;border-radius:14px;background:#fff;padding:17px 19px}
-  .rolecard.amber{border-color:#B87C14}
-  .rolecard.green{border-color:#1E7A3C;background:#F8FBF9}
-  .badge{width:31px;height:31px;border-radius:10px;background:#5058C4;color:#fff;font-size:15px;
-    font-weight:700;display:flex;align-items:center;justify-content:center;letter-spacing:-.02em}
-  .rolecard.amber .badge{background:#B87C14}
-  .rolecard.green .badge{background:#1E7A3C}
-  .rn{font-size:17px;font-weight:700;letter-spacing:-.024em;margin-top:12px}
-  .rr{font-size:9.6px;color:#8a8d94;line-height:1.4;margin-top:4px}
-  .rl{margin-top:14px;padding-top:13px;border-top:1px solid #ececef}
-  .rl li{font-size:10.2px;line-height:1.5;padding-left:15px;margin-top:8px}
-  .rl li::before{width:6px;height:6px;top:5.8px;border-width:1.3px}
-  .sbar{position:absolute;left:0;right:0;bottom:0;border-top:1px solid #ececef;padding:9px 19px;
-    font-size:8.8px;font-weight:700;letter-spacing:.06em;color:#3f47a8;background:#FAFAFD;
-    border-radius:0 0 12px 12px}
-  .rolecard.amber .sbar{color:#8a5a0e;background:#FDFAF3}
-  .rolecard.green .sbar{color:#1a6d36;background:#F1F7F3}
+  /* ---------- halaman 1 · kotak alur ---------- */
+  .key{position:absolute;display:flex;gap:18px;align-items:center;font-size:8.8px;color:#5b5e66}
+  .key i{display:inline-flex;align-items:center;gap:6px;font-style:normal}
+  .key i::before{content:'';width:9px;height:9px;border-radius:3px;background:#5058C4}
+  .key i.a::before{background:#B87C14}
+  .key i.g::before{background:#1E7A3C}
+  .key i.n::before{background:#a8aab0}
+
+  .flab{position:absolute;font-size:9.4px;font-weight:700;letter-spacing:.12em;color:#5b5e66}
+  .flab span{color:#a8aab0;letter-spacing:.06em}
+
+  .fbox{position:absolute;border:1.8px solid #5058C4;border-radius:12px;background:#fff;padding:12px 15px}
+  .fbox.a{border-color:#B87C14}
+  .fbox.g{border-color:#1E7A3C;background:#F8FBF9}
+  .fbox.n{border-color:#c4c6cc;background:#FAFAFB}
+  .fr{font-size:7.8px;font-weight:700;letter-spacing:.1em;color:#3f47a8}
+  .fbox.a .fr{color:#8a5a0e}
+  .fbox.g .fr{color:#1a6d36}
+  .fbox.n .fr{color:#8a8d94}
+  .ft{font-size:13.5px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-top:6px}
+  .fd{font-size:8.6px;color:#5b5e66;line-height:1.45;margin-top:5px}
+  .fbox.sm{padding:11px 12px}
+  .fbox.sm .ft{font-size:11.5px;margin-top:5px}
+  .fbox.sm .fd{font-size:8.2px;margin-top:4px}
 
   /* slot isi form yang belum ditetapkan */
   .slot{margin-top:8px;border:1.3px dashed #B87C14;border-radius:7px;background:#FDFAF3;padding:8px 10px}
@@ -67,7 +75,7 @@
   .slot .sr{height:10px;border-radius:3px;background:#F2E7D2;margin-top:6px}
   .slot .sn{font-size:8px;color:#8a5a0e;line-height:1.45;margin-top:8px}
 
-  /* baris keputusan di gerbang approval */
+  /* baris keputusan */
   .out{margin-top:8px;padding:6px 0 6px 9px;border-left:3px solid #1E7A3C}
   .out.rev{border-left-color:#B87C14}
   .out .on{font-size:9.6px;font-weight:700;color:#1E7A3C;letter-spacing:-.01em}
@@ -77,11 +85,15 @@
   .tag{display:inline-block;font-size:7.6px;font-weight:700;letter-spacing:.05em;color:#8a5a0e;
     border:1px solid #e0c894;background:#FDF6E8;border-radius:4px;padding:1px 5px;vertical-align:1px}
 
-  .para{font-size:8.8px;color:#33363d;line-height:1.55;margin-top:7px}
-  .para b{font-weight:600;color:#191b21}
   .looplab{position:absolute;font-size:9px;font-weight:700;letter-spacing:.06em;color:#8a5a0e}
 
-  /* halaman 3 · pita status */
+  /* kode versi penawaran */
+  .kode{font-family:'Geist Mono',ui-monospace,monospace;font-weight:500;font-size:8.4px;
+    background:#F2F3F8;border:1px solid #e0e2ec;border-radius:4px;padding:0 4px}
+  .kode.mati{background:#F7F0F0;border-color:#e8d6d6;color:#8a5c5c;text-decoration:line-through}
+  .kode.hidup{background:#EEF6F0;border-color:#cfe3d6;color:#1a6d36}
+
+  /* pita status */
   .chip{position:absolute;border:1.5px solid #5058C4;border-radius:9px;background:#fff;padding:7px 10px;height:56px}
   .chip.greenc{border-color:#1E7A3C;background:#F5FAF6}
   .chip .cn{font-size:10.5px;font-weight:700;letter-spacing:-.01em}
@@ -90,7 +102,7 @@
   .seclab{position:absolute;font-size:9px;font-weight:700;letter-spacing:.12em;color:#9a9da3}
 
   table{position:absolute;border-collapse:collapse;table-layout:fixed}
-  th,td{border:1px solid #e6e7ec;padding:7px 8px;font-size:8.4px;color:#33363d;line-height:1.45;
+  th,td{border:1px solid #e6e7ec;padding:6px 8px;font-size:8.4px;color:#33363d;line-height:1.45;
     vertical-align:top;text-align:left}
   th{background:#F6F7FD;color:#3f47a8;font-weight:700;font-size:8.6px;letter-spacing:.02em;
     border-color:#d5d7ea}
@@ -104,15 +116,18 @@
 </head>
 <body>
 
-<!-- ==================== HALAMAN 1 · ALUR SEDERHANA PER PERAN ==================== -->
+<!-- ==================== HALAMAN 1 · ALUR SAJA ==================== -->
 <div class="page">
 
   <h1>Alur Sales dan SSE sampai SSA</h1>
-  <div class="sub">PT Selaras Lawang Sewu · <b>tiga peran, tiga langkah</b> · SSE adalah nama baru untuk peran yang di dokumen lama ditulis ABA</div>
+  <div class="sub">PT Selaras Lawang Sewu · <b>dua alur: order baru dan perubahan penawaran</b> · SSE adalah nama baru untuk peran yang di dokumen lama ditulis ABA</div>
 
-  <div class="colhd" style="left:36px;top:96px">PELAKSANA</div>
-  <div class="colhd" style="left:399px;top:96px">ATASAN</div>
-  <div class="colhd" style="left:762px;top:96px">BACK OFFICE</div>
+  <div class="key" style="left:36px;top:74px">
+    <i>Sales dan SSE</i>
+    <i class="a">Manager (Sales Leader)</i>
+    <i class="g">SSA</i>
+    <i class="n">pemicu dan sistem</i>
+  </div>
 
   <svg class="wires" viewBox="0 0 1123 794">
     <defs>
@@ -122,89 +137,125 @@
         <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#B87C14"/></marker>
       <marker id="ag" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
         <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#1E7A3C"/></marker>
+      <marker id="an" markerWidth="10" markerHeight="10" refX="7.5" refY="3.4" orient="auto">
+        <path d="M0,0 L7.5,3.4 L0,6.8 z" fill="#9a9da3"/></marker>
     </defs>
+    <!-- alur 1 -->
     <g fill="none" stroke="#5058C4" stroke-width="2.2">
-      <path d="M363 296 H 393" marker-end="url(#ai)"/>
+      <path d="M363 178 H 393" marker-end="url(#ai)"/>
     </g>
     <g fill="none" stroke="#1E7A3C" stroke-width="2.2">
-      <path d="M726 296 H 756" marker-end="url(#ag)"/>
+      <path d="M726 178 H 756" marker-end="url(#ag)"/>
     </g>
     <g fill="none" stroke="#B87C14" stroke-width="2" stroke-dasharray="6 4">
-      <path d="M561 466 V 510 H 198 V 474" marker-end="url(#aa)"/>
+      <path d="M561 230 V 268 H 198 V 238" marker-end="url(#aa)"/>
+    </g>
+    <!-- alur 2 -->
+    <g fill="none" stroke="#9a9da3" stroke-width="2">
+      <path d="M188 414 H 210" marker-end="url(#an)"/>
+    </g>
+    <g fill="none" stroke="#B87C14" stroke-width="2">
+      <path d="M368 414 H 390" marker-end="url(#aa)"/>
+    </g>
+    <g fill="none" stroke="#5058C4" stroke-width="2">
+      <path d="M548 414 H 570" marker-end="url(#ai)"/>
+    </g>
+    <g fill="none" stroke="#B87C14" stroke-width="2">
+      <path d="M728 414 H 750" marker-end="url(#aa)"/>
+    </g>
+    <g fill="none" stroke="#1E7A3C" stroke-width="2">
+      <path d="M908 414 H 930" marker-end="url(#ag)"/>
     </g>
   </svg>
 
-  <div class="rolecard" style="left:36px;top:126px;width:325px;height:340px">
-    <div class="badge">1</div>
-    <div class="rn">Sales dan SSE</div>
-    <div class="rr">Sales Person memegang pelanggan, SSE adalah admin Sales yang mendampinginya</div>
-    <ul class="rl">
-      <li>Menerima permintaan atau PO dari pelanggan</li>
-      <li>Mengisi <b>satu form order</b> bersama</li>
-      <li>SSE memastikan isian sudah lengkap</li>
-      <li>Selama <b>Draft</b>, form bebas diubah kedua pihak</li>
-      <li>Submit untuk minta approval atasan</li>
-    </ul>
-    <div class="sbar">STATUS · DRAFT, LALU MENUNGGU APPROVAL</div>
+  <!-- ---------- alur 1 ---------- -->
+  <div class="flab" style="left:36px;top:104px">ALUR 1 · ORDER BARU <span>· jalan lurus, sekali approval</span></div>
+
+  <div class="fbox" style="left:36px;top:126px;width:325px;height:104px">
+    <div class="fr">SALES DAN SSE</div>
+    <div class="ft">Isi form order</div>
+    <div class="fd">Sales Person dan SSE mengisi satu form bersama, lalu submit untuk minta approval</div>
   </div>
 
-  <div class="rolecard amber" style="left:399px;top:126px;width:325px;height:340px">
-    <div class="badge">2</div>
-    <div class="rn">Sales Leader</div>
-    <div class="rr">atasan langsung Sales Person dan SSE, satu tingkat approval</div>
-    <ul class="rl">
-      <li>Form masuk ke antrean approval miliknya</li>
-      <li>Memeriksa isi form</li>
-      <li><b>Setuju</b>, form lanjut ke SSA</li>
-      <li><b>Perlu revisi</b>, form balik ke Sales dan SSE</li>
-      <li>Keputusannya wajib disertai catatan alasan</li>
-    </ul>
-    <div class="sbar">STATUS · DISETUJUI ATAU PERLU REVISI</div>
+  <div class="fbox a" style="left:399px;top:126px;width:325px;height:104px">
+    <div class="fr">MANAGER</div>
+    <div class="ft">Approve</div>
+    <div class="fd">Setuju, atau minta revisi disertai catatan alasan</div>
   </div>
 
-  <div class="rolecard green" style="left:762px;top:126px;width:325px;height:340px">
-    <div class="badge">3</div>
-    <div class="rn">SSA</div>
-    <div class="rr">Sales Support Administration, back office penjualan dan operasional</div>
-    <ul class="rl">
-      <li>Menerima form yang <b>sudah disetujui</b></li>
-      <li>Cross check isi form</li>
-      <li>Menerbitkan SO</li>
-      <li>SO jadi dasar kerja enam sektor</li>
-      <li>Memberi kabar balik ke Sales bila ada kendala</li>
-    </ul>
-    <div class="sbar">STATUS · TERKIRIM KE SSA, LALU DIPROSES SSA</div>
+  <div class="fbox g" style="left:762px;top:126px;width:325px;height:104px">
+    <div class="fr">SSA</div>
+    <div class="ft">Terbitkan SO</div>
+    <div class="fd">Cross check dulu, lalu SO menyebar serentak ke enam sektor</div>
   </div>
 
-  <div class="looplab" style="left:580px;top:503px">PERLU REVISI · FORM KEMBALI KE SALES DAN SSE, LALU MASUK GERBANG INI LAGI</div>
+  <div class="looplab" style="left:580px;top:261px">PERLU REVISI · FORM BALIK UTUH KE SALES DAN SSE, BELUM PERNAH DISETUJUI</div>
 
-  <div class="card rule" style="left:36px;top:562px;width:1051px;height:100px">
-    <div class="rulet">ATURAN INTI</div>
+  <!-- ---------- alur 2 ---------- -->
+  <div class="flab" style="left:36px;top:322px">ALUR 2 · PERUBAHAN PENAWARAN <span>· penawaran sudah disetujui, lalu berubah</span></div>
+
+  <div class="fbox n sm" style="left:36px;top:344px;width:150px;height:140px">
+    <div class="fr">PEMICU</div>
+    <div class="ft">Ada perubahan penawaran</div>
+    <div class="fd">Permintaan bisa datang dari pelanggan atau dari internal</div>
+  </div>
+
+  <div class="fbox a sm" style="left:216px;top:344px;width:150px;height:140px">
+    <div class="fr">MANAGER</div>
+    <div class="ft">Buka kunci data</div>
+    <div class="fd">Manager menentukan data mana saja yang boleh diedit. Sisanya tetap terkunci</div>
+  </div>
+
+  <div class="fbox sm" style="left:396px;top:344px;width:150px;height:140px">
+    <div class="fr">SSE</div>
+    <div class="ft">Edit data yang dibuka</div>
+    <div class="fd">SSE hanya bisa mengubah data yang dibuka Manager, tidak lebih</div>
+  </div>
+
+  <div class="fbox a sm" style="left:576px;top:344px;width:150px;height:140px">
+    <div class="fr">MANAGER</div>
+    <div class="ft">Konfirmasi dan sign</div>
+    <div class="fd">Manager memeriksa hasil edit lalu tanda tangan. Tanpa sign, tidak bergerak</div>
+  </div>
+
+  <div class="fbox g sm" style="left:756px;top:344px;width:150px;height:140px">
+    <div class="fr">SSA</div>
+    <div class="ft">Kirim ke SSA</div>
+    <div class="fd">Baru boleh berangkat sesudah ada sign dari Manager</div>
+  </div>
+
+  <div class="fbox n sm" style="left:936px;top:344px;width:151px;height:140px">
+    <div class="fr">SISTEM</div>
+    <div class="ft">Versi penawaran naik</div>
+    <div class="fd"><span class="kode mati">R1</span> gugur, <span class="kode hidup">R2</span> yang berlaku. Kode lama tidak bisa dipakai lagi</div>
+  </div>
+
+  <div class="card rule" style="left:36px;top:546px;width:1051px;height:100px">
+    <div class="rulet">CATATAN ALUR 2</div>
     <ul>
-      <li>Tidak ada berkas yang sampai ke SSA tanpa lewat approval atasan. Tidak ada jalur pintas lewat pesan pribadi ke perorangan</li>
-      <li>Form yang sudah disetujui terkunci. Perubahan sesudahnya berupa revisi baru yang juga lewat gerbang approval</li>
-      <li>Halaman 2 merinci apa yang dikerjakan tiap peran · Halaman 3 menerjemahkannya jadi status, hak akses, dan jejak di dashboard</li>
+      <li><b>Perlu Revisi di alur 1 tidak sama dengan perubahan penawaran di alur 2.</b> Alur 1 menolak form yang belum pernah disetujui, form balik utuh. Alur 2 mengubah penawaran yang sudah disetujui, dan hanya data yang dibuka Manager yang boleh disentuh</li>
+      <li><b>R1 dan R2 hanya contoh penamaan.</b> Intinya penawaran yang sudah gugur tidak bisa dipakai lagi. Format kode sebenarnya menyusul</li>
+      <li>Halaman 2 merinci alur 1 · Halaman 3 merinci alur 2 · Halaman 4 menerjemahkan keduanya jadi status, hak akses, dan jejak di dashboard</li>
     </ul>
   </div>
 
   <div class="foot">
     <span><b>PT Selaras Lawang Sewu</b> · alur Sales dan SSE sampai SSA</span>
-    <span>Halaman 1 dari 3 · sumber: arahan Matthew, 14 Agustus 2026</span>
+    <span>Halaman 1 dari 4 · sumber: arahan Matthew, 14 Agustus 2026</span>
   </div>
 
 </div>
 
-<!-- ==================== HALAMAN 2 · RINCIAN TIAP PERAN ==================== -->
+<!-- ==================== HALAMAN 2 · RINCIAN ALUR 1 ==================== -->
 <div class="page">
 
-  <h1>Rincian tiap peran</h1>
-  <div class="sub">Isi tiga kotak di halaman 1, dibuka satu per satu · <b>urutan kolomnya sama</b> supaya bisa dibaca berdampingan</div>
+  <h1>Rincian alur 1 · order baru</h1>
+  <div class="sub">Isi tiga kotak alur 1 di halaman 1, dibuka satu per satu · <b>urutan kolomnya sama</b> supaya bisa dibaca berdampingan</div>
 
-  <div class="colhd" style="left:36px;top:82px">1 · PELAKSANA<span>Sales Person + SSE</span></div>
-  <div class="colhd" style="left:399px;top:82px">2 · ATASAN<span>Sales Leader (Manager Sales)</span></div>
-  <div class="colhd" style="left:762px;top:82px">3 · BACK OFFICE<span>SSA</span></div>
+  <div class="colhd" style="left:36px;top:82px">SALES DAN SSE<span>Sales Person + SSE</span></div>
+  <div class="colhd" style="left:399px;top:82px">MANAGER<span>Sales Leader (Manager Sales)</span></div>
+  <div class="colhd" style="left:762px;top:82px">SSA<span>Sales Support Administration</span></div>
 
-  <!-- ---------- baris 1 ---------- -->
   <div class="card" style="left:36px;top:126px;width:325px;height:186px">
     <div class="ct">Cara mengisi form</div>
     <div class="cm">satu form, dua pengisi, satu berkas yang sama</div>
@@ -212,8 +263,8 @@
       <li>Sales Person mengisi bagian yang dia pegang, SSE melengkapi dan merapikan</li>
       <li>SSE memeriksa kelengkapan sebelum form boleh disubmit</li>
       <li>Selama status masih <b>Draft</b>, form bebas diubah kedua pihak</li>
-      <li>Setelah submit, form terkunci sampai atasan memberi keputusan</li>
-      <li>Bila atasan minta revisi, form terbuka lagi beserta catatan alasannya</li>
+      <li>Setelah submit, form terkunci sampai Manager memberi keputusan</li>
+      <li>Bila Manager minta revisi, form terbuka lagi beserta catatan alasannya</li>
       <li>Form yang sudah diperbaiki masuk gerbang approval lagi, bukan langsung ke SSA</li>
     </ul>
   </div>
@@ -237,12 +288,11 @@
       <li>Hanya form berstatus <b>Disetujui</b> yang boleh masuk ke SSA</li>
       <li>SSA tidak menerima berkas lewat jalur lain, termasuk pesan langsung ke perorangan</li>
       <li>Form yang sudah disetujui terkunci, tidak bisa diubah isinya</li>
-      <li>Setiap keputusan atasan tercatat: siapa, kapan, dan alasannya</li>
+      <li>Setiap keputusan Manager tercatat: siapa, kapan, dan alasannya</li>
       <li>SSA hanya memproses pekerjaan final, tanpa mengoreksi isi form</li>
     </ul>
   </div>
 
-  <!-- ---------- baris 2 ---------- -->
   <div class="card" style="left:36px;top:342px;width:325px;height:268px">
     <div class="ct">Isi form order</div>
     <div class="cm">bagian yang paling menentukan bentuk dashboard</div>
@@ -275,7 +325,7 @@
     </div>
     <ul style="margin-top:9px">
       <li>Catatan <b>wajib diisi pada kedua keputusan</b>, bukan hanya saat minta revisi</li>
-      <li>Atasan tidak memperbaiki sendiri isi form. Kalau ada yang salah, dia minta revisi</li>
+      <li>Manager tidak memperbaiki sendiri isi form. Kalau ada yang salah, dia minta revisi</li>
       <li>Approval dilakukan lewat tombol di dashboard supaya tercatat, bukan lewat balasan pesan</li>
     </ul>
   </div>
@@ -286,7 +336,7 @@
     <ul>
       <li>Form order yang sudah terisi lengkap</li>
       <li>Dokumen pendukung yang dilampirkan Sales dan SSE</li>
-      <li>Jejak approval: nama atasan, waktu persetujuan, dan catatannya</li>
+      <li>Jejak approval: nama Manager, waktu persetujuan, dan catatannya</li>
       <li>Nomor rujukan order supaya berkas bisa dicari ulang kapan saja</li>
     </ul>
     <div class="notet" style="margin-top:13px;padding-top:12px;border-top:1px solid #e2e3ec">SETELAH SSA MENERIMA</div>
@@ -300,27 +350,111 @@
   <div class="card note" style="left:36px;top:636px;width:1051px;height:74px">
     <div class="notet">CONTOH PERJALANAN SATU ORDER, TERMASUK SATU PUTARAN REVISI</div>
     <div class="para">Sales Person menerima PO, SSE melengkapi isinya, lalu submit dan status berubah dari
-      <b>Draft</b> jadi <b>Menunggu Approval</b> · Sales Leader membaca form, menilai tanggal janji kirim
+      <b>Draft</b> jadi <b>Menunggu Approval</b> · Manager membaca form, menilai tanggal janji kirim
       terlalu ketat, dan menekan <b>Minta Revisi</b> beserta alasannya · form terbuka lagi, Sales dan SSE
-      memperbaiki tanggalnya, lalu submit ulang · kali ini Sales Leader menekan <b>Setuju</b>, form terkunci
+      memperbaiki tanggalnya, lalu submit ulang · kali ini Manager menekan <b>Setuju</b>, form terkunci
       dan masuk antrean SSA sebagai <b>Terkirim ke SSA</b> · SSA cross check, tidak perlu bertanya siapa yang
       menyetujui karena jejaknya ikut, lalu menerbitkan SO.</div>
   </div>
 
   <div class="foot">
-    <span><b>PT Selaras Lawang Sewu</b> · rincian tiap peran</span>
-    <span>Halaman 2 dari 3 · kolomnya sejajar dengan kotak 1, 2, dan 3 di halaman 1</span>
+    <span><b>PT Selaras Lawang Sewu</b> · rincian alur 1, order baru</span>
+    <span>Halaman 2 dari 4 · kolomnya sejajar dengan tiga kotak alur 1 di halaman 1</span>
   </div>
 
 </div>
 
-<!-- ==================== HALAMAN 3 · TERJEMAHAN KE DASHBOARD ==================== -->
+<!-- ==================== HALAMAN 3 · RINCIAN ALUR 2 ==================== -->
+<div class="page">
+
+  <h1>Rincian alur 2 · perubahan penawaran</h1>
+  <div class="sub">Penawaran sudah disetujui lalu berubah · <b>kendali ada di Manager</b>, SSE hanya bisa menyentuh data yang dibuka · penawaran lama digugurkan supaya tidak terpakai lagi</div>
+
+  <div class="colhd" style="left:36px;top:82px">LANGKAH 1<span>Manager membuka kunci</span></div>
+  <div class="colhd" style="left:399px;top:82px">LANGKAH 2<span>SSE mengedit</span></div>
+  <div class="colhd" style="left:762px;top:82px">LANGKAH 3<span>Manager sign, lalu ke SSA</span></div>
+
+  <div class="card amber" style="left:36px;top:126px;width:325px;height:214px">
+    <div class="ct">Kendali buka kunci ada di Manager</div>
+    <div class="cm">perubahan tidak bisa dimulai sendiri oleh SSE</div>
+    <ul>
+      <li>Manager memilih <b>data mana saja</b> yang boleh diedit, bukan membuka seluruh form</li>
+      <li>Data yang tidak dibuka tetap terkunci dan tidak bisa disentuh siapa pun</li>
+      <li>Pembukaan kunci tercatat: data apa yang dibuka, oleh siapa, kapan, dan alasannya</li>
+      <li>Selama kunci terbuka, penawaran bertanda sedang diubah supaya sektor lain tahu angkanya belum final</li>
+    </ul>
+    <div style="margin-top:7px"><span class="tag">DAFTAR DATA YANG BOLEH DIBUKA BELUM DITETAPKAN</span></div>
+  </div>
+
+  <div class="card" style="left:399px;top:126px;width:325px;height:214px">
+    <div class="ct">SSE mengedit dalam batas yang dibuka</div>
+    <div class="cm">bebas memperbaiki, tetapi hanya di kotak yang sudah dibuka</div>
+    <ul>
+      <li>SSE hanya bisa mengubah data yang dibuka Manager, tidak lebih</li>
+      <li>Butuh mengubah data lain, SSE minta Manager membuka kuncinya dulu</li>
+      <li>Setiap perubahan tercatat lengkap dengan nilai lama dan nilai barunya</li>
+      <li>Selesai mengedit, SSE <b>mengajukan konfirmasi balik ke Manager</b></li>
+      <li>SSE tidak bisa mengirim langsung ke SSA, sekalipun editnya sudah benar</li>
+    </ul>
+  </div>
+
+  <div class="card amber" style="left:762px;top:126px;width:325px;height:214px">
+    <div class="ct">Sign Manager jadi syarat berangkat</div>
+    <div class="cm">satu pintu keluar, sama seperti gerbang approval di alur 1</div>
+    <ul>
+      <li>Manager memeriksa hasil edit SSE, lalu <b>sign</b></li>
+      <li>Tanpa sign, perubahan tidak bergerak ke mana pun</li>
+      <li>Manager bisa mengembalikannya lagi ke SSE bila hasil editnya belum benar</li>
+      <li>Sesudah sign, penawaran versi baru dikirim ke SSA berikut jejak siapa membuka kunci, siapa mengedit, dan siapa sign</li>
+      <li>Kunci menutup sendiri setelah sign, tidak dibiarkan terbuka</li>
+    </ul>
+  </div>
+
+  <div class="card rule" style="left:36px;top:370px;width:1051px;height:160px">
+    <div class="rulet">ATURAN VERSI PENAWARAN · CONTOH R1 JADI R2</div>
+    <ul>
+      <li>Begitu versi baru berlaku, penawaran lama <span class="kode mati">R1</span> <b>digugurkan</b> dan <span class="kode hidup">R2</span> yang dipakai. Perubahan berikutnya menggugurkan R2 dan menerbitkan R3, begitu seterusnya</li>
+      <li><b>Kode yang sudah gugur tidak bisa dipakai lagi</b> di transaksi mana pun. Sistem menolaknya, bukan sekadar memberi peringatan. Inilah inti dari penomoran versi tersebut</li>
+      <li>Yang gugur <b>tidak dihapus</b>. Tetap tersimpan sebagai riwayat supaya bisa ditelusuri: apa yang berubah, siapa yang mengubah, dan atas persetujuan siapa</li>
+      <li>Hanya boleh ada <b>satu versi yang berlaku</b> pada satu waktu. Semua dokumen turunan menunjuk ke versi yang berlaku, bukan ke versi lama</li>
+      <li><span class="kode">R1</span> dan <span class="kode">R2</span> di dokumen ini hanya contoh penamaan dari Matthew untuk menjelaskan maksudnya. Format kode yang sebenarnya menyusul</li>
+    </ul>
+  </div>
+
+  <div class="card note" style="left:36px;top:560px;width:500px;height:150px">
+    <div class="notet">BEDANYA DENGAN PERLU REVISI DI ALUR 1</div>
+    <ul>
+      <li><b>Perlu Revisi (alur 1)</b> terjadi sebelum penawaran pernah disetujui. Form balik utuh ke Draft, seluruh isinya bisa diubah, dan tidak ada versi yang gugur</li>
+      <li><b>Perubahan penawaran (alur 2)</b> terjadi setelah penawaran disetujui dan angkanya sudah dipakai sektor lain. Hanya data yang dibuka Manager yang bisa diubah, dan versinya naik</li>
+      <li>Keduanya sama-sama berhenti di Manager. Tidak ada perubahan yang lewat tanpa keputusan Manager</li>
+    </ul>
+  </div>
+
+  <div class="card rule" style="left:560px;top:560px;width:527px;height:150px">
+    <div class="rulet">BELUM DITETAPKAN UNTUK ALUR 2</div>
+    <ul>
+      <li>Format kode versi penawaran yang sebenarnya, dan apakah nomornya berlanjut atau mengulang tiap tahun</li>
+      <li>Daftar data yang boleh dibuka Manager, dan apakah ada data yang tidak boleh diubah sama sekali</li>
+      <li>Apakah perubahan bernilai besar perlu naik ke atasan Manager, memakai batas kewenangan yang sama seperti alur 1</li>
+      <li>Nasib SO yang sudah terbit ketika penawaran naik versi: ikut direvisi, dibatalkan, atau terbit SO baru</li>
+      <li>Siapa yang memberi tahu sektor lain bahwa angka yang mereka pegang sudah gugur</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · rincian alur 2, perubahan penawaran</span>
+    <span>Halaman 3 dari 4 · R1 dan R2 adalah contoh penamaan, bukan format final</span>
+  </div>
+
+</div>
+
+<!-- ==================== HALAMAN 4 · TERJEMAHAN KE DASHBOARD ==================== -->
 <div class="page">
 
   <h1>Yang dibangun di dashboard</h1>
-  <div class="sub">Tiga peran di halaman 1 diterjemahkan jadi <b>status, hak ubah, dan jejak</b> yang harus ada di sistem · satu order berjalan lewat satu rantai status, tidak ada jalur pintas</div>
+  <div class="sub">Kedua alur diterjemahkan jadi <b>status, hak ubah, dan jejak</b> yang harus ada di sistem · satu penawaran berjalan lewat satu rantai status, tidak ada jalur pintas</div>
 
-  <div class="seclab" style="left:36px;top:86px">RANTAI STATUS SATU ORDER</div>
+  <div class="seclab" style="left:36px;top:86px">RANTAI STATUS SATU PENAWARAN</div>
 
   <svg class="wires" viewBox="0 0 1123 794">
     <defs>
@@ -336,7 +470,8 @@
       <path d="M873 138 H 887" marker-end="url(#bi)"/>
     </g>
     <g fill="none" stroke="#B87C14" stroke-width="1.8" stroke-dasharray="5 3">
-      <path d="M347 166 V 186 H 133 V 172" marker-end="url(#ba)"/>
+      <path d="M334 166 V 184 H 133 V 172" marker-end="url(#ba)"/>
+      <path d="M990 166 V 208 H 360 V 172" marker-end="url(#ba)"/>
     </g>
   </svg>
 
@@ -346,11 +481,11 @@
   </div>
   <div class="chip" style="left:250px;top:110px;width:195px">
     <div class="cn">Menunggu Approval</div>
-    <div class="cx">Form terkunci. Bola ada di Sales Leader.</div>
+    <div class="cx">Form terkunci. Bola ada di Manager.</div>
   </div>
   <div class="chip" style="left:464px;top:110px;width:195px">
     <div class="cn">Disetujui</div>
-    <div class="cx">Terkunci permanen. Isi tidak bisa diubah lagi.</div>
+    <div class="cx">Terkunci. Hanya Manager yang bisa membuka lagi.</div>
   </div>
   <div class="chip greenc" style="left:678px;top:110px;width:195px">
     <div class="cn">Terkirim ke SSA</div>
@@ -361,25 +496,19 @@
     <div class="cx">SSA cross check, lalu terbitkan SO.</div>
   </div>
 
-  <div class="looplab" style="left:150px;top:192px">PERLU REVISI · KEMBALI KE DRAFT DENGAN CATATAN ALASAN DARI ATASAN</div>
+  <div class="looplab" style="left:140px;top:188px">ALUR 1 · PERLU REVISI, BALIK KE DRAFT</div>
+  <div class="looplab" style="left:380px;top:214px">ALUR 2 · STATUS SEDANG DIUBAH, LALU SIGN MANAGER, VERSI BARU BERLAKU, MASUK GERBANG APPROVAL LAGI</div>
 
-  <div class="seclab" style="left:36px;top:224px">SIAPA MEMEGANG APA DI TIAP LANGKAH</div>
+  <div class="seclab" style="left:36px;top:238px">SIAPA MEMEGANG APA DI TIAP LANGKAH</div>
 
-  <table style="left:36px;top:246px;width:1051px">
+  <table style="left:36px;top:260px;width:1051px">
     <colgroup>
-      <col style="width:150px"><col style="width:158px"><col style="width:150px">
-      <col style="width:150px"><col style="width:443px">
+      <col style="width:158px"><col style="width:158px"><col style="width:150px">
+      <col style="width:158px"><col style="width:427px">
     </colgroup>
     <tr>
       <th>Langkah</th><th>Status di dashboard</th><th>Pemegang bola</th>
       <th>Boleh mengubah isi</th><th>Yang wajib dicatat sistem</th>
-    </tr>
-    <tr>
-      <td class="st">Pesanan masuk</td>
-      <td>belum ada order</td>
-      <td>Sales Person</td>
-      <td>Sales Person</td>
-      <td>Waktu order dibuka dan siapa yang membukanya</td>
     </tr>
     <tr>
       <td class="st">Isi form</td>
@@ -391,64 +520,72 @@
     <tr>
       <td class="st">Submit</td>
       <td>Menunggu Approval</td>
-      <td>Sales Leader</td>
+      <td>Manager</td>
       <td>tidak ada</td>
       <td>Waktu submit dan siapa yang menekan submit. Dari sini penghitung waktu tunggu approval mulai jalan</td>
     </tr>
     <tr>
-      <td class="st">Keputusan atasan</td>
+      <td class="st">Keputusan Manager</td>
       <td>Disetujui <b>atau</b> Perlu Revisi</td>
-      <td>Sales Leader</td>
+      <td>Manager</td>
       <td>tidak ada</td>
-      <td>Keputusan, nama atasan, waktu keputusan, dan catatan alasan. Catatan wajib diisi pada kedua keputusan, bukan hanya saat minta revisi</td>
+      <td>Keputusan, nama Manager, waktu keputusan, dan catatan alasan. Catatan wajib diisi pada kedua keputusan</td>
     </tr>
     <tr>
       <td class="st">Masuk SSA</td>
-      <td>Terkirim ke SSA</td>
+      <td>Terkirim ke SSA, lalu Diproses SSA</td>
       <td>SSA</td>
       <td>tidak ada</td>
       <td>Waktu penyeberangan dan waktu SSA pertama kali membuka berkas, supaya lama mengantre terlihat</td>
     </tr>
     <tr>
-      <td class="st">Proses SSA</td>
-      <td>Diproses SSA</td>
+      <td class="st">Buka kunci <span style="font-weight:400;color:#8a5a0e">alur 2</span></td>
+      <td>Sedang Diubah</td>
+      <td>SSE, dalam batas yang dibuka</td>
+      <td>SSE, hanya data yang dibuka</td>
+      <td>Data apa yang dibuka, oleh siapa, kapan, alasannya, dan tiap nilai yang berubah sesudahnya</td>
+    </tr>
+    <tr>
+      <td class="st">Sign Manager <span style="font-weight:400;color:#8a5a0e">alur 2</span></td>
+      <td>Versi Baru Berlaku</td>
       <td>SSA</td>
-      <td>SSA, lewat mekanisme SSA sendiri</td>
-      <td>Sambungan ke rantai SSA yang sudah ada: cross check, cek timeline terhadap PDD, terbit SO</td>
+      <td>tidak ada</td>
+      <td>Tanda tangan Manager, kode versi lama yang digugurkan, kode versi baru yang berlaku, dan waktunya. Kode yang gugur ditolak sistem bila dipakai lagi</td>
     </tr>
   </table>
 
-  <div class="seclab" style="left:36px;top:490px">YANG DIBANGUN DULUAN DAN YANG MASIH MENUNGGU KEPUTUSAN</div>
+  <div class="seclab" style="left:36px;top:522px">YANG DIBANGUN DULUAN DAN YANG MASIH MENUNGGU KEPUTUSAN</div>
 
-  <div class="card" style="left:36px;top:512px;width:500px;height:168px">
+  <div class="card" style="left:36px;top:544px;width:500px;height:166px">
     <div class="ct">Komponen yang harus dibangun</div>
     <div class="cm">yang membedakan alur ini dari sekadar tukar berkas</div>
     <ul>
       <li>Form order dengan validasi isian wajib, bisa diisi bergantian Sales dan SSE</li>
       <li>Tombol submit yang <b>mengunci</b> form sekaligus memindahkan statusnya</li>
-      <li>Antrean approval milik Sales Leader, berisi semua form yang menunggu keputusannya</li>
+      <li>Antrean approval milik Manager, berisi semua yang menunggu keputusannya</li>
       <li>Tombol Setuju dan Minta Revisi, keduanya wajib berisi catatan</li>
-      <li>Pemberitahuan ke pihak berikutnya setiap kali status berpindah</li>
-      <li>Jejak audit yang tidak bisa dihapus di tiap perubahan</li>
-      <li>Penghitung waktu tunggu approval supaya keterlambatan terlihat, bukan tersembunyi</li>
+      <li><b>Kendali buka kunci per data</b> untuk Manager, berikut catatan alasannya</li>
+      <li><b>Penomoran versi penawaran</b>: versi lama otomatis gugur dan ditolak sistem bila dipakai</li>
+      <li>Jejak audit yang tidak bisa dihapus, dan penghitung waktu tunggu approval</li>
     </ul>
   </div>
 
-  <div class="card rule" style="left:560px;top:512px;width:527px;height:168px">
+  <div class="card rule" style="left:560px;top:544px;width:527px;height:166px">
     <div class="rulet">BELUM DITETAPKAN · PERLU KEPUTUSAN SEBELUM DIBANGUN</div>
     <ul>
-      <li><b>Daftar isian form order.</b> Menunggu daftar dari Matthew. Semua yang lain di dokumen ini tidak bergantung pada daftar itu, jadi pembangunan alur bisa jalan lebih dulu</li>
-      <li><b>Batas kewenangan Sales Leader.</b> Nilai pesanan atau diskon berapa yang masih boleh dia setujui sendiri, dan ke siapa naik kalau lewat batas</li>
-      <li><b>Batas waktu approval</b> sebelum sebuah form dianggap terlambat</li>
-      <li><b>Pengganti bila Sales Leader berhalangan</b>, supaya order tidak menggantung di satu orang</li>
-      <li><b>Boleh tidaknya SSA menolak balik</b> form yang sudah disetujui, dan kalau boleh, kembali ke siapa</li>
-      <li><b>Penyeragaman istilah.</b> Dokumen lama masih menulis ABA. Perlu diputuskan apakah seluruh dokumen diganti jadi SSE atau kedua istilah dipakai berdampingan</li>
+      <li><b>Daftar isian form order.</b> Menunggu daftar dari Matthew. Sisanya tidak bergantung pada daftar itu, jadi pembangunan alur bisa jalan lebih dulu</li>
+      <li><b>Format kode versi penawaran.</b> R1 dan R2 hanya contoh, format sebenarnya menyusul</li>
+      <li><b>Daftar data yang boleh dibuka Manager</b> saat perubahan penawaran</li>
+      <li><b>Batas kewenangan Manager</b> pada nilai pesanan dan diskon, berlaku untuk kedua alur</li>
+      <li><b>Batas waktu approval</b> dan <b>pengganti bila Manager berhalangan</b></li>
+      <li><b>Nasib SO yang sudah terbit</b> ketika penawaran naik versi, dan siapa yang memberi tahu sektor lain</li>
+      <li><b>Penyeragaman istilah.</b> Dokumen lama masih menulis ABA, bukan SSE</li>
     </ul>
   </div>
 
   <div class="foot">
-    <span><b>PT Selaras Lawang Sewu</b> · alur Sales dan SSE sampai SSA</span>
-    <span>Halaman 3 dari 3 · sambungan ke workflow-aba-ssa.pdf dan peta-data-dashboard.pdf</span>
+    <span><b>PT Selaras Lawang Sewu</b> · terjemahan kedua alur ke dashboard</span>
+    <span>Halaman 4 dari 4 · sambungan ke workflow-aba-ssa.pdf dan peta-data-dashboard.pdf</span>
   </div>
 
 </div>

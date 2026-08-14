@@ -307,23 +307,30 @@ Permintaan Matthew: flowchart alur bisnis untuk dasar pembangunan dashboard.
 Alur yang diberikan: Sales dan SSE mengisi form, minta approval atasan, setelah
 atasan setuju baru terkirim ke SSA.
 
-`docs/workflow-sales-sse-ssa.html/.pdf`, 3 halaman A4 landscape:
+`docs/workflow-sales-sse-ssa.html/.pdf`, 4 halaman A4 landscape:
 
-- Halaman 1: alur sederhana, satu kartu besar per peran. Tiga kartu bernomor
-  (Sales dan SSE, Sales Leader, SSA) dengan empat sampai lima butir kerja, palang
-  status di kaki tiap kartu, jalur revisi amber putus-putus balik dari atasan ke
-  pelaksana, ditutup kartu Aturan Inti.
-- Halaman 2: rincian tiap peran. Tiga kolom dengan urutan yang sama seperti
-  halaman 1, jadi bisa dibaca berdampingan: cara mengisi form dan slot isi form,
-  daftar periksa atasan dan dua keluaran keputusan, aturan gerbang dan paket
-  serah terima. Ditutup contoh perjalanan satu order dengan satu putaran revisi.
-- Halaman 3: terjemahan ke dashboard. Rantai lima status, tabel pemegang bola
-  dan hak ubah per langkah, komponen yang harus dibangun, dan daftar yang belum
-  ditetapkan.
+- Halaman 1: alur saja, kotak dan panah, tanpa daftar panjang. Alur 1 order baru
+  (tiga kotak: Sales dan SSE, Manager, SSA) dengan jalur Perlu Revisi balik ke
+  pelaksana. Alur 2 perubahan penawaran (enam kotak: pemicu, Manager buka kunci,
+  SSE edit, Manager sign, kirim ke SSA, versi naik). Kotak diwarnai per peran
+  dengan kunci warna di kepala halaman, ditutup kartu Catatan Alur 2.
+- Halaman 2: rincian alur 1. Tiga kolom dengan urutan yang sama seperti kotak
+  alur 1 di halaman 1, jadi bisa dibaca berdampingan: cara mengisi form dan slot
+  isi form, daftar periksa Manager dan dua keluaran keputusan, aturan gerbang dan
+  paket serah terima. Ditutup contoh perjalanan satu order dengan satu putaran
+  revisi.
+- Halaman 3: rincian alur 2. Tiga kolom per langkah (buka kunci, edit, sign),
+  kartu Aturan Versi Penawaran, kartu pembeda Perlu Revisi vs perubahan
+  penawaran, dan daftar yang belum ditetapkan khusus alur 2.
+- Halaman 4: terjemahan ke dashboard. Rantai lima status dengan dua jalur balik
+  (alur 1 dan alur 2), tabel pemegang bola dan hak ubah per langkah termasuk dua
+  baris alur 2, komponen yang harus dibangun, dan daftar yang belum ditetapkan.
 
-Struktur ini hasil koreksi Matthew atas versi pertama: versi pertama menaruh
-flowchart rinci sekaligus kartu aturan di halaman 1 sehingga padat. Sekarang
-halaman 1 hanya menjawab "siapa mengerjakan apa", rinciannya turun ke belakang.
+Struktur ini hasil dua kali koreksi Matthew. Versi pertama menaruh flowchart
+rinci sekaligus kartu aturan di halaman 1 sehingga padat; versi kedua memakai
+kartu peran besar berisi butir kerja, masih terlalu banyak teks untuk halaman
+pembuka. Sekarang halaman 1 murni kotak dan panah supaya alurnya kelihatan
+sekali lihat, seluruh teks turun ke halaman rincian.
 
 Keputusan (dikonfirmasi Matthew sebelum menggambar):
 
@@ -347,3 +354,34 @@ Catatan render: Chromium di lingkungan ini tidak mempercayai CA proxy sehingga
 Google Fonts gagal dimuat dan huruf jatuh ke DejaVu. PDF dirender dari salinan
 sementara yang menyematkan Geist sebagai data URI; sumber HTML tetap memakai
 tautan Google Fonts seperti dokumen lain.
+
+## 14 Agu 2026 (lanjutan) - Alur 2: perubahan penawaran dan penomoran versi
+
+Tambahan dari Matthew: kalau penawaran berubah setelah disetujui, alurnya beda
+dari Perlu Revisi biasa.
+
+1. **Kendali buka kunci ada di Manager.** Manager yang menentukan data mana saja
+   yang boleh diedit SSE, bukan membuka seluruh form. Data yang tidak dibuka
+   tetap terkunci. SSE tidak bisa memulai perubahan sendiri.
+2. **Sign ulang wajib.** Selesai mengedit, SSE mengajukan konfirmasi balik ke
+   Manager. Tanpa sign Manager, perubahan tidak bisa dikirim ke SSA.
+3. **Versi penawaran naik dan yang lama gugur.** Contoh Matthew: kode R1
+   digugurkan, R2 yang berlaku. Maksudnya penawaran yang gugur tidak bisa dipakai
+   lagi. R1 dan R2 ditulis di dokumen sebagai contoh penamaan, bukan format final,
+   dan ditandai begitu di tiga tempat supaya tidak terlanjur dianggap baku.
+
+Yang ditambahkan sendiri dan perlu dikoreksi Matthew bila salah: pembukaan kunci
+tercatat lengkap dengan alasannya, kunci menutup sendiri setelah sign, penawaran
+bertanda sedang diubah selama kunci terbuka, versi yang gugur disimpan sebagai
+riwayat bukan dihapus, dan hanya satu versi yang berlaku pada satu waktu.
+
+Beda alur 1 dan alur 2 sengaja ditulis eksplisit di halaman 1 dan halaman 3,
+karena keduanya sama-sama berhenti di Manager dan gampang tertukar: Perlu Revisi
+menolak form yang belum pernah disetujui dan form balik utuh, sedangkan perubahan
+penawaran menyentuh penawaran yang angkanya sudah dipakai sektor lain sehingga
+hanya data yang dibuka Manager yang bisa berubah.
+
+Pertanyaan yang belum terjawab dan sudah masuk dokumen: format kode versi yang
+sebenarnya, daftar data yang boleh dibuka Manager, apakah perubahan bernilai
+besar naik ke atasan Manager, nasib SO yang sudah terbit ketika penawaran naik
+versi, dan siapa yang memberi tahu sektor lain bahwa angka mereka sudah gugur.
