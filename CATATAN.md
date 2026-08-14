@@ -307,15 +307,23 @@ Permintaan Matthew: flowchart alur bisnis untuk dasar pembangunan dashboard.
 Alur yang diberikan: Sales dan SSE mengisi form, minta approval atasan, setelah
 atasan setuju baru terkirim ke SSA.
 
-`docs/workflow-sales-sse-ssa.html/.pdf`, 2 halaman A4 landscape:
+`docs/workflow-sales-sse-ssa.html/.pdf`, 3 halaman A4 landscape:
 
-- Halaman 1: flowchart 3 jalur (Pelaksana Sales + SSE, Atasan Sales Leader,
-  Back Office SSA), enam langkah bernomor, gerbang approval dengan dua keluaran
-  (Setuju ke SSA, Perlu Revisi balik ke Draft lewat jalur amber putus-putus),
-  plus kartu Aturan Gerbang dan Paket Serah Terima.
-- Halaman 2: terjemahan ke dashboard. Rantai lima status, tabel pemegang bola
+- Halaman 1: alur sederhana, satu kartu besar per peran. Tiga kartu bernomor
+  (Sales dan SSE, Sales Leader, SSA) dengan empat sampai lima butir kerja, palang
+  status di kaki tiap kartu, jalur revisi amber putus-putus balik dari atasan ke
+  pelaksana, ditutup kartu Aturan Inti.
+- Halaman 2: rincian tiap peran. Tiga kolom dengan urutan yang sama seperti
+  halaman 1, jadi bisa dibaca berdampingan: cara mengisi form dan slot isi form,
+  daftar periksa atasan dan dua keluaran keputusan, aturan gerbang dan paket
+  serah terima. Ditutup contoh perjalanan satu order dengan satu putaran revisi.
+- Halaman 3: terjemahan ke dashboard. Rantai lima status, tabel pemegang bola
   dan hak ubah per langkah, komponen yang harus dibangun, dan daftar yang belum
   ditetapkan.
+
+Struktur ini hasil koreksi Matthew atas versi pertama: versi pertama menaruh
+flowchart rinci sekaligus kartu aturan di halaman 1 sehingga padat. Sekarang
+halaman 1 hanya menjawab "siapa mengerjakan apa", rinciannya turun ke belakang.
 
 Keputusan (dikonfirmasi Matthew sebelum menggambar):
 
