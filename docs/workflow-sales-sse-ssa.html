@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Workflow Sales dan SSE ke SSA · Form, Approval Atasan, Serah Terima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page{size:A4 landscape;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#fff}
+  body{font-family:'Geist',system-ui,sans-serif;color:#191b21;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:1123px;height:794px;position:relative;background:#fff;overflow:hidden;page-break-after:always}
+  .page:last-child{page-break-after:auto}
+
+  h1{position:absolute;left:36px;top:24px;font-size:21px;font-weight:700;letter-spacing:-.022em}
+  .sub{position:absolute;left:36px;top:53px;font-size:9.6px;color:#5b5e66}
+  .sub b{color:#191b21;font-weight:600}
+
+  .colhd{position:absolute;font-size:9px;font-weight:700;letter-spacing:.12em;color:#9a9da3}
+  .colhd span{display:block;font-size:11.5px;font-weight:700;letter-spacing:-.01em;color:#3f47a8;margin-top:3px}
+  .divider{position:absolute;width:1px;border-left:1px dashed #dcdde2}
+
+  svg.wires{position:absolute;left:0;top:0;width:1123px;height:794px;pointer-events:none}
+
+  .card{position:absolute;border:1.5px solid #5058C4;border-radius:10px;background:#fff;padding:8px 11px}
+  .card.amber{border-color:#B87C14}
+  .card.green{border-color:#1E7A3C;background:#F5FAF6}
+  .card.rule{border:1.5px dashed #B87C14;background:#FDFAF3}
+  .card.note{border:1.5px dashed #5058C4;background:#FAFAFD}
+
+  .ct{font-size:11.5px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+  .cm{font-size:8.4px;color:#8a8d94;margin-top:2px}
+  ul{list-style:none;margin-top:6px}
+  li{font-size:8.8px;color:#33363d;line-height:1.45;padding-left:11px;position:relative;margin-top:1px}
+  li::before{content:'';position:absolute;left:0;top:4.6px;width:5px;height:5px;border-radius:50%;
+    border:1.1px solid #5058C4;background:#fff}
+  .amber li::before{border-color:#B87C14}
+  .green li::before{border-color:#1E7A3C}
+  .rule li::before{border-color:#c99a3a}
+  li b{font-weight:600;color:#191b21}
+
+  .rulet{font-size:9px;font-weight:700;color:#8a5a0e;letter-spacing:.02em}
+  .notet{font-size:9px;font-weight:700;color:#3f47a8;letter-spacing:.02em}
+
+  /* slot isi form yang belum ditetapkan */
+  .slot{margin-top:7px;border:1.3px dashed #B87C14;border-radius:7px;background:#FDFAF3;padding:6px 8px}
+  .slot .sh{font-size:8.2px;font-weight:700;color:#8a5a0e;letter-spacing:.06em}
+  .slot .sr{height:9px;border-radius:3px;background:#F2E7D2;margin-top:4px}
+  .slot .sn{font-size:8px;color:#8a5a0e;line-height:1.4;margin-top:5px}
+
+  /* baris keputusan di gerbang approval */
+  .out{margin-top:7px;padding:5px 0 5px 9px;border-left:3px solid #1E7A3C}
+  .out.rev{border-left-color:#B87C14}
+  .out .on{font-size:9.4px;font-weight:700;color:#1E7A3C;letter-spacing:-.01em}
+  .out.rev .on{color:#8a5a0e}
+  .out .ox{font-size:8.4px;color:#4a4d54;line-height:1.42;margin-top:2px}
+
+  .tag{display:inline-block;font-size:7.6px;font-weight:700;letter-spacing:.05em;color:#8a5a0e;
+    border:1px solid #e0c894;background:#FDF6E8;border-radius:4px;padding:1px 5px;vertical-align:1px}
+
+  .looplab{position:absolute;font-size:9px;font-weight:700;letter-spacing:.06em;color:#8a5a0e}
+
+  /* halaman 2 · pita status */
+  .chip{position:absolute;border:1.5px solid #5058C4;border-radius:9px;background:#fff;padding:7px 10px;height:56px}
+  .chip.amberc{border-color:#B87C14;background:#FDFAF3}
+  .chip.greenc{border-color:#1E7A3C;background:#F5FAF6}
+  .chip .cn{font-size:10.5px;font-weight:700;letter-spacing:-.01em}
+  .chip .cx{font-size:8.2px;color:#5b5e66;line-height:1.4;margin-top:3px}
+
+  .seclab{position:absolute;font-size:9px;font-weight:700;letter-spacing:.12em;color:#9a9da3}
+
+  table{position:absolute;border-collapse:collapse;table-layout:fixed}
+  th,td{border:1px solid #e6e7ec;padding:7px 8px;font-size:8.4px;color:#33363d;line-height:1.45;
+    vertical-align:top;text-align:left}
+  th{background:#F6F7FD;color:#3f47a8;font-weight:700;font-size:8.6px;letter-spacing:.02em;
+    border-color:#d5d7ea}
+  td b{font-weight:600;color:#191b21}
+  td.st{font-weight:700;color:#191b21}
+
+  .foot{position:absolute;left:36px;right:36px;top:742px;font-size:8.6px;color:#a8aab0;
+    border-top:1px solid #ececef;padding-top:8px;display:flex;justify-content:space-between}
+  .foot b{color:#5b5e66;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ==================== HALAMAN 1 · FLOWCHART ==================== -->
+<div class="page">
+
+  <h1>Alur Sales dan SSE sampai SSA</h1>
+  <div class="sub">PT Selaras Lawang Sewu · <b>form diisi bersama, atasan menyetujui, baru menyeberang ke SSA</b> · SSE adalah nama baru untuk peran yang di dokumen lama ditulis ABA</div>
+
+  <div class="colhd" style="left:36px;top:82px">DEPARTEMEN PENJUALAN · PELAKSANA<span>Sales Person + SSE (Sales Support Executive)</span></div>
+  <div class="colhd" style="left:404px;top:82px">DEPARTEMEN PENJUALAN · ATASAN<span>Sales Leader (Manager Sales)</span></div>
+  <div class="colhd" style="left:736px;top:82px">BACK OFFICE<span>SSA (Sales Support Administration)</span></div>
+
+  <div class="divider" style="left:388px;top:78px;height:616px"></div>
+  <div class="divider" style="left:720px;top:78px;height:616px"></div>
+
+  <svg class="wires" viewBox="0 0 1123 794">
+    <defs>
+      <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#5058C4"/></marker>
+      <marker id="aa" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#B87C14"/></marker>
+      <marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#1E7A3C"/></marker>
+    </defs>
+    <g fill="none" stroke="#5058C4" stroke-width="1.8">
+      <!-- pesanan masuk turun ke pengisian form -->
+      <path d="M204 218 V 244" marker-end="url(#ai)"/>
+      <!-- form lengkap turun ke submit -->
+      <path d="M272 496 V 522" marker-end="url(#ai)"/>
+      <!-- submit menyeberang ke gerbang approval atasan -->
+      <path d="M372 566 H 400" marker-end="url(#ai)"/>
+    </g>
+    <g fill="none" stroke="#1E7A3C" stroke-width="1.8">
+      <!-- disetujui, menyeberang ke SSA -->
+      <path d="M704 566 H 732" marker-end="url(#ag)"/>
+      <path d="M911 606 V 632" marker-end="url(#ag)"/>
+    </g>
+    <g fill="none" stroke="#B87C14" stroke-width="1.8" stroke-dasharray="5 3">
+      <!-- perlu revisi, form kembali ke Sales dan SSE -->
+      <path d="M470 666 V 692 H 100 V 502" marker-end="url(#aa)"/>
+    </g>
+  </svg>
+
+  <!-- ================= PELAKSANA ================= -->
+  <div class="card" style="left:36px;top:126px;width:336px;height:92px">
+    <div class="ct">1 · Pesanan pelanggan masuk</div>
+    <div class="cm">Sales Person yang memegang hubungan pelanggan</div>
+    <ul>
+      <li>Permintaan, penawaran, atau PO diterima Sales Person</li>
+      <li>SSE mendampingi sejak titik ini sebagai <b>admin Sales</b>, bukan penerima terpisah di belakang</li>
+    </ul>
+  </div>
+
+  <div class="card" style="left:36px;top:248px;width:336px;height:248px">
+    <div class="ct">2 · Sales dan SSE mengisi form order</div>
+    <div class="cm">satu form, dua pengisi, satu berkas yang sama</div>
+    <ul>
+      <li>Sales Person mengisi bagian yang dia pegang, SSE melengkapi dan merapikan</li>
+      <li>SSE memeriksa kelengkapan sebelum form boleh disubmit</li>
+      <li>Selama status masih <b>Draft</b>, form bebas diubah kedua pihak</li>
+    </ul>
+    <div class="slot">
+      <div class="sh">ISI FORM · MENUNGGU DAFTAR FIELD</div>
+      <div class="sr" style="width:88%"></div>
+      <div class="sr" style="width:72%"></div>
+      <div class="sr" style="width:80%"></div>
+      <div class="sn">Daftar field belum ditetapkan. Rujukan sementara: enam parameter sisi penjualan di
+        peta data dashboard (Nomor Penawaran, Nomor PO atau SPK, Nama Pemesan, Nama Proyek,
+        Total Nilai Pesanan, Status PDD).</div>
+    </div>
+  </div>
+
+  <div class="card" style="left:172px;top:526px;width:200px;height:80px">
+    <div class="ct">3 · Submit untuk approval</div>
+    <div class="cm">status jadi Menunggu Approval</div>
+    <ul>
+      <li>Form terkunci dari perubahan sampai atasan memberi keputusan</li>
+    </ul>
+  </div>
+
+  <div class="looplab" style="left:104px;top:668px">PERLU REVISI · FORM KEMBALI KE SALES DAN SSE</div>
+
+  <!-- ================= ATASAN ================= -->
+  <div class="card" style="left:404px;top:126px;width:300px;height:250px">
+    <div class="ct">Sales Leader menerima permintaan approval</div>
+    <div class="cm">atasan langsung Sales Person dan SSE</div>
+    <ul>
+      <li>Form yang menunggu keputusan muncul di antrean approval miliknya, tidak dititipkan lewat pesan pribadi</li>
+      <li>Kelengkapan form, tidak ada isian wajib yang kosong</li>
+      <li>Kebenaran data pelanggan dan total nilai pesanan</li>
+      <li>Harga dan termin pembayaran masih di dalam batas kewenangannya</li>
+      <li>Tanggal janji kirim masuk akal terhadap kapasitas yang ada</li>
+      <li>Dokumen pendukung sudah terlampir</li>
+      <li>Atasan <b>tidak memperbaiki sendiri</b> isi form. Kalau ada yang salah, dia minta revisi</li>
+    </ul>
+    <div style="margin-top:6px"><span class="tag">DAFTAR PERIKSA USULAN AWAL</span></div>
+  </div>
+
+  <div class="card amber" style="left:404px;top:486px;width:300px;height:180px">
+    <div class="ct">4 · Gerbang approval</div>
+    <div class="cm">keputusan atasan menentukan form jalan atau balik</div>
+    <div class="out">
+      <div class="on">SETUJU</div>
+      <div class="ox">Form dikunci, lalu menyeberang ke SSA bersama jejak persetujuannya.</div>
+    </div>
+    <div class="out rev">
+      <div class="on">PERLU REVISI</div>
+      <div class="ox">Form dibuka lagi untuk Sales dan SSE, disertai catatan alasan. Setelah diperbaiki, masuk gerbang ini lagi.</div>
+    </div>
+  </div>
+
+  <!-- ================= BACK OFFICE ================= -->
+  <div class="card rule" style="left:736px;top:126px;width:351px;height:176px">
+    <div class="rulet">ATURAN GERBANG</div>
+    <ul>
+      <li>Hanya form berstatus <b>Disetujui</b> yang boleh masuk ke SSA</li>
+      <li>SSA tidak menerima berkas lewat jalur lain, termasuk pesan langsung ke perorangan</li>
+      <li>Form yang sudah disetujui terkunci. Perubahan sesudahnya berupa revisi baru yang juga lewat gerbang approval</li>
+      <li>Setiap keputusan atasan tercatat: siapa, kapan, dan alasannya</li>
+    </ul>
+  </div>
+
+  <div class="card note" style="left:736px;top:332px;width:351px;height:164px">
+    <div class="notet">PAKET SERAH TERIMA</div>
+    <div class="cm" style="margin-top:3px">yang ikut menyeberang bersama form</div>
+    <ul>
+      <li>Form order yang sudah terisi lengkap</li>
+      <li>Dokumen pendukung yang dilampirkan Sales dan SSE</li>
+      <li>Jejak approval: nama atasan, waktu persetujuan, dan catatannya</li>
+      <li>Nomor rujukan order supaya berkas bisa dicari ulang kapan saja</li>
+    </ul>
+  </div>
+
+  <div class="card green" style="left:736px;top:526px;width:351px;height:80px">
+    <div class="ct">5 · Form masuk antrean SSA</div>
+    <div class="cm">status jadi Terkirim ke SSA</div>
+    <ul>
+      <li>SSA melihatnya di antrean masuk, lengkap dengan jejak approval sehingga tidak perlu bertanya ulang siapa yang menyetujui</li>
+    </ul>
+  </div>
+
+  <div class="card green" style="left:736px;top:636px;width:351px;height:74px">
+    <div class="ct">6 · SSA lanjut memproses</div>
+    <div class="cm">cross check, lalu terbitkan SO</div>
+    <ul>
+      <li>Rincian empat langkah SSA sampai SO terbit dan menyebar ke enam sektor ada di <b>workflow-aba-ssa.pdf</b></li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · alur Sales dan SSE sampai SSA</span>
+    <span>Halaman 1 dari 2 · sumber: arahan Matthew, 14 Agustus 2026</span>
+  </div>
+
+</div>
+
+<!-- ==================== HALAMAN 2 · TERJEMAHAN KE DASHBOARD ==================== -->
+<div class="page">
+
+  <h1>Yang dibangun di dashboard</h1>
+  <div class="sub">Enam langkah di halaman 1 diterjemahkan jadi <b>status, hak ubah, dan jejak</b> yang harus ada di sistem · satu order berjalan lewat satu rantai status, tidak ada jalur pintas</div>
+
+  <div class="seclab" style="left:36px;top:86px">RANTAI STATUS SATU ORDER</div>
+
+  <svg class="wires" viewBox="0 0 1123 794">
+    <defs>
+      <marker id="bi" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#5058C4"/></marker>
+      <marker id="ba" markerWidth="9" markerHeight="9" refX="7" refY="3.1" orient="auto">
+        <path d="M0,0 L7,3.1 L0,6.2 z" fill="#B87C14"/></marker>
+    </defs>
+    <g fill="none" stroke="#5058C4" stroke-width="1.8">
+      <path d="M231 138 H 245" marker-end="url(#bi)"/>
+      <path d="M445 138 H 459" marker-end="url(#bi)"/>
+      <path d="M659 138 H 673" marker-end="url(#bi)"/>
+      <path d="M873 138 H 887" marker-end="url(#bi)"/>
+    </g>
+    <g fill="none" stroke="#B87C14" stroke-width="1.8" stroke-dasharray="5 3">
+      <path d="M347 166 V 186 H 133 V 172" marker-end="url(#ba)"/>
+    </g>
+  </svg>
+
+  <div class="chip" style="left:36px;top:110px;width:195px">
+    <div class="cn">Draft</div>
+    <div class="cx">Sales dan SSE mengisi. Keduanya boleh mengubah.</div>
+  </div>
+  <div class="chip" style="left:250px;top:110px;width:195px">
+    <div class="cn">Menunggu Approval</div>
+    <div class="cx">Form terkunci. Bola ada di Sales Leader.</div>
+  </div>
+  <div class="chip" style="left:464px;top:110px;width:195px">
+    <div class="cn">Disetujui</div>
+    <div class="cx">Terkunci permanen. Isi tidak bisa diubah lagi.</div>
+  </div>
+  <div class="chip greenc" style="left:678px;top:110px;width:195px">
+    <div class="cn">Terkirim ke SSA</div>
+    <div class="cx">Masuk antrean SSA bersama jejak approval.</div>
+  </div>
+  <div class="chip greenc" style="left:892px;top:110px;width:195px">
+    <div class="cn">Diproses SSA</div>
+    <div class="cx">SSA cross check, lalu terbitkan SO.</div>
+  </div>
+
+  <div class="looplab" style="left:150px;top:192px">PERLU REVISI · KEMBALI KE DRAFT DENGAN CATATAN ALASAN DARI ATASAN</div>
+
+  <div class="seclab" style="left:36px;top:224px">SIAPA MEMEGANG APA DI TIAP LANGKAH</div>
+
+  <table style="left:36px;top:246px;width:1051px">
+    <colgroup>
+      <col style="width:150px"><col style="width:158px"><col style="width:150px">
+      <col style="width:150px"><col style="width:443px">
+    </colgroup>
+    <tr>
+      <th>Langkah</th><th>Status di dashboard</th><th>Pemegang bola</th>
+      <th>Boleh mengubah isi</th><th>Yang wajib dicatat sistem</th>
+    </tr>
+    <tr>
+      <td class="st">1 · Pesanan masuk</td>
+      <td>belum ada order</td>
+      <td>Sales Person</td>
+      <td>Sales Person</td>
+      <td>Waktu order dibuka dan siapa yang membukanya</td>
+    </tr>
+    <tr>
+      <td class="st">2 · Isi form</td>
+      <td>Draft</td>
+      <td>Sales Person + SSE</td>
+      <td>Sales Person, SSE</td>
+      <td>Tiap perubahan isian: siapa, kapan, nilai lama, nilai baru. Dua orang mengisi satu form, jadi tanpa ini tidak jelas siapa mengisi apa</td>
+    </tr>
+    <tr>
+      <td class="st">3 · Submit</td>
+      <td>Menunggu Approval</td>
+      <td>Sales Leader</td>
+      <td>tidak ada</td>
+      <td>Waktu submit dan siapa yang menekan submit. Dari sini penghitung waktu tunggu approval mulai jalan</td>
+    </tr>
+    <tr>
+      <td class="st">4 · Gerbang approval</td>
+      <td>Disetujui <b>atau</b> Perlu Revisi</td>
+      <td>Sales Leader</td>
+      <td>tidak ada</td>
+      <td>Keputusan, nama atasan, waktu keputusan, dan catatan alasan. Catatan wajib diisi pada kedua keputusan, bukan hanya saat menolak</td>
+    </tr>
+    <tr>
+      <td class="st">5 · Masuk SSA</td>
+      <td>Terkirim ke SSA</td>
+      <td>SSA</td>
+      <td>tidak ada</td>
+      <td>Waktu penyeberangan dan waktu SSA pertama kali membuka berkas, supaya lama mengantre terlihat</td>
+    </tr>
+    <tr>
+      <td class="st">6 · Proses SSA</td>
+      <td>Diproses SSA</td>
+      <td>SSA</td>
+      <td>SSA, lewat mekanisme SSA sendiri</td>
+      <td>Sambungan ke rantai SSA yang sudah ada: cross check, cek timeline terhadap PDD, terbit SO</td>
+    </tr>
+  </table>
+
+  <div class="seclab" style="left:36px;top:490px">YANG DIBANGUN DULUAN DAN YANG MASIH MENUNGGU KEPUTUSAN</div>
+
+  <div class="card" style="left:36px;top:512px;width:500px;height:168px">
+    <div class="ct">Komponen yang harus dibangun</div>
+    <div class="cm">yang membedakan alur ini dari sekadar tukar berkas</div>
+    <ul>
+      <li>Form order dengan validasi isian wajib, bisa diisi bergantian Sales dan SSE</li>
+      <li>Tombol submit yang <b>mengunci</b> form sekaligus memindahkan statusnya</li>
+      <li>Antrean approval milik Sales Leader, berisi semua form yang menunggu keputusannya</li>
+      <li>Tombol Setuju dan Minta Revisi, keduanya wajib berisi catatan</li>
+      <li>Pemberitahuan ke pihak berikutnya setiap kali status berpindah</li>
+      <li>Jejak audit yang tidak bisa dihapus di tiap perubahan</li>
+      <li>Penghitung waktu tunggu approval supaya keterlambatan terlihat, bukan tersembunyi</li>
+    </ul>
+  </div>
+
+  <div class="card rule" style="left:560px;top:512px;width:527px;height:168px">
+    <div class="rulet">BELUM DITETAPKAN · PERLU KEPUTUSAN SEBELUM DIBANGUN</div>
+    <ul>
+      <li><b>Daftar isian form order.</b> Menunggu daftar dari Matthew. Semua yang lain di dokumen ini tidak bergantung pada daftar itu, jadi pembangunan alur bisa jalan lebih dulu</li>
+      <li><b>Batas kewenangan Sales Leader.</b> Nilai pesanan atau diskon berapa yang masih boleh dia setujui sendiri, dan ke siapa naik kalau lewat batas</li>
+      <li><b>Batas waktu approval</b> sebelum sebuah form dianggap terlambat</li>
+      <li><b>Pengganti bila Sales Leader berhalangan</b>, supaya order tidak menggantung di satu orang</li>
+      <li><b>Boleh tidaknya SSA menolak balik</b> form yang sudah disetujui, dan kalau boleh, kembali ke siapa</li>
+      <li><b>Penyeragaman istilah.</b> Dokumen lama masih menulis ABA. Perlu diputuskan apakah seluruh dokumen diganti jadi SSE atau kedua istilah dipakai berdampingan</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span><b>PT Selaras Lawang Sewu</b> · alur Sales dan SSE sampai SSA</span>
+    <span>Halaman 2 dari 2 · sambungan ke workflow-aba-ssa.pdf dan peta-data-dashboard.pdf</span>
+  </div>
+
+</div>
+
+</body>
+</html>

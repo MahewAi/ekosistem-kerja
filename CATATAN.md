@@ -300,3 +300,42 @@ atasan-bawahan tetap terbaca, menunggu koreksi Matthew. Total 23 posisi
 perlu nama (21 dari dokumen + 2 kepala usulan). Avatar "?" kelabu untuk
 kotak tanpa orang. Konten dipadatkan supaya 3 halaman tetap muat
 (cardBottom max 729 vs footer 749, diukur via getBoundingClientRect).
+
+## 14 Agu 2026 - Workflow Sales dan SSE ke SSA (dokumen baru)
+
+Permintaan Matthew: flowchart alur bisnis untuk dasar pembangunan dashboard.
+Alur yang diberikan: Sales dan SSE mengisi form, minta approval atasan, setelah
+atasan setuju baru terkirim ke SSA.
+
+`docs/workflow-sales-sse-ssa.html/.pdf`, 2 halaman A4 landscape:
+
+- Halaman 1: flowchart 3 jalur (Pelaksana Sales + SSE, Atasan Sales Leader,
+  Back Office SSA), enam langkah bernomor, gerbang approval dengan dua keluaran
+  (Setuju ke SSA, Perlu Revisi balik ke Draft lewat jalur amber putus-putus),
+  plus kartu Aturan Gerbang dan Paket Serah Terima.
+- Halaman 2: terjemahan ke dashboard. Rantai lima status, tabel pemegang bola
+  dan hak ubah per langkah, komponen yang harus dibangun, dan daftar yang belum
+  ditetapkan.
+
+Keputusan (dikonfirmasi Matthew sebelum menggambar):
+
+1. **SSE = nama baru ABA.** Peran yang sama, istilah berubah. Dokumen lama
+   (`workflow-aba-ssa`, `hirarki-divisi`, `flow-asli`, `data-dashboard`) masih
+   menulis ABA dan sengaja tidak disentuh dulu. Penyeragaman istilah lintas
+   dokumen dicatat sebagai keputusan terbuka di halaman 2.
+2. **Atasan yang menyetujui = Sales Leader (Manager Sales)**, bukan Project
+   Controller. Approval satu tingkat, tidak berjenjang.
+3. **Isi form dikosongkan.** Matthew akan memberi daftar fieldnya menyusul, jadi
+   kartu form memakai slot bertanda "menunggu daftar field" dengan rujukan
+   sementara ke enam parameter sisi penjualan di `peta-data-dashboard`. Sisa
+   dokumen tidak bergantung pada daftar itu, jadi alurnya bisa dibangun duluan.
+
+Yang ditambahkan sendiri dan perlu dikoreksi Matthew bila salah: daftar periksa
+atasan (ditandai chip "daftar periksa usulan awal"), aturan bahwa atasan tidak
+memperbaiki sendiri isi form, dan kewajiban mengisi catatan pada kedua keputusan
+approval.
+
+Catatan render: Chromium di lingkungan ini tidak mempercayai CA proxy sehingga
+Google Fonts gagal dimuat dan huruf jatuh ke DejaVu. PDF dirender dari salinan
+sementara yang menyematkan Geist sebagai data URI; sumber HTML tetap memakai
+tautan Google Fonts seperti dokumen lain.
